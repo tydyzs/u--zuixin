@@ -1,0 +1,11 @@
+
+项目中引入文件：
+<script type="text/javascript" src="/controls/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/daie/scripts/miniui/miniui.js"></script>
+<link rel="stylesheet" media="all" href="/ycpgl/styles/ycpgl_style.css" />
+
+html代码：（设置dateFmt='yyyy-MM'即可将选择框样式只显示年月）
+<input style="width: 80%" type='text' id="ydfbsjq" name="ydfbsjq" class='mini-wdatepicker'
+		                                           dateFmt='yyyy-MM' allowInput='false' required="true"
+		                                           />
+

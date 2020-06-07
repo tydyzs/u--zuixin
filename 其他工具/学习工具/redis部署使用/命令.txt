@@ -1,0 +1,23 @@
+
+
+手动持久化：./redis-cli bgsave
+
+0.select 0(切换数据库）
+2.新建变量和值： set name shc
+3.获取变量和值： get  name
+4.查看所有key：keys *  (匹配key：keys a*a)
+5.删除key：del testkey
+6.判断一个键值是否存在： exists key （如果存在，返回整数类型 1 ，否则返回 0）
+7.递增数字：incr key
+#。向尾部追加值：append key value
+
+
+
+list：
+1.添加元素：（左：lpush list_key list_value.右：rpush list_key list_value）
+2.查看元素：lrange list_key 0 5 (查看0-5的数值，含头含尾；若第二位为-1，则表示查看所有）
+3.删除一个元素：rpop list_key  (lpop:从左边删除）
+4.返回list长度：llen list_key  
+5.获取指定位置的元素：lindex list_key 1(获取第二位）
+6.修改指定位置元素：lset list_key 2 zlh 
+7.数组追加：rpoplpush A B （将B追加到A后面）

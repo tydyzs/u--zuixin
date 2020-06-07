@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.UseThemeDao">
+
+	 <resultMap id="UseTheme" type="com.tgb.model.UseTheme">
+	   <id property="use_subject_id" column="USE_SUBJECT_ID"/>
+	   <result property="type_id" column="TYPE_ID"/>
+	   <result property="subject_id" column="SUBJECT_ID"/>
+	   <result property="use_subject_name" column="USE_SUBJECT_NAME"/>
+	   <result property="setman" column="SETMAN"/>
+	   <result property="setdate" column="SETDATE"/>
+	   <result property="is_del" column="IS_DEL"/>
+	</resultMap> 
+	
+	<resultMap id="Theme" type="com.tgb.model.Tsubject">
+	   <id property="subject_id" column="SUBJECT_ID"/>
+	   <result property="subject_name" column="SUBJECT_NAME"/>
+	   
+	</resultMap>
+	
+	<!-- 查询使用主题 -->
+	<select id="findUseTheme" parameterType="Map" resultMap="UseTheme">
+		select * from TT_USE_SUBJECT 
+		 where 1=1 
+         <if test="typeId!=null">
+        and TYPE_ID=#{typeId}
+         </if>
+        <if test="themeId!=null">
+          and SUBJECT_ID=#{themeId}
+        </if>
+	</select>
+	
+	<!-- 加载下拉框：根据分类id查询所有主题-->
+	 <select id="findName" parameterType="string" resultMap="Theme">
+	select *  from TT_TSUBJECT where t_type_id = #{typeId} and is_del=0 ORDER BY setdate DESC
+	</select>
+	
+	<!-- 查询所有的主题，按照时间排序 -->
+	<select id="Alltheme" resultMap="Theme">
+	select *  from TT_TSUBJECT where is_del=0 order by SETDATE desc
+	</select>
+	<!-- 查询所有的主题，按照时间排序 -->
+	<select id="Alltheme_only" resultType="java.util.HashMap">
+	select subject_id,subject_name  from TT_TSUBJECT where is_del=0
+	</select>	
+<!-- 分页 -->	
+	<!-- 加载下拉框：根据分类id查询所有主题-->
+	 <select id="findName_new" parameterType="map" resultMap="Theme">	
+	 <![CDATA[
+		select * from (select t.*,rownum rn from (select *  from TT_TSUBJECT where t_type_id = #{typeId} and is_del=0 ORDER BY setdate DESC) t ) where rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10	 
+	 ]]>
+	
+	</select>
+	
+	<!-- 查询所有的主题，按照时间排序 -->
+	<select id="Alltheme_new" parameterType="map" resultMap="Theme">
+	<![CDATA[	
+	select * from (select t.*,rownum rn from (select *  from TT_TSUBJECT where is_del=0 order by SETDATE desc) t ) where rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10	
+	 ]]>
+	</select>
+	<!-- 加载下拉框：根据分类id查询所有使用主题-->
+	 <select id="findUseName_new" parameterType="map" resultMap="UseTheme">	
+	 <![CDATA[
+		select * from (select t.*,rownum rn from (select *  from TT_USE_SUBJECT  where t_type_id = #{typeId} and is_del=0 ORDER BY setdate DESC) t ) where rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10	 
+	 ]]>
+	
+	</select>
+	
+	<!-- 查询所有的使用主题，按照时间排序 -->
+	<select id="AllUsetheme_new" parameterType="map" resultMap="UseTheme">
+	<![CDATA[	
+	select * from (select t.*,rownum rn from (select *  from TT_USE_SUBJECT where is_del=0 order by SETDATE desc) t ) where rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10	
+	 ]]>
+	</select>	
+	<!-- 查询所有的主题总数 -->
+	<select id="Alltheme_count" resultType="int">
+	select count(*)  from TT_TSUBJECT where is_del=0
+	</select>
+	<!-- 查询所有的使用主题总数 -->
+	<select id="AllUsetheme_count" resultType="int">
+	select count(*)  from TT_USE_SUBJECT where is_del=0
+	</select>			
+<!-- 分页end -->
+	<!-- 根据分类id查询子分类id -->
+	<select id="findId" parameterType="int" resultType="int">
+    select T_TYPE_ID from TT_TYPE where PARENT_ID = #{pId}	
+	</select>
+	<!-- 根据主题id查询主题名称 -->
+	<select id="findthemename" parameterType="int" resultType="string">
+	 select subject_name from TT_TSUBJECT where subject_id=#{themeId} and is_del=0
+	</select>
+	
+
+	<!-- 根据类型id获取类型名称 -->
+	<select id="findtypename" parameterType="int" resultType="string">
+	 select TYPE_NAME from TT_TYPE where T_TYPE_ID=#{typeId}
+	</select>
+	
+	<!-- 根据使用主题id删除使用主题 -->
+	<delete id="deleteuse" parameterType="int">
+		delete from TT_USE_SUBJECT where USE_SUBJECT_ID=#{useId}
+	</delete>
+	
+	<!-- 根据使用主题名称查询使用主题 -->
+	<select id="queryUseTheme" parameterType="string" resultMap="UseTheme">
+	  select * from TT_USE_SUBJECT where USE_SUBJECT_NAME like #{useName} and is_del=0
+	</select>
+	
+	
+	
+	
+	<!-- 根据分类id查询是否有关联数据 -->
+	<select id="checkdata" parameterType="int" resultType="int">
+	    select count(*) from tt_tsubject where T_TYPE_ID=#{typeId} and is_del=0
+	</select>
+	
+	
+	
+	
+	<!-- <select id="find"  parameterType="int" resultMap="Themetype">
+		select * from TT_TYPE where PARENT_ID=#{id}
+	</select>
+	
+	<select id="find1"  parameterType="com.tgb.model.Themetype" resultType="java.lang.Integer">
+		select count(*) from TT_TYPE where PARENT_ID =#{pId} and TYPE_CODE=#{code} 
+	</select>
+	<select id="find2"  parameterType="com.tgb.model.Themetype" resultType="java.lang.Integer">
+		select count(*) from TT_TYPE where PARENT_ID =#{pId} and TYPE_NAME=#{name}
+	</select>
+	
+	
+	<insert id="save" parameterType="com.tgb.model.Themetype">
+		insert into TT_TYPE(T_TYPE_ID,TYPE_NAME,PARENT_ID,TYPE_CODE) values(#{id},#{name},#{pId},#{code})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from TT_TYPE where T_TYPE_ID=#{id} or PARENT_ID=#{id}
+	</delete>
+	
+	<select id="findId" parameterType="int" resultType="java.lang.Integer">
+		select count(*) from TT_TYPE where PARENT_ID=#{id}
+	</select>  -->
+	<!-- 查询使用主题 -->
+	<select id="findUseThemeBySubject_id" parameterType="map" resultMap="UseTheme">
+		select * from TT_USE_SUBJECT 
+		 where is_del=0 <!-- and setman=#{setman} --> and SUBJECT_ID=#{subject_id}
+        
+	</select>	
+</mapper>

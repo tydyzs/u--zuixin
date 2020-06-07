@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.Code_nameMapper">
+	
+	<insert id="save" parameterType="Code_name">
+		insert into tt_code_name(code_name_id,table_id,col_id,subject_id) values(seq_code_name.nextval,#{table_id},#{col_id},#{subject_id})
+	</insert>
+	
+	<update id="update" parameterType="Code_name">
+		update tt_code_name set table_id=#{table_id},col_id=#{col_id},subject_id=#{subject_id} where code_name_id=#{code_name_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_code_name where code_name_id=#{code_name_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Code_name">
+		select code_name_id,table_id,col_id,subject_id from tt_code_name where code_name_id=#{code_name_id}
+	</select>
+	
+	<select id="findAll" resultType="Code_name">
+		select code_name_id,table_id,col_id,subject_id from tt_code_name
+	</select>
+	
+</mapper>

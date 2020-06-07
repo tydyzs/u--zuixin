@@ -1,0 +1,312 @@
+    vue使三块：
+ 一，html块：
+	    <div id="d1">
+		  <p> {{msg}}</p>
+		  <p> {{get_html()}}</p>
+		  <input v-bind:value="input_value" :type="types"/></br></br>
+		   //（v-bind:value只会让标签显示数据，v-model可让"可输入"标签和数据对象的数据实时同步）
+		  <input type="text" v-model="value2"/>
+		  <div v-html="html_str"></div>
+		  <input value="点击" type="button" v-on:click="click1"/>
+		  <input value="点击" type="button" v-on:click="click2('1')"/>
+		</div>
+二，数据块（或将属性和含数都放在data里)
+	1.属性
+	var data_d1={
+			msg:"999",
+			html_str:'<input id="" name="" value="提交" type="button"/>',
+			input_value:"321",
+			types:"text",
+			bds1:1,
+			bds2:true,
+			bds3:"aabbcc",
+			bds4:"1",
+			shows:false,
+			inputs:"",
+			num:1,
+			num1:2,
+			ok:true,
+			ok1:true,
+			ok2:true,
+			randoms:Math.random()
+	};
+	2.函数
+			//1.methods函数（一般存事件触发的函数，每次触发都会执行相应函数.方法带括号<p> {{get_html()}}</p>）
+			var fun_d1={
+					get_html:function(){
+								return "hello word!";
+							}
+			};
+			//2.filters函数（属性调用函数）
+			var filters={
+					click2:function(value){
+						var v1=value+2;
+						return v1;
+					}
+			};
+			//3.计算函数：computed函数（计算属性：函数里存计算的逻辑，多次调用只会执行一次，除非执行的数据有变才会从新执行,直接写函数名<p> {{click1}}</p>）
+			var computed_fun={
+				click1:function(){
+					return "123";
+				}
+			};
+			//4,监听函数（wath）
+			var watch_fun={
+					value2:function(nval){
+						this.value3=nval*1000;
+					},
+					value3:function(nval){
+						this.value2=nval/1000;
+					}
+			}；
+			//5,页面初始化函数：mounted
+			mounted:mounted_fun,
+			
+三，vue.js块（绑定html和数据）：
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		methods:methods_fun,//绑定事件
+		filters:filters,//属性调用的事件
+		computed:computed_fun,//绑定计算函数（下面的函数用于处理数据的计算）
+		watch:watch_fun//监听事件
+	});
+////////////////   修改数据    //////////////////////
+	var id=setTimeout(function(){//改变数据对象，html中的值随之改变
+		data_d1.msg=555;//设置数据对象改变页面的值
+		var vue_el=vue_obj.$el;	//获取vue对象的dom对象
+		var vue_data=vue_obj.$data;//获取vue对象的数据对象
+		vue_data.msg="666";//可通过设置vue中数据对象的属性
+		//alert(vue_data.msg);//获取值
+		vue_obj.msg="777";//也可直接设置vue对象属性
+	},1000);
+	
+//获取vue的属性（通过$):
+var vue_el=vue_obj.$el;	
+var vue_data=vue_obj.$data;
+***********************   记录   **********************************
+	
+	var data_d1={
+				msg:"999",
+				input_value:"321",
+				html_str:'<input id="" name="" value="提交" type="button"/>'
+	};
+	var fun_d1={
+			get_html:function(){
+				var str=this.msg;//获取vue对象属性的值
+				this.input_value=str;//设置vue对象属性的值
+				return "hello word!!!";
+			}
+	};
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		methods:fun_d1
+	});
+1.文本9字符串（通过{{html_str}}）：
+	<p> {{msg}}</p>
+	<p> {{get_html_str()}}</p>
+2.html9设置：子html内容通过v-html属性设置(v-html="")：
+	<div v-html="html_str"></div>
+3.属性9设置：v-bind:  或  :(简写）
+  <input v-bind:value="input_value" :type="types"/>
+4.运算（html中写表达式，js）：
+	  1.html:
+		  {{bds1+1}}</br>
+		  {{bds2?"yes":"no"}}</br>
+		  {{bds3.split("bb")}}</br>
+		  <input :class="'class-'+bds4" value="表达式"/>
+	  2.data:
+		  var data_d1={
+				bds1:1,
+				bds2:true,
+				bds3:"aabbcc",
+				bds4:"1"
+		  };
+5.设置显示隐藏（v-if="param"：)
+  	<p v-if="shows">显示隐藏</p>
+	var data_d1={
+			shows:false//true(显示）；false(隐藏）
+	};
+6.注册函数9事件9  (v-on:click="click1"。 缩写：@click="") ：
+    <input value="点击" type="button" v-on:click="click1"/></br></br>
+	var fun_d1={
+		click1:function(){
+			alert(123);
+		}
+	};
+7.html输入绑定到数据对象中v-model( input、select、textarea、checkbox、radio数据变化时同步到数据对象）：
+    <p>{{inputs}}</p>
+    <input v-model="inputs"/>	
+    
+    var data_d1={
+		inputs:""
+	};	
+8.属性调用函数（num传入click2方法中并返回一个值）：
+    <p>{{ num | click2 }}</p>//num传入click2并获取返回
+    <p>{{ num | click2 | click3}}</p>//num传入click2然后将返回值传入click3并获取最后的返回值
+    <p>{{ num | click3(2,num1)}}</p>//可传递参数（num会作为第一个参数；这两个参数会作为函数的第二个和第三个参数）
+    var data_d1={
+			num:1,
+			num1:2
+	};
+	var filters={
+			click2:function(value){
+				var v1=value+2;
+				return v1;
+			},
+			click3:function(value,value1,value2){
+				var v1=value+value1+value2;
+				return v1;
+			}
+	};  
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		filters:filters
+	});
+9.运算：
+	1.判断语法/if
+		1.if:
+			<template v-if="ok">
+				<p>true</p>
+		    </template>
+		    
+		    var data_d1={
+					ok:true,
+					randoms:Math.random()
+			};
+		2.if-else:
+			<div v-if="randoms> 0.5">
+		      Sorry
+		    </div>
+		    <div v-else>
+		      Not sorry
+		    </div>
+		3.if-else-if：
+			<div v-if="randoms > 0.8">
+		      A
+		    </div>
+		    <div v-else-if="randoms > 0.5">
+		      B
+		    </div>
+		    <div v-else>
+		      Not A/B/C
+		    </div>
+	2.循环语法v-for
+		1.循环数组：
+			<table>
+				<tr v-for="obj in list1">
+					<td>{{obj.id}}</td>
+					<td>{{obj.name}}</td>
+				</tr>
+			</table>
+			var data_d1={
+				list1:[{id:"1",name:"张三"},{id:"2",name:"李四"},{id:"3",name:"王五"}]
+			};
+		2.循环对象(遍历map，key和index非必要）：
+		    <table>
+				<tr v-for="(value,key,index) in object">
+					<td>{{index}}:{{key}}={{value}}</td>
+				</tr>
+			</table>
+			var data_d1={
+				object:{id:"1",name:"name",age:"21"}
+			};
+		3.循环整数（固定次数循环，for循环）：
+			<table>
+				<tr v-for="i in 3">
+					<td>tr{{i}}</td>
+				</tr>
+			</table>
+10.监听器test3.html（调用vue对象的$watch方法来监听属性的变化；）
+	实例一
+	<p>{{value1}}</p>
+	<input v-on:click="click1" type="button" value="点击"/>
+	</br></br>
+	
+	var data_d1={
+		value1:2
+	};
+	var methods_fun={
+			click1:function(){
+				this.value1++;
+			}
+	};
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		methods:methods_fun
+	});
+	//参数（value1需要监听的属性；nval：变后后；oval：变化前）
+	vue_obj.$watch('value1', function(nval, oval) {
+	    alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+	});
+	
+	实例二：
+	<input type="text" v-model="value2"/>km=
+	<input type="text" v-model="value3"/>m
+	var watch_fun={
+			value2:function(nval){
+				this.value3=nval*1000;
+			},
+			value3:function(nval){
+				this.value2=nval/1000;
+			}
+	}
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		methods:methods_fun,//绑定事件
+		filters:filters,//属性调用的事件
+		computed:computed_fun,//绑定计算函数（下面的函数用于处理数据的计算）
+		watch:watch_fun//监听事件
+	});
+	
+11.vue绑定样式class：
+	(可设置多个样式c1.c2。显示为true的样式.两个为true的相同例如width样式显示后面的）
+		.c1{
+		width:50px;
+		height:20px;
+		background-color:#0ea8d8;
+		}
+		.c2{
+		width:50px;
+		height:20px;
+		border:1px solid #f00;
+		}
+		//可将{c1 : b1,c2 : b2 }写入vue一个属性中。这里直接引用属性名
+		<div v-bind:class="{c1 : b1,c2 : b2 }">
+	    </div>
+	    	
+	    var data_d1={
+				b1:true,
+				b2:true
+		};
+12.vue事件扩展：
+	<!-- 阻止单击事件冒泡 -->
+	<a v-on:click.stop="doThis"></a>
+	<!-- 提交事件不再重载页面 -->
+	<form v-on:submit.prevent="onSubmit"></form>
+	<!-- 修饰符可以串联  -->
+	<a v-on:click.stop.prevent="doThat"></a>
+	<!-- 只有修饰符 -->
+	<form v-on:submit.prevent></form>
+	<!-- 添加事件侦听器时使用事件捕获模式 -->
+	<div v-on:click.capture="doThis">...</div>
+	<!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+	<div v-on:click.self="doThat">...</div>
+	<!-- click 事件只能点击一次，2.1.4版本新增 -->
+	<a v-on:click.once="doThis"></a>
+	
+	键盘事件：
+	<!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+	<input v-on:keyup.13="submit">
+	
+13.组件（自定义标签，可重复使用）：
+	<div>
+		<shcdiv  v-model="value1"></shcdiv>
+    </div>
+	Vue.component('shcdiv',{
+		template:'<input type="text"/>'
+	});

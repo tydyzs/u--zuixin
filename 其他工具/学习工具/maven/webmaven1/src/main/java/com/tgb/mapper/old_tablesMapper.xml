@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.Old_tablesMapper">
+	
+	<insert id="save" parameterType="String">
+		insert into tt_old_tables(s_tables_id,c_name,e_name) values(seq_old_tables.nextval,#{c_name},#{e_name})
+	</insert>
+	
+	<update id="update" parameterType="Old_tables">
+		update tt_old_tables set c_name=#{c_name},e_name=#{e_name}  where s_tables_id=#{s_tables_id}
+	</update>
+	<update id="update_1"  parameterType="Old_tables">
+		update tt_old_tables set c_name=#{c_name} where s_tables_id=#{s_tables_id}
+	</update>	
+	<delete id="delete" parameterType="int">
+		delete from tt_old_tables where s_tables_id=#{s_tables_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Old_tables">
+		select s_tables_id,c_name,e_name from tt_old_tables where s_tables_id=#{s_tables_id}
+	</select>
+	
+	<select id="findAll" resultType="Old_tables">
+		select s_tables_id,c_name,e_name from tt_old_tables where C_NAME<![CDATA[ <>]]>'null'
+	</select>
+	<select id="findAll_1" resultType="Old_tables">
+		select s_tables_id,c_name,e_name from tt_old_tables order by e_name asc
+	</select>
+	<select id="findByIds" parameterType="list" resultType="Old_tables">
+		select s_tables_id,c_name,e_name from tt_old_tables where s_tables_id in
+		<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>	
+	</select>
+	<select id="findAll_new" parameterType="int" resultType="Old_tables">		
+	<![CDATA[
+		select * from (select t.*,rownum rn from (select s_tables_id,c_name,e_name from tt_old_tables where C_NAME<>'null') t ) where rn>(#{currentPage}-1)*20 and rn<=#{currentPage}*20	 
+	 ]]>
+	</select>
+	<select id="find_count" resultType="Integer">
+		select count(*) from tt_old_tables where C_NAME<![CDATA[ <>]]>'null'
+	</select>				
+</mapper>

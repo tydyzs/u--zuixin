@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper2.SqlDao">
+	
+	<select id="implementsql" parameterType="map" resultType="java.util.LinkedHashMap">
+	  ${sql}
+	</select>
+	
+	
+	<select id="findnumber" parameterType="map" resultType="integer">
+	select count(*) from ( ${sql} )
+	</select>
+	<select id="implementsql1" parameterType="map" resultType="java.util.LinkedHashMap">
+	select * from(select ROWNUM ro ,b.* from ( ${sql} )b)v
+	 where v.ro<![CDATA[ <]]>#{endnumber} and v.ro>=#{strnumber}
+	</select>
+	
+	
+	
+	<select id="findzsxm" resultType="com.tgb.model2.zsxm">
+	  select * from test_zsxm_dm
+	</select>
+	
+	
+	<select id="findzspm" resultType="com.tgb.model2.zsxm">
+	 select * from test_zspm_dm
+	</select>
+	
+	<select id="findgljg" resultType="com.tgb.model2.zsxm">
+  select * from test_swjg_dm
+	</select>
+	
+	
+	
+	
+	
+	<!-- 查询字段类型 -->
+	<select id="findtype" parameterType="map" resultType="string">
+		 select data_type From all_tab_columns where table_name=upper(#{table_name}) and column_name=#{col_name}
+	</select> 
+	
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.TgroupMapper">
+	
+	<insert id="save" parameterType="Tgroup">
+		insert into tt_tgroup(group_id,s_tables_id,c_name,e_name,group_col_id,col_c_name,col_e_name,subject_id) values(seq_group.nextval,#{s_tables_id},#{c_name},#{e_name},#{group_col_id},#{col_c_name},#{col_e_name},#{subject_id})
+	</insert>
+	
+	<update id="update" parameterType="Tgroup">
+		update tt_tgroup set s_tables_id=#{s_tables_id},c_name=#{c_name},e_name=#{e_name},group_col_id=#{group_col_id},col_c_name=#{col_c_name},col_e_name=#{col_e_name},subject_id=#{subject_id}  where group_id=#{group_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_tgroup where group_id=#{group_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Tgroup">
+		select group_id,s_tables_id,c_name,e_name,group_col_id,col_c_name,col_e_name,subject_id from tt_tgroup where group_id=#{group_id}
+	</select>
+	
+	<select id="findAll" resultType="Tgroup">
+		select group_id,s_tables_id,c_name,e_name,group_col_id,col_c_name,col_e_name,subject_id from tt_tgroup
+	</select>
+	
+</mapper>

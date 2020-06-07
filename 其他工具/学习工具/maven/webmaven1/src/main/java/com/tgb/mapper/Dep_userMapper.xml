@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.Dep_userMapper">
+	
+	<insert id="save" parameterType="com.tgb.model.Dep_user">
+		<selectKey resultType="integer" order="AFTER" keyProperty="dep_user_id">
+			select seq_dep_user.currval from dual		
+		</selectKey>
+		insert into tt_dep_user(dep_user_id,department_id,user_id,position,duty,remark) values(seq_dep_user.nextval,#{department_id},#{user_id},#{position},#{duty},#{remark})
+	</insert>
+	
+	<update id="update" parameterType="com.tgb.model.Dep_user">
+		update tt_dep_user set department_id=#{department_id},user_id=#{user_id},position=#{position},duty=#{duty},remark=#{remark}  where dep_user_id=#{dep_user_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_dep_user where dep_user_id=#{dep_user_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="java.util.HashMap">		
+		select * from tt_dep_user where dep_user_id=#{dep_user_id}
+	</select>
+	
+	<select id="findAll" parameterType="string" resultType="java.util.HashMap">
+	<![CDATA[
+		select * from (select t.*,rownum rn from (
+			select a.*,c.department_name,c.department_code,b.position,b.duty from tt_user_new a join tt_dep_user b on a.user_id=b.user_id join tt_department c on b.department_id=c.department_id
+		) t ) where rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10
+	]]>
+	</select>		
+	<select id="findCount"  resultType="Integer">
+		select count(*) from tt_dep_user
+	</select>	
+	<select id="update_2" parameterType="com.tgb.model.Dep_user">		
+		update tt_dep_user set department_id=#{department_id},user_id=#{user_id},position=#{position},duty=#{duty},remark=#{remark} where department_id=#{department_id} and user_id=#{user_id}
+	</select>
+	<delete id="deleteByDepID" parameterType="int">
+		delete from tt_dep_user where department_id=#{department_id}
+	</delete>		
+</mapper>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.User_newMapper">
+	
+	<insert id="save" parameterType="com.tgb.model.User_new">
+		<selectKey resultType="integer" order="AFTER" keyProperty="user_id">
+			select seq_user.currval from dual		
+		</selectKey>
+		insert into tt_user_new(user_id,user_code,user_name,password,EMAIL,TEL,mobile,station,remark,login_num,user_image) values(seq_user.nextval,#{user_code},#{user_name},#{password},#{EMAIL},#{TEL},#{mobile},#{station},#{remark},#{login_num},#{user_image})
+	</insert>
+	
+	<update id="update" parameterType="com.tgb.model.User_new">
+		update tt_user_new set user_code=#{user_code},user_name=#{user_name},password=#{password},EMAIL=#{EMAIL},TEL=#{TEL},mobile=#{mobile},station=#{station},remark=#{remark},login_num=#{login_num},user_image=#{user_image}  where user_id=#{user_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		update tt_user_new set station=1 where user_id=#{user_id}
+			
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="java.util.HashMap">		
+		select a.*,c.department_name,c.department_id,b.dep_user_id,b.position,b.duty from tt_user_new a join tt_dep_user b on a.user_id=b.user_id join tt_department c on b.department_id=c.department_id where a.user_id=#{user_id}
+	</select>
+	
+	<select id="findAll" parameterType="string" resultType="java.util.HashMap">
+	<![CDATA[
+		select * from (select t.*,rownum rn from (
+			select a.*,c.department_name,b.position from tt_user_new a join tt_dep_user b on a.user_id=b.user_id join tt_department c on b.department_id=c.department_id where a.station=0 
+		) t ) where rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10
+	]]>
+	</select>
+	
+	<select id="findAll_new" resultType="java.util.HashMap">		
+			select a.*,c.department_name,c.department_code,b.position from tt_user_new a join tt_dep_user b on a.user_id=b.user_id join tt_department c on b.department_id=c.department_id where a.station=0 		
+
+	</select>	
+	
+	<select id="findByName" parameterType="map" resultType="java.util.HashMap">
+	
+		select * from (select t.*,rownum rn from (
+			select a.*,c.department_name,b.position from tt_user_new a left join tt_dep_user b on a.user_id=b.user_id left join tt_department c on b.department_id=c.department_id where <![CDATA[a.station=0 ]]>
+			<if test="user_code!= null and user_code!=''">
+			 	and (a.user_code like CONCAT(CONCAT('%',#{user_code}),'%') or a.user_name like CONCAT(CONCAT('%',#{user_code}),'%'))
+			</if>
+	<![CDATA[				
+		) t ) where	rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10
+	]]>
+	<!--
+		select a.*,c.department_name,b.position from tt_user_new a join tt_dep_user b on a.user_id=b.user_id join tt_department c on b.department_id=c.department_id
+		 <if test="_parameter != null and _parameter!=''">
+		<if test="user_code!= null and user_code!=''">
+			 where a.user_code like CONCAT(CONCAT('%',#{user_code}),'%') or a.user_name like CONCAT(CONCAT('%',#{user_code}),'%')
+		</if>
+	 -->	
+	</select>
+<select id="findByName_new" parameterType="map" resultType="java.util.HashMap">
+	
+		
+			select * from (select a.*,md5(a.user_code) user_code_md5 from tt_user_new a where <![CDATA[a.station=0 ]]>)
+			<if test="user_code!= null and user_code!=''">
+			 	where user_code=#{user_code}
+			</if>
+	
+	</select>		
+	<select id="findCount"  resultType="Integer">
+		select count(*)
+		  from tt_user_new a
+		  join tt_dep_user b
+		    on a.user_id = b.user_id
+		  join tt_department c
+		    on b.department_id = c.department_id
+		 where a.station = 0
+	</select>
+	<select id="findCount_new"  resultType="Integer">
+		 select count(*)
+		  from tt_user_new a
+		  join tt_dep_user b
+		    on a.user_id = b.user_id
+		  join tt_department c
+		    on b.department_id = c.department_id
+		 where a.station = 0
+	</select>			
+	<select id="checkUser"  parameterType="com.tgb.model.User_new" resultType="com.tgb.model.User_new">
+		select * from tt_user_new where user_code=#{user_code} and password=#{password}
+	</select>
+	<select id="findModRoleByUserId"  parameterType="int" resultType="java.util.HashMap">
+		select a.user_id,a.user_name,a.user_code,a.password,b.role_name,b.role_id,c.module_id,c.module_name,c.module_url,c.parent_id from 
+		tt_user_new a join tt_role_user d 
+		on a.user_id = d.user_id
+		join tt_role b
+		on d.role_id = b.role_id
+		join tt_role_module e
+		on b.role_id = e.role_id
+		join tt_module c
+		on e.module_id = c.module_id
+		where a.user_id=#{user_id}
+	</select>
+	<!-- 根据用户编码查询所有的父模块 -->
+	<select id="findModByUserCode" parameterType="map" resultType="java.util.HashMap">	
+		select distinct a.module_name,a.module_url,a.module_id,a.parent_id,a.project_id from tt_module a
+		join
+		tt_role_module b
+		on
+		a.module_id = b.module_id
+		join
+		tt_role c
+		on
+		b.role_id = c.role_id
+		join
+		tt_role_user d
+		on
+		c.role_id = d.role_id
+		join
+		tt_user_new e
+		on
+		d.user_id = e.user_id
+		where
+		a.project_id = #{project_id}
+		and
+		parent_id = 1
+		and
+		e.user_code = #{user_code}
+		order by 
+		a.module_id
+		asc
+	</select>	 
+	
+	<!-- 根据用户编码和父模块ID查询所有子模块 -->	
+	<select id="findModByPanentID" parameterType="map" resultType="java.util.HashMap">	
+		select distinct a.module_name,a.module_url,a.module_id,a.parent_id,a.project_id from tt_module a
+		join
+		tt_role_module b
+		on
+		a.module_id = b.module_id
+		join
+		tt_role c
+		on
+		b.role_id = c.role_id
+		join
+		tt_role_user d
+		on
+		c.role_id = d.role_id
+		join
+		tt_user_new e
+		on
+		d.user_id = e.user_id
+		where
+		a.project_id = #{project_id}
+		and
+		parent_id = #{parent_id}
+		and
+		e.user_code = #{user_code}
+		order by 
+		a.module_id
+		asc
+	</select>	
+	
+	<!-- 根据user_code查询user -->
+	<select id="finduserdata" parameterType="string" resultType="java.util.HashMap">
+	  select * from tt_user_new where user_code=#{user_code} and station=0
+	</select>	
+</mapper>

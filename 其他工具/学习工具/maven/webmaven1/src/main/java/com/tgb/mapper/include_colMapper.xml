@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.Include_colMapper">
+	
+	<insert id="save" parameterType="Include_col">
+		<selectKey resultType="integer" order="AFTER" keyProperty="include_col_id">
+			select seq_include_col.currval from dual		
+		</selectKey>
+		insert into tt_include_col(include_col_id,s_tables_id,col_c_name,col_e_name,col_e_name_alias,subject_id,is_project,is_where,is_code,is_group) values(seq_include_col.nextval,#{s_tables_id},#{col_c_name},#{col_e_name},#{col_e_name_alias},#{subject_id},#{is_project},#{is_where},#{is_code},#{is_group})
+	</insert>
+	
+	<update id="update" parameterType="Include_col">
+		update tt_include_col set s_tables_id=#{s_tables_id},col_c_name=#{col_c_name},col_e_name=#{col_e_name},col_e_name_alias=#{col_e_name_alias},subject_id=#{subject_id},is_project=#{is_project},is_where=#{is_where},is_code=#{is_code},is_group=#{is_group} where include_col_id=#{include_col_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_include_col where include_col_id=#{include_col_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Include_col">
+		select include_col_id,s_tables_id,col_c_name,col_e_name,col_e_name_alias,subject_id,is_project,is_where,is_code,is_group from tt_include_col where include_col_id=#{include_col_id}
+	</select>
+	
+	<select id="findAll" resultType="Include_col">
+		select include_col_id,s_tables_id,col_c_name,col_e_name,col_e_name_alias,subject_id,is_project,is_where,is_code,is_group from tt_include_col
+	</select>
+	
+</mapper>

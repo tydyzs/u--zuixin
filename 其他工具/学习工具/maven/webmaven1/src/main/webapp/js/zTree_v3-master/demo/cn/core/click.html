@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - beforeClick / onClick</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	
+	
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core.js"></script>
+	<!--  <script type="text/javascript" src="../../../js/jquery.ztree.excheck.js"></script>
+	  <script type="text/javascript" src="../../../js/jquery.ztree.exedit.js"></script>-->
+	
+	
+	<style type="text/css">
+	   #d2{
+	    width:600px;
+	    height:600px;
+	   position:relative; 
+         left:300px;
+         top:10px;
+	   }
+	   
+	     #t1{
+	    font-size:20px ;
+	    width:600px;
+	    position:relative; 
+         left:0px;
+         top:-340px;
+	   }
+	   
+	   #t2{
+	    background-color:#999 ;
+	    font-size:20px ;
+	    width:600px;
+	    position:relative; 
+         left:0px;
+         top:-330px;
+         border:2px solid #000;
+	   }
+	   
+	   tr,th,td{
+	   height:20px;
+	   text-align:center;
+	   }
+	   
+	   #span{
+	   color:#f61;
+	   text-decoration:underline;
+	   font-weight:700;
+	   font-size:25px;
+	   }
+	</style>
+	
+	
+	<SCRIPT type="text/javascript">
+	   var PARENT_ID="";//用于新增时id确认
+	
+		var setting = {
+			data: {
+				key: {
+					title:"t"
+				},
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeClick: beforeClick,
+				onClick: onClick
+			}
+		};
+
+		var zNodes =[
+            { id:0, name:"主题分类", t:"qqq",open:true},
+			{ id:1, pId:0, name:"普通的父节点11", t:"www",open:true},
+			{ id:11, pId:1, name:"叶子节点111 - 1", t:"eee"},
+			{ id:12, pId:1, name:"叶子节点 - 2", t:"qwer"},
+			{ id:13, pId:1, name:"叶子节点 - 3", t:"asdf"},
+			{ id:2, pId:0, name:"NB的父节点", t:"ddd", open:true},
+			{ id:21, pId:2, name:"叶子节点2 - 1", t:"aaaa", click:false},
+			{ id:22, pId:2, name:"叶子节点2 - 2", t:"ffff", click:false},
+			{ id:23, pId:2, name:"叶子节点2 - 3", t:"gggg", click:false},
+			{ id:3, pId:0, name:"郁闷的父节点", t:"cccc", open:true, click:false },
+			{ id:31, pId:3, name:"叶子节点3 - 1", t:"bbbb"},
+			{ id:32, pId:3, name:"叶子节点3 - 2", t:"qqqq"},
+			{ id:33, pId:3, name:"叶子节点3 - 3", t:"wwww"}
+		];
+
+		var log, className = "dark";
+		function beforeClick(treeId, treeNode, clickFlag) {//点击节点
+			$("#span").html(treeNode.name);
+			PARENT_ID=treeNode.id;
+		/* 	className = (className === "dark" ? "":"dark");
+			var tr='<tr>'+
+			   '<td>'+treeNode.name+'</td>'+
+			   '<td>'+treeNode.t+'</td>'+
+			   '<td><input type="button" value="删除" onclick="dele(this)"></td>'+
+			   '</tr>';
+			$("#tbody").append($(tr)); */
+			alert(treeNode.id+"***"+treeNode.t+"***"+treeNode.name);return;
+			
+			
+			
+			showLog("[ "+getTime()+" beforeClick ]&nbsp;&nbsp;" + treeNode.name+"77--"+treeNode.id );
+			return (treeNode.click != false);
+		}
+		function onClick(event, treeId, treeNode, clickFlag) {
+			showLog("[ "+getTime()+" onClick ]&nbsp;&nbsp;clickFlag = " + clickFlag + " (" + (clickFlag===1 ? "普通选中": (clickFlag===0 ? "<b>取消选中</b>" : "<b>追加选中</b>")) + ")");
+		}		
+		function showLog(str) {
+			if (!log) log = $("#log");
+			log.append("<li class='"+className+"'>"+str+"</li>");
+			if(log.children("li").length > 8) {
+				log.get(0).removeChild(log.children("li")[0]);
+			}
+		}
+		function getTime() {
+			var now= new Date(),
+			h=now.getHours(),
+			m=now.getMinutes(),
+			s=now.getSeconds();
+			return (h+":"+m+":"+s);
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
+		
+		function dele(bnt){//删除-----
+			var code=$(bnt).parent().parent().attr("id");
+			alert(code);
+			$(bnt).parent().parent().remove();
+		}
+		
+		function newType(){//新增-----
+			if(PARENT_ID==""){
+				alert("请选择主题");
+				return;
+			}
+			//alert(PARENT_ID);
+			var i1=$("#input1").val();
+			var i2=$("#input2").val();
+			if(i1==""||i2==""){
+				alert("输入不完整！");
+				return;
+			}
+			var tr='<tr>'+
+			   '<td>'+i1+'</td>'+
+			   '<td>'+i2+'</td>'+
+			   '<td><input type="button" value="删除" onclick="dele(this)"></td>'+
+			   '</tr>';
+			$("#tbody").append($(tr));
+			$("#input1").val("");
+			$("#input2").val("");
+		}
+		
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	
+	<div  id="d2" >
+	</br>
+	  <table id="t1" >
+	     <tr>
+	       <td>
+	       </td>
+	       <td>
+	         <span id="span"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	       </td>
+	     </tr>
+	     <tr>
+	       <td>
+	       </td>
+	       <td>
+	       </td>
+	     </tr>
+	     <tr>
+	        <td>
+	          分类编码:<input id="input1" type="text" style="width:120px;height:25px;"/>
+	        </td>
+	        <td>
+	        分类名称:<input id="input2" type="text" style="width:120px;height:25px;"/>
+	        </td>
+	        <td>
+	    <input type="button" onclick="newType()" value="新增" style="width:90px;height:30px;background-color:#966 ;">    
+	        </td>
+	     </tr>
+	  </table>
+	  
+       <table id="t2" border="2" bordercolor="#000">
+          <thead>
+             <tr>
+                <th style="height:30px">分类编码</th>	
+				<th style="height:30px">分类名称</th>	
+				<th style="height:30px">系统操作</th>
+             </tr>
+          </thead>
+	  	  <tbody id="tbody" >
+			<tr id="2">
+			   <td>sfdstre</td>
+			   <td>2</td>
+			   <td><input type="button" value="删除" onclick="dele(this)"></td>
+			</tr>
+			<tr id="3">
+			   <td>fghfgh</td>
+			   <td>3</td>
+			   <td><input type="button" value="删除" onclick="dele(this)"></td>
+			</tr>
+			<tr id="4">
+			   <td>vbnnnv</td>
+			   <td>3</td>
+			   <td><input type="button" value="删除" onclick="dele(this)"></td>
+			</tr>
+		  </tbody>
+	   </table>
+	</div>
+	 
+</div>
+</BODY>
+</HTML>

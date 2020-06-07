@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>组件（component）</title>
+</head>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<style>
+</style>
+
+<body>
+<div id="d1">
+	<div>
+		<shcdiv  v-model="value1"></shcdiv>
+    </div>
+    
+    <div>
+    <shcdiv></shcdiv>
+    </div>
+</div>
+</body>
+<script type="text/javascript" >
+	//创建两个对象：存放属性/存放函数
+	var data_d1={
+			b1:true,
+			b2:true,
+			value1:2
+	};
+	Vue.component('shcdiv',{
+		template:'<input type="text"/>'
+	});
+	var methods_fun={
+			click1:function(){
+				this.value1=3;
+			}
+	};
+	var filters={
+			click2:function(value,value1){
+				var v1=value+2;
+				return v1;
+			},
+			click21:function(value,value1){
+				var v1=value+2;
+				return v1;
+			},
+			click3:function(value,value1,value2){
+				var v1=value+value1+value2;
+				return v1;
+			}
+	};
+	
+	var computed_fun={
+			computed1:function(){
+				console.log("computed1%%%%%%%%%%%%%%55");
+				return this.value1+1;
+			}
+	};
+	var watch_fun={
+	}
+	//初始化vue对象（将保存属性和函数的对象与html关联）
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		methods:methods_fun,//绑定事件
+		filters:filters,//属性调用的事件
+		computed:computed_fun,//绑定计算函数（下面的函数用于处理数据的计算）
+		watch:watch_fun//监听事件
+	});
+	vue_obj.$watch('value1', function(nval, oval) {
+		   alert(nval+"--"+oval);
+	});
+	
+</script>
+</html>

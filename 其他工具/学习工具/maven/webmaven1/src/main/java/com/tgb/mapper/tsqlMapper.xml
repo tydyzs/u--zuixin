@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.TsqlMapper">
+	
+	<insert id="save" parameterType="Tsql">
+		insert into tt_tsql(sql_id,sql_content,subject_id) values(seq_sql.nextval,#{sql_content,jdbcType=CLOB},#{subject_id})
+	</insert>
+	
+	<update id="update" parameterType="Tsql">
+		update tt_tsql set sql_content=#{sql_content},subject_id=#{subject_id}  where sql_id=#{sql_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_tsql where sql_id=#{sql_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Tsql">
+		select sql_id,sql_content,subject_id from tt_tsql where sql_id=#{sql_id}
+	</select>
+	
+	<select id="findAll" resultType="Tsql">
+		select sql_id,sql_content,subject_id from tt_tsql
+	</select>
+	
+</mapper>

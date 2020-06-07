@@ -1,0 +1,15 @@
+  
+1.html：
+
+<input id="drFile1" name="drFile1" class="mini-fileupload"
+													style="width: 35%" uploadUrl="/UploadFile?impcharset=utf-8"
+													limitType="*.xls;*.xlsx;" limitSize="20MB"
+													onuploadsuccess="RwpcFile.onUploadFileSuccess" />
+
+
+2.js：RwpcFile.startUploadFile();
+  引入：uploadfile_data.js；swfupload.js
+
+3.后台：ExcelUploadLogicHandler
+
+

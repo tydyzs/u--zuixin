@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.UseCustomThemeMapper">
+	
+	<!-- 包含表字段 -->
+	<resultMap id="Include_col" type="com.tgb.model.Include_col">
+	   <id property="include_col_id" column="include_col_id"/>
+	   <result property="s_tables_id" column="s_tables_id"/>
+	   <result property="col_c_name" column="col_c_name"/>
+	   <result property="col_e_name" column="col_e_name"/>
+	   <result property="subject_id" column="subject_id"/>
+	   <result property="is_project" column="is_project"/>
+	   <result property="is_where" column="is_where"/>
+	   <result property="is_code" column="is_code"/>
+	   <result property="is_group" column="is_group"/>
+	</resultMap>
+	
+	<!-- 主题分类表 -->
+	<resultMap id="Themetype" type="com.tgb.model.Themetype">
+	   <id property="id" column="T_TYPE_ID"/>
+	   <result property="name" column="TYPE_NAME"/>
+	   <result property="pId" column="PARENT_ID"/>
+	   <result property="code" column="TYPE_CODE"/>
+	</resultMap>
+	
+	<!-- 主题表 -->
+	<resultMap id="Theme" type="com.tgb.model.Theme">
+	   <id property="subject_id" column="subject_id"/>
+	   <result property="subject_name" column="subject_name"/>
+	   <result property="t_type_id" column="t_type_id"/>
+	   <result property="setman" column="setman"/>
+	   <result property="setDate" column="setDate"/>
+	   <result property="modify_date" column="modify_date"/>
+	   <result property="is_function" column="is_function"/>
+	   <result property="is_groupby" column="is_groupby"/>
+	   <result property="is_order" column="is_order"/>
+	   <result property="is_del" column="is_del"/>
+	</resultMap>
+	
+	
+	 <!-- 使用主题SQL条件表 -->
+	 <resultMap id="Use_where" type="com.tgb.model.Use_where">
+	   <id property="use_where_id" column="use_where_id"/>
+	   <result property="l_bracket" column="l_bracket"/>
+	   <result property="s_tables_id" column="s_tables_id"/>
+	   <result property="e_name" column="e_name"/>
+	   <result property="c_name" column="c_name"/>
+	   <result property="include_col_id" column="include_col_id"/>
+	   <result property="col_e_name" column="col_e_name"/>
+	   <result property="col_c_name" column="col_c_name"/>
+	   <result property="operator" column="operator"/>
+	   <result property="col_value" column="col_value"/>
+	   <result property="r_bracket" column="r_bracket"/>
+	   <result property="connector" column="connector"/>
+	   <result property="subject_id" column="subject_id"/>
+	   <result property="use_subject_id" column="use_subject_id"/>
+	</resultMap> 
+	
+	<!-- 使用主题排序表 -->
+	<resultMap id="Use_order" type="com.tgb.model.Use_order">
+	   <id property="use_order_id" column="use_order_id"/>
+	   <result property="table_name" column="table_name"/>
+	   <result property="c_name" column="c_name"/>
+	   <result property="e_name" column="e_name"/>
+	   <result property="order_col_id" column="order_col_id"/>
+	   <result property="col_c_name" column="col_c_name"/>
+	   <result property="col_e_name" column="col_e_name"/>
+	   <result property="order_dct" column="order_dct"/>
+	   <result property="subject_id" column="subject_id"/>
+	   <result property="use_subject_id" column="use_subject_id"/>
+	</resultMap>
+	
+	<!-- 使用主题字段表 -->
+	<resultMap id="Use_col" type="com.tgb.model.Use_col">
+	   <id property="use_col_id" column="use_col_id"/>
+	   <result property="s_tables_id" column="s_tables_id"/>
+	   <result property="col_c_name" column="col_c_name"/>
+	   <result property="col_e_name" column="col_e_name"/>
+	   <result property="subject_id" column="subject_id"/>
+	   <result property="include_col_id" column="include_col_id"/>
+	   <result property="use_subject_id" column="use_subject_id"/>
+	</resultMap>
+	
+	<!-- 使用主题表 -->
+	<resultMap id="Use_subject" type="com.tgb.model.Use_subject">
+	   <id property="use_subject_id" column="use_subject_id"/>
+	   <result property="type_id" column="type_id"/>
+	   <result property="subject_id" column="subject_id"/>
+	   <result property="use_subject_name" column="use_subject_name"/>
+	   <result property="setman" column="setman"/>
+	   <result property="setdate" column="setdate"/>
+	   <result property="is_del" column="is_del"/>
+	</resultMap>
+	
+	<!-- 保存：新增使用主题 -->
+	<insert id="addUseSubject" parameterType="com.tgb.model.Use_subject">
+		insert into tt_use_subject values(seq_use_subject.NEXTVAL,#{type_id},#{subject_id},#{use_subject_name},#{setman},#{setdate},#{is_del})
+	</insert>
+	
+	<select id="selectUseName" parameterType="string" resultType="java.lang.Integer">
+	   select use_subject_id from tt_use_subject where use_subject_name=#{useThemeName}
+	</select>
+	
+	<delete id="deleteUseName" parameterType="int">
+	   delete from tt_use_subject where use_subject_id=#{useThemeId}
+	</delete>
+	<delete id="deleteUseName1" parameterType="int">
+	   delete from tt_use_col where use_subject_id=#{useThemeId}
+	</delete>
+	<delete id="deleteUseName2" parameterType="int">
+	   delete from tt_use_order where use_subject_id=#{useThemeId}
+	</delete>
+	<delete id="deleteUseName3" parameterType="int">
+	   delete from tt_use_where where use_subject_id=#{useThemeId}
+	</delete>
+	<delete id="deleteUseName4" parameterType="int">
+	   delete from tt_tusesql where use_subject_id=#{useThemeId}
+	</delete>
+	
+	
+	
+	<!-- 保存使用主题字段：根据使用主题字段id查询其他数据 -->
+	<select id="findInclude" parameterType="int" resultMap="Include_col">
+	    select * from tt_include_col where INCLUDE_COL_ID=#{INCLUDE_COL_ID}
+	</select>
+	<!-- 使用主题字段：新增 -->
+	<insert id="addUseCol" parameterType="com.tgb.model.Use_col" >
+	insert into tt_use_col values(seq_use_col.NEXTVAL,#{s_tables_id},#{col_c_name},#{col_e_name},#{subject_id},#{include_col_id},#{use_subject_id})
+	</insert>
+	
+															
+	
+	
+	<!-- 查询使用主题 -->
+	<select id="findcolName" parameterType="int" resultMap="Include_col">
+	select * from tt_include_col where subject_id=#{themeId} and is_project=1
+	</select>
+	
+	
+	<!-- 根据主题id加载where条件字段 -->
+	<select id="findwhere" parameterType="int" resultType="com.tgb.model.Where_col">
+	select * from tt_where_col where subject_id=#{themeId}
+	</select>
+	
+	<!-- 根据条件字段id加载where条件字段 -->
+	<select id="findwhere2" parameterType="int" resultType="com.tgb.model.Where_col">
+	select * from tt_where_col where INCLUDE_COL_ID=#{col_id}
+	</select>	
+	<!-- 根据条件字段id加载where条件字段 -->
+	<select id="findwhere3" parameterType="map" resultType="com.tgb.model.Where_col">
+	select * from tt_where_col where INCLUDE_COL_ID=#{col_id} and subject_id=#{subject_id}
+	</select>	
+	
+	<!-- 根据包含表字段中的表名称id查询表中文名英文名 -->
+	<select id="findSTables" parameterType="int" resultType="com.tgb.model.S_tables">
+	select * from tt_s_tables where S_TABLES_ID=#{tableid}
+	</select>
+	<!-- 根据条件字段中的表名称id查询表中文名英文名 -->
+	<select id="findSTables2" parameterType="int" resultType="com.tgb.model.Old_tables">
+	select * from tt_old_tables where S_TABLES_ID=#{tableid}
+	</select>
+	
+	
+	
+	<!-- 使用主题排序字段：新增 -->
+	<insert id="addorder" parameterType="com.tgb.model.Use_order" >
+	insert into tt_use_order values(seq_use_order.NEXTVAL,#{s_tables_id},#{c_name},#{e_name},#{order_col_id},#{col_c_name},#{col_e_name},#{order_dct},#{subject_id},#{use_subject_id})
+	</insert>
+	<!-- 根据主题id查询主题分类id -->
+	<select id="queryTypeId" parameterType="int" resultType="int">
+	select T_TYPE_ID from tt_tsubject where SUBJECT_ID=#{themeId}
+	</select>
+	
+	<!-- 使用主题排序字段：新增 -->
+	<insert id="addWhere" parameterType="com.tgb.model.Use_order" >
+	insert into tt_use_where values(seq_use_where.NEXTVAL,#{l_bracket},#{s_tables_id},#{e_name},#{c_name},#{include_col_id},#{col_e_name},#{col_c_name},#{operator},#{col_value,jdbcType=CLOB},#{r_bracket},#{connector},#{subject_id},#{use_subject_id})
+	</insert>
+	
+	
+	 <!-- 使用主题sql：新增 -->
+	<insert id="addTusesql" parameterType="com.tgb.model.Tusesql" >
+	insert into tt_tusesql values(seq_tusesql.NEXTVAL,#{sql_content,jdbcType=CLOB},#{use_subject_id})
+	</insert>  
+	
+	
+	<!-- ******     根据使用主题id  查询       *********** -->   
+	
+	<!-- 查询使用主题    字段   -->
+	<select id="queryCol"  parameterType="int"  resultMap="Use_col">
+	 select * from tt_use_col where USE_SUBJECT_ID=#{useThemeId} order by USE_COL_ID
+	</select> 
+	<!-- 查询排序 字段 --> 
+	<select id="queryOrder"  parameterType="int"  resultType="com.tgb.model.Use_order">
+	select * from tt_use_order where USE_SUBJECT_ID=#{useThemeId} order by use_order_id desc
+	</select>
+	<!-- 查询条件  --> 
+	<select id="queryWhere"  parameterType="int"  resultType="com.tgb.model.Use_where">
+	select * from tt_use_where where USE_SUBJECT_ID=#{useThemeId} order by USE_WHERE_ID
+	</select>      
+	
+	
+	
+	<!-- 根据主题id查询sql。此sql用于子表查询 -->
+	<select id="finsql"  parameterType="int"  resultType="com.tgb.model.Tsql">
+	select * from tt_tsql where subject_Id=#{themeId}
+	</select>  
+	
+	
+	<!-- 根据主题id查询主题 -->
+	<select id="findTheme" parameterType="int"  resultType="com.tgb.model.Theme">
+	select * from tt_tsubject where subject_Id=#{themeId}
+	</select>
+	
+	
+	<!-- 导出excel：根据主题id和字段英文名查询中文名 -->
+	<select id="findcname" parameterType="com.tgb.model.Include_col"  resultType="string">
+       select col_c_name from TT_INCLUDE_COL  where subject_Id=#{subject_id} and col_e_name_alias=#{col_e_name}
+	</select>
+                       
+<select id="testxx"  resultType="string">
+declare 
+
+begin
+delete from tt_where_col where include_col_id=81973 and subject_id=300;
+delete from tt_where_col where include_col_id=81976 and subject_id=300;
+
+end;
+</select>
+
+
+
+
+
+	
+</mapper>

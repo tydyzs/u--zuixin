@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper2.TableDao2">
+	
+	<!-- 查询数据库所有表 -->
+	<select id="findTalbe"   resultType="string">
+		<!-- 
+		select table_name from user_tables
+		select OWNER||'.'||TABLE_NAME from ALL_TABLES where owner not in('SYS','SYSTEM')
+		
+		select OWNER||'.'||TABLE_NAME,TABLE_NAME from ALL_TABLES where owner not in('SYS','SYSTEM','OUTLN','DBSNMP','APPQOSSYS')
+		-->
+		select table_name from user_tables
+	</select>
+	
+	
+	<!-- 根据表明查询所有字段名 -->
+	<select id="findcol" parameterType="string" resultType="string">
+	select column_name from user_tab_columns where Table_Name=#{tableName}
+	</select>
+	
+	<!-- 查询准备数据库所有表_2 -->
+	<select id="findTalbe_2"   resultType="java.util.Map">		
+		<!-- select table_name,comments from user_tab_comments -->
+		<!-- select OWNER||'.'||TABLE_NAME table_name,COMMENTS from ALL_tab_comments  where owner not in('SYS','SYSTEM','OUTLN','DBSNMP','APPQOSSYS') -->
+		<!-- select to_nchar(OWNER)||'.'||to_nchar(TABLE_NAME) table_name,to_nchar(COMMENTS) COMMENTS from ALL_tab_comments  where owner not in('SYS', 'SYSTEM', 'OUTLN', 'DBSNMP', 'APPQOSSYS','SCOTT','SYSMAN','CTXSYS','DIP','DMSYS','ANONYMOUS','EXFSYS','MDDATA','MDSYS','MGMT_VIEW','OLAPSYS','ORDPLUGINS','ORDSYS','ORDDATA','OWBSYS','WMSYS','XDB','FLOWS_FILES','APEX_030200','DB_XTWH','GS_CXTJ','DRS')
+		  AND
+        TABLE_NAME NOT IN('T_ZX_SKQK','T_JC_JCDG') -->
+        
+ select to_nchar(OWNER)||'.'||to_nchar(TABLE_NAME) table_name,to_nchar(COMMENTS) COMMENTS from ALL_tab_comments  
+where owner not in('SYS', 'SYSTEM', 'OUTLN', 'DBSNMP', 'APPQOSSYS','SCOTT','SYSMAN','CTXSYS','DIP','DMSYS','ANONYMOUS','EXFSYS','MDDATA','MDSYS','MGMT_VIEW','OLAPSYS','ORDPLUGINS','ORDSYS','ORDDATA','OWBSYS','WMSYS','XDB','FLOWS_FILES','APEX_030200','ZC_OGG','DRS')
+AND TABLE_NAME NOT IN('T_ZX_SKQK','T_JC_JCDG')
+<!-- union all 
+select to_nchar('DW.DW_CWBB_ALL_V') as table_name , to_nchar('财务报表') COMMENTS
+from dual  -->
+<!-- 更新企业所得税：select to_nchar(OWNER)||'.'||to_nchar(TABLE_NAME) table_name,to_nchar(COMMENTS) COMMENTS from ALL_tab_comments  
+where OWNER='DW' AND table_name LIKE 'DW_SDS%' -->
+	</select>
+	
+	<!-- 查询准备数据库中表名,字段名，所有者不同列名相同 -->
+	<select id="findcol_2"  resultType="java.util.Map">		
+		<!-- select table_name,column_name,comments from user_col_comments -->
+		<!-- select OWNER||'.'||TABLE_NAME table_name,column_name,comments from all_col_comments where owner not in('SYS','SYSTEM','OUTLN','DBSNMP','APPQOSSYS') -->
+		select to_nchar(OWNER)||'.'||to_nchar(TABLE_NAME) table_name,to_nchar(column_name) column_name,to_nchar(comments) comments from all_col_comments where owner not in('SYS', 'SYSTEM', 'OUTLN', 'DBSNMP', 'APPQOSSYS','SCOTT','SYSMAN','CTXSYS','DIP','DMSYS','ANONYMOUS','EXFSYS','MDDATA','MDSYS','MGMT_VIEW','OLAPSYS','ORDPLUGINS','ORDSYS','ORDDATA','OWBSYS','WMSYS','XDB','FLOWS_FILES','APEX_030200','DB_XTWH','GS_CXTJ','DRS')  
+		  AND
+        TABLE_NAME NOT IN('T_ZX_SKQK','T_JC_JCDG')
+	</select>
+	<!-- 查询准备数据库中表名,字段名 -->
+	<select id="findcol_2_new" parameterType="string" resultType="java.util.Map">		
+		 select column_name,comments from all_col_comments where owner||'.'||TABLE_NAME=#{table_name} 
+	</select>		
+	
+	
+	
+	
+</mapper>

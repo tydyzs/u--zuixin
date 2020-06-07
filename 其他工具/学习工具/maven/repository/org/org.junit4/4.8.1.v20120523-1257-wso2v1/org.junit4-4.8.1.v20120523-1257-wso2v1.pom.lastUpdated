@@ -1,0 +1,4 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Thu Dec 07 15:18:20 CST 2017
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1512631100794
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org\:org.junit4\:pom\:4.8.1.v20120523-1257-wso2v1 from/to central (https\://repo.maven.apache.org/maven2)\: Software caused connection abort\: recv failed

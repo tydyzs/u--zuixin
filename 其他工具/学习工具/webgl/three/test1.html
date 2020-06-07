@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>创建一些基本物体（基本材质）</title>
+<script type="text/javascript" src="../../js/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="../../js/util.js"></script>
+<script type="text/javascript" src="../../js/three.js"></script>
+<script type="text/javascript" src="test.js"></script>
+</head>
+<body>
+   <div id="webgl_output">
+   </div>
+</body>
+
+<script type="text/javascript">
+
+$(function(){
+	var threeObj=getthree();
+	threeObj.renderer.setClearColor(0xEEEEEE);
+	threeObj.renderer.setSize(window.innerWidth,window.innerHeight);
+	threeObj.scene.add(threeObj.axes);
+	
+	threeObj.plane.rotation.x=-0.5*Math.PI;
+	threeObj.plane.x=15;
+	threeObj.plane.y=15;
+	threeObj.plane.z=15;
+	threeObj.scene.add(threeObj.plane);
+	
+	threeObj.cube.position.x=-4;
+	threeObj.cube.position.y=4;
+	threeObj.cube.position.z=-4;
+	threeObj.scene.add(threeObj.cube);
+	
+	
+	threeObj.sphere.position.x=20;
+	threeObj.sphere.position.y=4;
+	threeObj.sphere.position.z=2;
+	threeObj.scene.add(threeObj.sphere);
+	threeObj.camera.position.x=-30;
+	threeObj.camera.position.y=40;
+	threeObj.camera.position.z=30;
+	threeObj.camera.lookAt(threeObj.scene.position);
+	
+	$("#webgl_output").append(threeObj.renderer.domElement);
+	threeObj.renderer.render(threeObj.scene,threeObj.camera)
+})
+function getthree(){
+	var threeObj={};
+	threeObj.scene=new THREE.Scene();//场景
+	threeObj.camera=new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight
+			,0.1,1000);//相机
+	threeObj.renderer=new THREE.WebGLRenderer();//渲染器
+	
+	threeObj.axes=new THREE.AxisHelper(20);//坐标抽对象
+	
+	threeObj.planeGeometry=new THREE.PlaneGeometry(60,40);//平面
+	threeObj.planeMaterial=new THREE.MeshBasicMaterial({color:0xcccccc});//创建一个基本材质（基础材质不会对光源产生效应）
+	threeObj.plane=new THREE.Mesh(threeObj.planeGeometry,threeObj.planeMaterial);//创建一个平面
+	//Mesh:网格
+	
+	threeObj.cubeGeometry=new THREE.CubeGeometry(4,4,4);
+	threeObj.cubeMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true});
+	threeObj.cube=new THREE.Mesh(threeObj.cubeGeometry,threeObj.cubeMaterial);//方块
+	
+	threeObj.sphereGeometry=new THREE.SphereGeometry(4,20,20);
+	threeObj.sphereMaterial=new THREE.MeshBasicMaterial({color:0x7777ff,wireframe:true});
+	threeObj.sphere=new THREE.Mesh(threeObj.sphereGeometry,threeObj.sphereMaterial);//球体
+	
+    return threeObj;
+}
+</script>
+</html>

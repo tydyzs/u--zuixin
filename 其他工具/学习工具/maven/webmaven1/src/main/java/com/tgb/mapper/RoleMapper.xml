@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.RoleMapper">
+	
+	<insert id="save" parameterType="com.tgb.model.Role">
+		<selectKey resultType="integer" order="AFTER" keyProperty="role_id">
+			select seq_role.currval from dual		
+		</selectKey>
+		insert into tt_role(role_id,project_id,role_name,remark) values(seq_role.nextval,#{project_id},#{role_name},#{remark})
+	</insert>
+	
+	<update id="update" parameterType="com.tgb.model.Role">
+		update tt_role set role_name=#{role_name},remark=#{remark} where role_id=#{role_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		declare
+		begin			
+			delete from tt_role_user where role_id=#{role_id};
+			delete from tt_role_module where role_id=#{role_id};
+			delete from tt_role where role_id=#{role_id};
+		end;	
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="java.util.HashMap">		
+		select * from tt_role where role_id=#{role_id}
+	</select>
+	
+	<select id="findAll" parameterType="map" resultType="java.util.HashMap">
+	<![CDATA[
+		select * from (select t.*,rownum rn from (
+			select a.*,b.project_name from tt_role a join tt_project b on a.project_id = b.project_id where b.project_id=#{project_id} order by role_id desc
+		) t ) where rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10
+	]]>
+	</select>
+	<select id="findByName" parameterType="map" resultType="java.util.HashMap">
+	
+		select * from (select t.*,rownum rn from (
+			select * from tt_role
+			<if test="role_name!= null and role_name!=''">
+			 	where project_id=#{project_id} and role_name like CONCAT(CONCAT('%',#{role_name}),'%')
+			</if>
+			 order by role_id desc 
+	<![CDATA[				
+		) t ) where	rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10
+	]]>
+	
+	</select>	
+	<select id="findCount"  parameterType="int" resultType="Integer">
+		select count(*) from tt_role where project_id=#{project_id}
+	</select>	
+	<select id="findAll_2" parameterType="int" resultType="java.util.HashMap">		
+			select * from tt_role where project_id=#{project_id}
+	</select>	
+</mapper>

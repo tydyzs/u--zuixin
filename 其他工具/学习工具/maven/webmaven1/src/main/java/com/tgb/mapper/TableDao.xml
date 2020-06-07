@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.TableDao">
+	
+	
+	<!-- 新增  数据库所有表英文名 -->
+	<insert id="newtable" parameterType="string">
+		insert into tt_old_tables(s_tables_id,e_name) values(seq_old_tables.NEXTVAL,#{ename})
+	</insert>
+	
+	
+	<!-- 查询tables中所有数据 -->
+	<select id="findtables"  resultType="com.tgb.model.Old_tables">
+	 select * from tt_old_tables
+	 <!--  select * from tt_old_tables where e_name LIKE '%DW_SDS%' -->
+	</select>
+	
+	
+	<!-- 新增字段 -->
+	<insert id="newCol" parameterType="com.tgb.model.Old_inc_col">
+		insert into tt_old_inc_col(include_col_id,col_e_name,s_tables_id) values (seq_old_inc_col.NEXTVAL,#{col_e_name},#{s_tables_id})
+	</insert>
+	
+	<!-- 新增  数据库所有表英文名及中文名称_2 -->
+	<insert id="newtable_2" parameterType="com.tgb.model.Old_tables">
+		<selectKey resultType="integer" order="AFTER" keyProperty="s_tables_id">
+			select seq_old_tables.currval from dual		
+		</selectKey>	
+		insert into tt_old_tables(s_tables_id,c_name,e_name) values(seq_old_tables.NEXTVAL,#{c_name},#{e_name})
+	</insert>
+	
+	<!-- 新增字段 -->
+	<insert id="newCol_2" parameterType="com.tgb.model.Old_inc_col">
+		insert into tt_old_inc_col(include_col_id,col_e_name,col_c_name,s_tables_id) values (seq_old_inc_col.NEXTVAL,#{col_e_name},#{col_c_name},#{s_tables_id})
+	</insert>
+	
+	<!-- ************************************************************* -->	
+	<!-- 新增  数据库所有表英文名及中文名称_2 -->
+	<insert id="newtable_3" parameterType="list">	
+		insert all 
+		<foreach collection="list" item="item" index="index" separator=" ">
+			into tt_old_tables(c_name,e_name) values
+			(#{item.c_name},#{item.e_name})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+	<!-- 新增字段 -->
+	<insert id="newCol_3" parameterType="list">
+		insert all  
+		<foreach collection="list" item="item" index="index" separator=" ">
+			into tt_old_inc_col(col_e_name,col_c_name,s_tables_id) values
+			(#{item.col_e_name},#{item.col_c_name},#{item.s_tables_id})
+		</foreach>		
+		select 1 from dual
+	</insert>	
+	
+	
+	
+	<!-- 根据表名查询表是否已经添加 -->
+	<select id="findname" parameterType="string" resultType="com.tgb.model.Old_tables">
+	  select * from tt_old_tables where e_name=#{e_name}
+	</select>
+	
+	<!-- 根据字段名查询表是否已经添加 -->
+	<select id="findcol" parameterType="com.tgb.model.Old_inc_col" resultType="java.lang.Integer">
+	  select count(*) from TT_OLD_INC_COL  where s_tables_id=#{s_tables_id} and col_e_name=#{col_e_name}
+	</select>
+	
+	<!-- 根据字段中文名查询英文名 -->
+	<select id="findcol_cname" parameterType="string" resultType="string">
+	  select col_c_name  from TT_OLD_INC_COL  where  col_e_name=#{e_name}
+	</select>
+	
+</mapper>

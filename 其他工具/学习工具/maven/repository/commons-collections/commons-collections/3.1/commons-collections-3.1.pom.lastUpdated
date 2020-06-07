@@ -1,0 +1,4 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Thu Nov 09 11:50:55 CST 2017
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1510199455919
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact commons-collections\:commons-collections\:pom\:3.1 from/to central (https\://repo.maven.apache.org/maven2)\: D\:\\repository\\commons-collections\\commons-collections\\3.1\\aether-a53e3d5b-aefd-4a78-808f-7f79cb6ae649-commons-collections-3.1.pom-in-progress (\u7CFB\u7EDF\u627E\u4E0D\u5230\u6307\u5B9A\u7684\u6587\u4EF6\u3002)

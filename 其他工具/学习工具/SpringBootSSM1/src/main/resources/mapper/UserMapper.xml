@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.UserTestDao">
+    <select id="selectUser" parameterType="map" resultType="map">
+        select * from usertab where userid=#{names}
+    </select>
+    
+    <select id="selectUser1" parameterType="String" resultType="map">
+        select * from usertab where USERNAME=#{username}
+    </select>
+</mapper>

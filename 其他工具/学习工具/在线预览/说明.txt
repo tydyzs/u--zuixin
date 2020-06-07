@@ -1,0 +1,9 @@
+
+https://gitee.com/kekingcn/file-online-preview/blob/master/README.md
+
+
+一，windows版本直接解压程序包（已经内置openOffice），环境要求jdk1.8
+	1.直接打开更目录中的bin目录，并启动项目（startup.bat)
+	2.演示地址：http://127.0.0.1:8012/index
+	3.项目中使用：（例如待预览的文件地址为：http://127.0.0.1:8080/doc/docx.docx）
+	  则预览地址为：http://127.0.0.1:8012/onlinePreview?url=http://127.0.0.1:8080/doc/docx.docx

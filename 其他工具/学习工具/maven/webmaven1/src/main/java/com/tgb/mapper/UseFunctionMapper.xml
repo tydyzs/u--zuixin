@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.UseFunctionMapper">
+	
+	<insert id="save" parameterType="com.tgb.model.UseFunction">
+		insert into tt_UseFunction(function_id,function_name,col_c_name,col_e_name,useSubject_id) values(seq_useFunction.nextval,#{function_name},#{col_c_name},#{col_e_name},#{useSubject_id})
+	</insert>
+	
+	<update id="update" parameterType="com.tgb.model.UseFunction">
+		update tt_UseFunction set function_name=#{function_name},col_c_name=#{col_c_name},col_e_name=#{col_e_name},UseSubject_id=#{UseSubject_id}  where function_id=#{function_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_UseFunction where function_id=#{function_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="com.tgb.model.UseFunction">
+		select function_id,function_name,col_c_name,col_e_name,useSubject_id from tt_UseFunction where function_id=#{function_id}
+	</select>
+	
+	<select id="findAll" resultType="com.tgb.model.UseFunction">
+		select function_id,function_name,col_c_name,col_e_name,useSubject_id from tt_UseFunction
+	</select>
+	<select id="findByUseSubject_id" parameterType="int" resultType="java.util.HashMap">
+		select a.function_name function_name,a.col_c_name f_col_c_name,a.col_e_name f_col_e_name,b.col_c_name g_col_c_name,b.col_e_name g_col_e_name 
+		from tt_UseFunction a 
+		full outer join tt_useGroup b 
+		on a.useSubject_id=b.useSubject_id  
+		where a.useSubject_id=#{useSubject_id}
+	</select>	
+	
+</mapper>

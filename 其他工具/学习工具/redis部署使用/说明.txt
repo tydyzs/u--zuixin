@@ -1,0 +1,84 @@
+
+
+redis只能在linux下运行
+
+
+
+
+
+
+*******************安装redis********************************
+
+1.将redis解压 /home/rdtar 文件夹中。
+2.安装：切换到/home/rdtar/redis-4.0.1目录  执行 make进行编译（直接输入命令：make。回车）。
+
+   （make命令报错：
+        make: * [all] Error 2
+        解决办法
+
+        进入源码包目录下的deps目录中执行
+
+        make geohash-int hiredis jemalloc linenoise lua
+     ）
+3.安装完成后复制文件
+   /home/rdtar/redis-4.0.1/redis.conf
+   /home/rdtar/redis-4.0.1/src/redis-cli
+   /home/rdtar/redis-4.0.1/src/redis-server
+  三个文件到  /usr/local/redis 文件夹中（方便操作）
+4.
+  a。启动redis  切换到/usr/local/redis目录执行 ./redis-server
+	（启动时指定复制后的配置文件：./redis-server /usr/local/redis-4.0.2/redis.conf)
+   (若需要后端启动：修改redis.conf中的daemonize:yes)
+
+  b。停止redis实例
+
+　　/usr/local/redis/bin/redis-cli shutdown
+
+　　或者
+
+　　pkill redis-server
+
+*******************redis 简单操作********************************
+1.执行  ./redis-cli  (进入redis操作）
+  a。select 0(切换数据库）
+2.新建变量和值： set name shc
+3.获取变量和值： get  name
+
+。。。见附件：redis的key操作.png
+
+4.数据类型：
+  a.string：set key value（一般定义string的key和value，以及vlaue的追加，
+     ||++；--；+n；-n；||(value是数字字符串才能这些操作)
+     截取；等操作）
+  
+  b.list（有序可重复集合）:lpush listname value(添加一个元素到key这个list的头部）list集合主要有头尾部添加元素，删除元素，返回元素，截取指定元素等操作；
+  
+  c.set（无序不重复集合）：sdd setname vlaue (添加一个元素到set这个set集合中）。set一般用于求几个set交并集
+
+  d.sort set(类似java的map）：zadd sortsetname  key value  （key为数字。可增可删；获取key排序后的vlaue；根据vlaue对key+n（返回key。如果+0则可返回原key）；获取排序的下标）
+
+
+。。。。。string操作；list操作；set操作 ；sort set操作。见附件
+
+
+***************************************数据持久化*******************************
+1.配置快照持久化（redis.conf)：（**大量数据持久化）见附件
+2.手动持久化：./redis-cli bgsave
+3.redis目录：ll命令（查看备份明细）
+4.aof持久化和aof追加持久化见附件（**细节数据持久化）
+
+
+******************主从模式*****************************************************
+1.查看其它服务的数据（本服务器成为从服务器）：修改配置文件  slaveof (例如 slaveof 192.168.21.123 6379）
+  然后重启redis服务（重启进程见附件），从服务器默认只能读。如果想写：slave-read-only yes
+ 
+
+
+
+
+
+***************  java  操作  redis  ****************************
+1.redis 允许远程访问：将redis.conf中的bind:127.0.0.1注释；修改：protected-mode no
+2. iptables -F  （谨慎操作！清楚防火墙规则）全部都清除掉，
+   再次使用iptables -L -n查看，规则都不存在了
+

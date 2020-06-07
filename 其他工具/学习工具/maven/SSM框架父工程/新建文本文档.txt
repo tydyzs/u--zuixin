@@ -1,0 +1,9 @@
+ 
+子工程只需要引入该父工程即可：
+
+<parent>
+      <groupId>com.shcjar</groupId>
+      <artifactId>parent</artifactId>
+      <version>1.0</version>
+      <relativePath>../parent/pom.xml</relativePath>
+    </parent>  

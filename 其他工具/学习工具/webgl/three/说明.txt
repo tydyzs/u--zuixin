@@ -1,0 +1,95 @@
+环境：
+jdk1.8;
+maven;
+
+
+
+一、目录说明
+	1、Application.java 建议放到跟目录下面,主要用于做一些框架配置
+	2、domain目录主要用于实体（Entity）与数据访问层（Repository）
+	3、service 层主要是业务类代码
+	4、controller 负责页面访问控制
+	
+二、第一个实例：hello wrod(见HelloController.java)
+  	1.写一个Controller类：
+	  	@RestController
+		public class HelloController {
+			  @RequestMapping("/hello")
+			    public String index() {
+			        return "Hello World";
+			    }
+		
+		}
+	 2.	启动主程序：DemoApplication.java(1.eclipse启动；2.mvn-install：打包后直接启动jar包（java -jar demo.jar:注意执行jar环境需要java和maven环境）。）
+	 3.浏览器访问：http://localhost:8080/hello
+	 
+三。SSM项目搭建
+#Mybatis扫描(配置xml模式使用)
+mybatis.mapper-locations=classpath*:mapper/*.xml
+
+四、前端（html,jsp,js,css...)
+
+  1.前端文件目录（src/main/resources/static)
+  2.访问地址：http://localhost:8080/demo/html/test.html
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%   WEBGL笔记    %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+1.常用元素
+
+   ------------------基本元素---------------------------
+    a,场景： 
+    var scene=new THREE.Scene();//场景
+    
+    b，相机：
+     var camera=new THREE.PerspectiveCamera(45,
+     window.innerWidth/window.innerHeight,0.1,1000);//相机
+    c,渲染器：
+     var renderer=new THREE.WebGLRenderer();//渲染器
+     renderer.setClearColor(0xEEEEEE);
+	 renderer.setSize(window.innerWidth,window.innerHeight);
+	 
+   ------------------其他元素---------------------------
+   
+    d,光源（加入到场景）：
+	  var  spotLight=new THREE.SpotLight(0xffffff); 
+	  spotLight.position.set(-40,60,-10);      
+	  scene.add(threeObj.spotLight);           
+二，物体与材质：
+     1.物体：
+      var wuti1=new THREE.PlaneGeometry(60,20);//平面
+      var wuti2=new THREE.CubeGeometry(4,4,4);//立方体
+      var wuti3=new THREE.SphereGeometry(4,20,20);//球体
+     2，材质：
+      	 基本材质： var caizhi1=MeshBasicMaterial({color:0xcccccc});//创建一个基本材质（基础材质不会对光源产生效应）
+      	 亮度材质: var caizhi2=new THREE.MeshLambertMaterial({color:0x7777ff});//可接受光源产生效果。
+     
+     
+     4，给物体添加材质并加入到场景中：
+        var wuti_boj = new THREE.Mesh(wuti1,caizhi1);
+            //设置物体位置
+        	threeObj.cube.position.x=-4;
+			threeObj.cube.position.y=4;
+			threeObj.cube.position.z=-4;
+        scene.add(wuti_boj);//添加物体到场景
+三，开始执行：
+	添加渲染器到html元素中：$("#webgl_output").append(renderer.domElement);
+	传入场景和相机，开始渲染：renderer.render(scene,camera);
+
+四：投影（阴影）效果：
+    ------四个要素缺一不可：（场景，物体，平面，光源）都得设置允许阴影效果-----
+    //1，场景允许阴影：
+	renderer.shadowMapEnabled=true; 
+	//3.哪个物体阴影：
+	threeObj.cube.castShadow=true;//方块将阴影投射到地面。
+	//2. 设置平面能接受到阴影：
+	threeObj.plane.receiveShadow=true;
+	//4.阴影由哪个光源产生的：
+	threeObj.spotLight.castShadow=true;	
+	
+	

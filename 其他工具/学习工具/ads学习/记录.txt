@@ -1,0 +1,172 @@
+0。节点：库级别。
+1.表区分
+维度表：
+又称复制表／广播表，即表的数据将复制到每个计算节点上。数据量较小；
+普通表：
+又称事实表，存放数据量较大的表；
+
+按更新模式区分：按更新方式分为：实时更新（realtime必须有主键）和批量表（batch可以没有主键）
+realtime--支持insert和delete，面向实时更新场景；
+batch--批量更新，通过odps批量同步（全覆盖、二级分区增量模式），不支持insert/delet
+2.分区，一个表数据随机分配各个分区。
+       一级分区：选一个列（数据种类多的列做以及分区。分区个数：保证每个分区大概300万数据）
+   --选择值分布均匀的列，切勿选择数据倾斜的列作为分区列。
+   --表join的列，如果有多个事实表（不包括维度表）进行join，选择参与join的列作为分区列
+   --选择大部分SQL都使用的join列或者where条件，有些情况不能满足所有的SQL
+   
+   
+   
+   
+SELECT语句限制：
+1.） “IN” 子句的值个数不能超过 50 个；-V2.6.x版本可以支持2000
+2.）“OR” 子句的个数不得超过 50 个； 性能问题。
+3.） 不支持 二级分区 条件 与 其它条件 “OR”；
+4.） 默认返回记录数:1万，可以根据实际情况调整更大值，2.5.8版本开始MPP查询下取
+消默认limit限制约束。
+5.）SQL长度限制： 1M，2.7版本后，可以支持 8M以上
+
+
+
+数据库对象命名不能包含如下关键字：
+n DEBUG
+n WARN
+n ERROR
+n __以下数据库名为系统保留：
+n SYSDB
+n ADM
+
+数据库对象命名不能等于如下关键字：
+BEFORE,BINARY,BLOB,BOTH,CALL,CASCADE,CHANGE,CHAR,CHARACTER,CHECK,COLLATE,
+CONDITION,CONNECTION,CONSTRAINT,CONTINUE,CONVERT,CROSS,CURRENT_DATE,CURRENT_T
+IME,CURRENT_TIMESTAMP,CURRENT_USER,CURSOR,DATABASES,DAY_HOUR,
+DAY_MICROSECOND,DAY_MINUTE,DAY_SECOND,DEC,DECIMAL,DECLARE,DEFAULT,
+DELAYED,DETERMINISTIC,DISTINCTROW,DIV,DOUBLE,DUAL,EACH,ELSEIF,ENCLOSED,
+ESCAPED,EXIT,FETCH,FLOAT,FOR,FORCE,FOREIGN,FUNCTION,GOTO,HOUR_MICROSECOND,
+HOUR_MINUTE,HOUR_SECOND,IF,INFILE,INT,INTEGER,ITERATE,KILL,LABEL,LEADING,LEAVE,
+LOAD,LOCALTIME,LOCALTIMESTAMP,LOCK,LONG,LOOP,MATCH,MINUTE_MICROSECOND,
+MINUTE_SECOND,MOD,MODIFIES,OPTIMIZE,OPTION,OUT,OUTFILE,PRECISION,RANGE,READ,
+REAL,REFERENCES,REGEXP,RELEASE,RENAME,REPEAT,REQUIRE,RESTRICT,RETURN,RLIKE,
+SCHEMA,SECOND+MICROSECOND,SEPARATOR,SMALLINT,SPATIAL,SPECIFIC,SQL,TINYINT,
+TINYBLOB,UNLOCK,UNSIGNED,USE,VARCHAR,WHILE,WRITE,XOR,YEAR_MON
+
+
+
+限制项目 最大值 说明及实践
+一级分区数 256 记录数非常的表。超大规模项目可以配置512.具体参考:
+《AnalyticDB 表设计和规划》
+二级分区数 100 最佳实践中建议小于90，特别是系统表数量很多情况。具体参
+考:《AnalyticDB 表设计和规划》
+单表最大列数 1024 超过1024列情况，建议通过拆分为2个或者多个表解决
+varchar长度 8KB 超过8k情况，建议使用clob存储
+维度表记录数 小于5000万 由于维度表需要复制到所有节点，记录数大表建议创建为事
+
+
+
+
+
+
+drop table tab_customers_shenhuancheng
+CREATE TABLE tab_customers_shenhuancheng (
+customer_id bigint COMMENT '客户id',
+customer_name varchar COMMENT '客户名',
+phone_num varchar COMMENT '电话号码',
+city_name varchar COMMENT '所属城市',
+sex integer COMMENT '性别',
+id_number varchar COMMENT '身份证号码',
+home_address varchar COMMENT '家庭住址',
+office_address varchar COMMENT '公司地址',
+age integer COMMENT '年龄',
+Login_time timestamp COMMENT '注册日期',
+PRIMARY KEY (customer_id))
+PARTITION BY HASH KEY (customer_id) PARTITION NUM 16
+TABLEGROUP demo_group OPTIONS (UPDATETYPE='realtime') COMMENT '客户表';
+
+insert into tab_customers_shenhuancheng values
+(234,'张三','13498780998','广州',0,'429003199802125857','广州市'，'广东省广州市天河区天寿路'，20，'2017-12-29 12:23:43')，
+(235,'李四','13498782222','广州',1,'429003199102125857','广州市'，'广东省广州市天河区天寿路'，27，'2018-11-14 07:12:11')，
+(236,'王五','13498784323','广州',0,'429003200302125857','北京市'，'北京市北京路'，15，'2018-08-21 12:32:59')，
+(237,'赵六','13498755338','广州',1,'429003197002125857','武汉市'，'武汉市中南路'，48，'2018-06-22 11:44:59')，
+(238,'田七','13423780998','广州',0,'429003198802125857','杭州市'，'杭州市杭州路'，30，'2018-12-12 12:11:59')
+;
+
+
+--2.客服人员：可以按任意条件（客户名字、电话、身份证、客户地址）查询客户基础信息，以及查询客户历史订单和最新一笔订单情况。
+select 
+t1.customer_id,
+t1.customer_name,
+t1.phone_num,
+t1.city_name,
+t1.sex,
+t1.id_number,
+t1.home_address,
+t1.office_address,
+t1.age,
+t1.Login_time,
+t2.Order_id,
+t2.Order_time,
+t2.Order_time_bigint,
+t2.Order_amount,
+t2.Order_type,
+t2.address,
+t2.city
+from tab_customers_shenhuancheng as t1 join tab_order_shenhuancheng as t2
+on t1.customer_id=t2.Customer_id
+where t1.customer_name='李四'
+and t1.phone_num='13498782222'
+and t1.id_number='234243234234532452'
+and Home_address='广东省广州市天河区'
+order by t2.Order_time desc
+
+
+drop table tab_order_shenhuancheng
+CREATE TABLE tab_order_shenhuancheng (
+Customer_id bigint COMMENT '客户ID ',
+Order_id Varchar COMMENT '订单号码',
+Order_time Timestamp COMMENT '订单时间', 
+Order_time_bigint bigint COMMENT '订单时间',
+Order_amount double COMMENT '订单金额',
+Order_type varchar COMMENT '订单类型',
+address varchar COMMENT '配送地址',
+city varchar COMMENT '订单发生城市',
+PRIMARY KEY (Order_id,Customer_id,Order_time_bigint) )
+PARTITION BY HASH KEY (Customer_id) PARTITION NUM 16
+SUBPARTITION BY LIST KEY (Order_time_bigint)
+SUBPARTITION OPTIONS (available_partition_num = 10)
+CLUSTERED BY (Customer_id)
+TABLEGROUP demo_group
+OPTIONS (UPDATETYPE='realtime') COMMENT '客户外卖订单表';
+
+insert into tab_order_shenhuancheng values
+
+
+(234,'1234','2019-01-21 11:23:32',201912,32.43,'水果单'，'中山二路35-2'，'广州市')，
+(235,'3213','2019-04-22 07:23:32',201912,31.43,'快餐'，'中山路'，'广州')，
+(236,'2323','2018-06-22 04:23:32',201806,33.43,'零食'，'北京路'，'北京')，
+(237,'4324','2019-01-24 05:23:32',201901,54.43,'快餐'，'中南路'，'武汉市');
+
+
+--1.客户：登陆系统，查询个人历史订单列表，订单总金额／订单量情况
+select * from tab_order_shenhuancheng where Customer_id=234;
+select sum(Order_amount) from tab_order_shenhuancheng where Customer_id=234;
+
+
+--3.业务分析人员，按季节、城市、客户年龄段等多维度统计，订单的金额、订单量统计。
+
+select 
+t1.age_group,
+t2.city,
+quarter(t2.Order_time),
+sum(t2.Order_amount),
+count(1)
+from 
+(select customer_id,
+decode(greatest(age, 20) ,20,'青年',decode(greatest(age, 40),40,'中年','老年')) as age_group
+from 
+tab_customers_shenhuancheng) as t1
+join tab_order_shenhuancheng as t2
+on t1.customer_id=t2.Customer_id
+group by t1.age_group,t2.city,quarter(t2.Order_time)
+
+
+
+

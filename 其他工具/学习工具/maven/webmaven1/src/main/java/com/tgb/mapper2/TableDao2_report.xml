@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper2.TableDao2_report">
+	
+<!-- 查询准备数据库所有表_2 -->
+	<select id="findTalbe_2"   resultType="java.util.Map">		
+		select OWNER,table_name,comments from all_tab_comments WHERE TABLE_NAME LIKE 'DM_%'
+	</select>
+	
+	<!-- 查询准备数据库中表名,字段名 -->
+	<select id="findcol_2" parameterType="String" resultType="java.util.Map">
+		select table_name,column_name,comments from all_col_comments where table_name=#{table_name}
+	</select>	
+	
+	<!-- 根据字段名查询表名 -->
+	<select id="findtablename" parameterType="string" resultType="string">
+	select table_name,column_name from all_tab_columns where column_name=#{colname}
+	</select>
+	
+	
+	<select id="findtable_user" parameterType="string" resultType="string">
+	 select OWNER from all_tab_comments where table_name=#{tablename}
+	</select>
+	
+	
+	<!-- 根据字段英文名查询中文名 -->
+	<select id="finCname" parameterType="String" resultType="string">
+		select comments from all_col_comments where column_name=#{column_name}
+	</select>
+	
+	
+	
+	
+	<!-- 补充：给所有表加别名 -->
+	<!-- <select id="bieming" parameterType="Map" resultType="string">
+	    
+  SELECT 'CREATE SYNONYM ' || TABLE_NAME||'_ZDYBB FOR DW.'||TABLE_NAME||';' FROM ALL_TAB_COMMENTS 
+WHERE OWNER ='HX_DM' AND TABLE_NAME NOT LIKE 'T_%'  AND TABLE_NAME NOT LIKE '%$%'
+	  </select>
+	
+	<update id="biemingsql" parameterType="string">
+	     #{sql}
+	</update> -->
+	
+</mapper>

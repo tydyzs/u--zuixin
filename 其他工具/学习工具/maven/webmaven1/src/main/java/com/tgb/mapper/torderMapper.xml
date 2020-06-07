@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.TorderMapper">
+	
+	<insert id="save" parameterType="Torder">
+		insert into tt_torder(order_id,table_name,c_name,e_name,order_col_id,col_c_name,col_e_name,order_dct,subject_id) values(seq_torder.nextval,#{table_name},#{c_name},#{e_name},#{order_col_id},#{col_c_name},#{col_e_name},#{order_dct},#{subject_id})
+	</insert>
+	
+	<update id="update" parameterType="Torder">
+		update tt_torder set table_name=#{table_name},c_name=#{c_name},e_name=#{e_name},order_col_id=#{order_col_id},col_c_name=#{col_c_name},col_e_name=#{col_e_name},order_dct=#{order_dct},subject_id=#{subject_id}  where order_id=#{order_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_torder where order_id=#{order_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Torder">
+		select order_id,table_name,c_name,e_name,order_col_id,col_c_name,col_e_name,order_dct,subject_id from tt_torder where order_id=#{order_id}
+	</select>
+	
+	<select id="findAll" resultType="Torder">
+		select order_id,table_name,c_name,e_name,order_col_id,col_c_name,col_e_name,order_dct,subject_id from tt_torder
+	</select>
+	
+</mapper>

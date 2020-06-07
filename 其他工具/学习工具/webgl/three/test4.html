@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>物体动起来</title>
+<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/three.js"></script>
+<script src="js/dat.gui.js"></script>
+</head>
+<body>
+   <div id="webgl_output">
+   </div>
+</body>
+
+<script type="text/javascript">
+
+$(function(){
+	threeObj=getthree();
+	 effect=new THREE.AsciiEffect(threeObj.renderer);
+	 effect.setSize(window.innerWidth,window,innerHeight)
+	threeObj.renderer.setClearColor(0xEEEEEE);
+	threeObj.renderer.setSize(window.innerWidth,window.innerHeight);
+	threeObj.scene.add(threeObj.axes);
+	
+	threeObj.plane.rotation.x=-0.5*Math.PI;
+	threeObj.plane.x=15;
+	threeObj.plane.y=15;
+	threeObj.plane.z=15;
+	threeObj.scene.add(threeObj.plane);
+	
+	//添加阴影效果
+	//1，场景允许阴影
+	threeObj.renderer.shadowMapEnabled=true; 
+	//   地面接受阴影 + 允许某个物体投射阴影到地面。
+	threeObj.plane.receiveShadow=true;
+	threeObj.cube.castShadow=true;//方块将阴影投射到地面。
+	//  某个光源产生阴影
+	threeObj.spotLight.castShadow=true;
+	
+	threeObj.cube.position.x=-4;
+	threeObj.cube.position.y=4;
+	threeObj.cube.position.z=0;
+	threeObj.scene.add(threeObj.cube);
+	
+	
+	threeObj.sphere.position.x=20;
+	threeObj.sphere.position.y=4;
+	threeObj.sphere.position.z=2;
+	threeObj.scene.add(threeObj.sphere);
+	threeObj.camera.position.x=-30;
+	threeObj.camera.position.y=40;
+	threeObj.camera.position.z=30;
+	threeObj.camera.lookAt(threeObj.scene.position);
+	
+	/* */
+	
+	$("#webgl_output").append(threeObj.renderer.domElement);
+	
+	//渲DObj.renderer.render(threeObj.scene,threeObj.camera)
+	//循环：不停渲染：
+	renderScene();
+	
+})
+var threeObj;
+var effect;
+function renderScene(){
+	requestAnimationFrame(renderScene);
+	//加入动画
+	//donghua1();
+	//donghua2();
+	donghua_gui()
+	
+	//threeObj.renderer.render(threeObj.scene,threeObj.camera);
+	//修改渲染代码：（renderer.render(scene,camera);)
+      	//改为：
+      	//effect.render(threeObj.scene,threeObj.camera);
+
+}
+function donghua1(){//立方体运动
+	threeObj.cube.position.x+=0.2;
+	//threeObj.cube.position.y+=0.1;
+	//threeObj.cube.position.z+=0.1;
+}
+function donghua2(){//视觉运动：
+	threeObj.camera.position.x+=-0.1;
+	threeObj.camera.position.y+=0.1;
+	threeObj.camera.position.z+=0.1;
+}
+function donghua_gui(){
+	//移动：
+	threeObj.cube.position.x+=controls.移速*controls.移向;
+	//颜色：
+	threeObj.cubeMaterial.color.setStyle(controls.颜色);//更新颜色
+}
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//%%%%%%%%%%%%%%%%%%%%%%%%    GUI    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+//1.创建GUI对象:
+    var gui=new dat.GUI();
+    //2.添加文件夹
+    var folder = gui.addFolder('菜单');
+    //3.设置交互界面位置
+    gui.domElement.style = 'position:absolute;top:0px;right:0px';
+    //4.创建控件对象变量
+    var controls={缩放系数: 1, 转速: 0.01,移速:0.1,移向:1,颜色 : 0x0000ff};
+    //5.向gui中添加需要控制的菜单
+    folder.addColor(controls, '颜色');//添加颜色菜单选项
+    folder.add(controls,'缩放系数',0.1,2.5);//添加缩放系数拖动条菜单选项
+    folder.add(controls,'转速',{低速: 0.005, 中速: 0.01,高速: 0.1});//添加转速下拉菜单选项
+    folder.add(controls,'移速',0,0.4);//添加转速下拉菜单选项
+    folder.add(controls,'移向',{正向: 1, 反向: -1});//添加转速下拉菜单选项
+    //6.文件夹folder下面的菜单选项展开显示
+    folder.open();
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+function getthree(){
+	var threeObj={};
+	threeObj.scene=new THREE.Scene();//场景
+	threeObj.camera=new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight
+			,0.1,1000);//相机
+	threeObj.renderer=new THREE.WebGLRenderer();//渲染器
+	
+	
+	threeObj.axes=new THREE.AxisHelper(20);//坐标抽对象
+	
+	//添加光源
+	threeObj.spotLight=new THREE.SpotLight(0xffffff);
+	threeObj.spotLight.position.set(-40,60,-10);
+	threeObj.scene.add(threeObj.spotLight);
+	
+	threeObj.planeGeometry=new THREE.PlaneGeometry(60,20);//平面
+	threeObj.planeMaterial=new THREE.MeshLambertMaterial({color:0xffffff});//光源材质
+	threeObj.plane=new THREE.Mesh(threeObj.planeGeometry,threeObj.planeMaterial);//创建一个平面
+	//Mesh:网格
+	
+	threeObj.cubeGeometry=new THREE.CubeGeometry(4,4,4);
+	threeObj.cubeMaterial=new THREE.MeshLambertMaterial({color:0xff0000});
+	threeObj.cube=new THREE.Mesh(threeObj.cubeGeometry,threeObj.cubeMaterial);//方块
+	
+	threeObj.sphereGeometry=new THREE.SphereGeometry(4,20,20);
+	threeObj.sphereMaterial=new THREE.MeshLambertMaterial({color:0x7777ff});
+	threeObj.sphere=new THREE.Mesh(threeObj.sphereGeometry,threeObj.sphereMaterial);//球体
+	
+    return threeObj;
+}
+</script>
+</html>

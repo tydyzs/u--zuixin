@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.Old_inc_colMapper">
+	
+	<insert id="save" parameterType="Old_inc_col">
+		insert into tt_old_inc_col(include_col_id,s_tables_id,col_c_name,col_e_name) values(seq_old_inc_col.nextval,#{s_tables_id},#{col_c_name},#{col_e_name})
+	</insert>
+	
+	<update id="update" parameterType="Old_inc_col">
+		update tt_old_inc_col set s_tables_id=#{s_tables_id},col_c_name=#{col_c_name},col_e_name=#{col_e_name}  where include_col_id=#{include_col_id}
+	</update>
+	<update id="update_1" parameterType="Old_inc_col">
+		update tt_old_inc_col set col_c_name=#{col_c_name} where include_col_id=#{include_col_id}
+	</update>	
+	<delete id="delete" parameterType="int">
+		delete from tt_old_inc_col where include_col_id=#{include_col_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Old_inc_col">
+		select include_col_id,s_tables_id,col_c_name,col_e_name from tt_old_inc_col where include_col_id=#{include_col_id}
+	</select>
+	
+	<select id="findAll" resultType="Old_inc_col">
+		select include_col_id,s_tables_id,col_c_name,col_e_name from tt_old_inc_col where col_c_name<![CDATA[ <>]]>'null'
+	</select>
+	<select id="findAll_1" resultType="Old_inc_col">
+		select include_col_id,s_tables_id,col_c_name,col_e_name from tt_old_inc_col
+	</select>	
+	
+	<!-- 根据表ID查询字段 -->
+	<select id="findByTid" parameterType="int" resultType="Old_inc_col" >
+		select * from tt_old_inc_col where s_tables_id=#{tId}
+	</select>
+	<select id="findByTids" parameterType="list" resultType="Old_inc_col" >
+		select * from tt_old_inc_col where s_tables_id in 
+		<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>	
+</mapper>

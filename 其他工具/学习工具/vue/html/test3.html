@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>监听属性</title>
+</head>
+<script type="text/javascript" src="../js/vue.js"></script>
+
+
+<body>
+<div id="d1">
+	实例一
+	<p>{{value1}}</p>
+	<input v-on:click="click1" type="button" value="点击"/>
+	</br></br>
+	实例二
+	<input type="text" v-model="value2"/>km=
+	<input type="text" v-model="value3"/>m
+	
+</div>
+</body>
+<script type="text/javascript" >
+	//创建两个对象：存放属性/存放函数
+	var data_d1={
+		value1:2,
+		value2:null,
+		value3:null
+	};
+	var methods_fun={
+			click1:function(){
+				this.value1=3;
+			}
+	};
+	var filters={
+			click2:function(value,value1){
+				var v1=value+2;
+				return v1;
+			},
+			click21:function(value,value1){
+				var v1=value+2;
+				return v1;
+			},
+			click3:function(value,value1,value2){
+				var v1=value+value1+value2;
+				return v1;
+			}
+	};
+	
+	var computed_fun={
+			computed1:function(){
+				console.log("computed1%%%%%%%%%%%%%%55");
+				return this.value1+1;
+			}
+	};
+	var watch_fun={
+			value2:function(nval){
+				this.value3=nval*1000;
+			},
+			value3:function(nval){
+				this.value2=nval/1000;
+			}
+	}
+	//初始化vue对象（将保存属性和函数的对象与html关联）
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		methods:methods_fun,//绑定事件
+		filters:filters,//属性调用的事件
+		computed:computed_fun,//绑定计算函数（下面的函数用于处理数据的计算）
+		watch:watch_fun//监听事件
+	});
+	vue_obj.$watch('value1', function(nval, oval) {
+		   alert(nval+"--"+oval);
+	});
+	/* vue_obj.$watch('value2', function(nval, oval) {
+	   this.value3=nval*1000;
+	});
+	vue_obj.$watch('value3', function(nval, oval) {
+	   this.value2=nval/1000;
+	}); */
+	
+</script>
+</html>

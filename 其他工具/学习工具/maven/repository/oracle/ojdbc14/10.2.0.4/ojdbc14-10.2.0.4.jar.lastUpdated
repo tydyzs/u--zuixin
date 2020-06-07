@@ -1,0 +1,4 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Thu Dec 07 14:19:57 CST 2017
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1512627597210
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact oracle\:ojdbc14\:jar\:10.2.0.4 from/to central (https\://repo.maven.apache.org/maven2)\: Software caused connection abort\: recv failed

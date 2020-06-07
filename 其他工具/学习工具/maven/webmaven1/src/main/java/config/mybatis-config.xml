@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 实体类,简称 -设置别名 -->
+	<typeAliases>
+		<typeAlias alias="User" type="com.tgb.model.User" />
+		<typeAlias alias="Tsubject" type="com.tgb.model.Tsubject" />
+		<typeAlias alias="Old_tables" type="com.tgb.model.Old_tables" />
+		<typeAlias alias="Old_inc_col" type="com.tgb.model.Old_inc_col" />
+		<typeAlias alias="S_tables" type="com.tgb.model.S_tables" />
+		<typeAlias alias="Tgroup" type="com.tgb.model.Tgroup" />
+		<typeAlias alias="Tfunction" type="com.tgb.model.Tfunction" />
+		<typeAlias alias="Torder" type="com.tgb.model.Torder" />
+		<typeAlias alias="Code_name" type="com.tgb.model.Code_name" />
+		<typeAlias alias="Tsql" type="com.tgb.model.Tsql" />
+		<typeAlias alias="Twhere" type="com.tgb.model.Twhere" />
+		<typeAlias alias="Where_col" type="com.tgb.model.Where_col" />
+		<typeAlias alias="Tcon" type="com.tgb.model.Tcon" />
+		<typeAlias alias="Include_col" type="com.tgb.model.Include_col" />
+		<!-- <typeAlias alias="User_new" type="com.tgb.model.User_new" /> -->
+	</typeAliases>
+	<!-- 实体接口映射资源 -->
+	<!--
+		说明：如果xxMapper.xml配置文件放在和xxMapper.java统一目录下，mappers也可以省略，因为org.mybatis.spring.mapper.MapperFactoryBean默认会去查找与xxMapper.java相同目录和名称的xxMapper.xml
+	-->
+	<mappers>
+		<mapper resource="com/tgb/mapper/userMapper.xml" />
+		<mapper resource="com/tgb/mapper/tsubjectMapper.xml" />
+		<mapper resource="com/tgb/mapper/old_tablesMapper.xml" />
+		<mapper resource="com/tgb/mapper/old_inc_colMapper.xml" />
+		<mapper resource="com/tgb/mapper/s_tablesMapper.xml" />
+		<mapper resource="com/tgb/mapper/tgroupMapper.xml" />
+		<mapper resource="com/tgb/mapper/tfunctionMapper.xml" />
+		<mapper resource="com/tgb/mapper/torderMapper.xml" />
+		<mapper resource="com/tgb/mapper/code_nameMapper.xml" />
+		<mapper resource="com/tgb/mapper/tsqlMapper.xml" />
+		<mapper resource="com/tgb/mapper/twhereMapper.xml" />
+		<mapper resource="com/tgb/mapper/where_colMapper.xml" />
+		<mapper resource="com/tgb/mapper/tconMapper.xml" />
+		<mapper resource="com/tgb/mapper/include_colMapper.xml" />
+		<!-- <mapper resource="com/tgb/mapper/user_newMapper.xml" /> -->
+	</mappers>
+
+</configuration>  

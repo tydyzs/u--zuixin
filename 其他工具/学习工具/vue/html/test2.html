@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>循环语法开始</title>
+</head>
+<script type="text/javascript" src="../js/vue.js"></script>
+
+
+<body>
+<div id="d1">
+	<table>
+		<tr v-for="obj in list1">
+			<td>{{obj.id}}</td>
+			<td>{{obj.name}}</td>
+		</tr>
+	</table>
+	<table>
+		<tr v-for="(value,key,index) in object">
+			<td>{{index}}:{{key}}={{value}}</td>
+		</tr>
+	</table>
+	<table>
+		<tr v-for="i in 3">
+			<td>tr{{i}}</td>
+		</tr>
+	</table>
+	<p>{{get_html()}}</p>
+	<p>{{get_html()}}</p>
+	<p>{{computed1}}</p>
+	<p>{{computed1}}</p>
+</div>
+</body>
+<script type="text/javascript" >
+	//创建两个对象：存放属性/存放函数
+	var data_d1={
+		list1:[{id:"1",name:"张三"},{id:"2",name:"李四"},{id:"3",name:"王五"}],
+		object:{id:"1",name:"name",age:"21"},
+		value1:2
+	};
+	var methods_fun={
+			get_html:function(){
+				console.log("get_html%%%%%%%%%%%%%%55");
+				return this.computed1;
+			},
+			click1:function(){
+				alert(123);
+			}
+	};
+	var filters={
+			click2:function(value,value1){
+				var v1=value+2;
+				return v1;
+			},
+			click21:function(value,value1){
+				var v1=value+2;
+				return v1;
+			},
+			click3:function(value,value1,value2){
+				var v1=value+value1+value2;
+				return v1;
+			}
+	};
+	
+	var computed_fun={
+			computed1:function(){
+				console.log("computed1%%%%%%%%%%%%%%55");
+				return this.value1+1;
+			}
+	};
+	//初始化vue对象（将保存属性和函数的对象与html关联）
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		methods:methods_fun,
+		filters:filters,
+		computed:computed_fun
+	});
+	var id=setTimeout(function(){//改变数据对象，html中的值随之改变
+		data_d1.msg=555;//设置数据对象改变页面的值
+		var vue_el=vue_obj.$el;	//获取vue对象的dom对象
+		var vue_data=vue_obj.$data;//获取vue对象的数据对象
+		vue_data.msg="666";//可通过设置vue中数据对象的属性
+		//alert(vue_data.msg);
+		//vue_obj.msg="777";//也可直接设置vue对象属性
+		data_d1.value1=3;
+	},1000);
+</script>
+</html>

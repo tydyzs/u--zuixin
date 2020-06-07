@@ -1,0 +1,214 @@
+
+
+常用命令：
+1.mvn clean ----清楚项目目录中生产的结果
+
+ 。mvn compile ----编译主程序
+
+2.mvn test  ----运行测试项目
+
+3.mvn package ----打包 jar/war文件
+
+4.mvn install  ----本地仓库中安装 ，jar文件
+
+5.mvn archetype:genate ----生产maven项目结构
+
+6.mvn clean install  ----删除再编译
+
+
+
+
+
+
+
+
+
+
+
+1.搭建maven环境变量
+(MAVEN_HOME ----  E:\apache-maven-3.5.0）：
+(PATH----%MAVEN_HOME%\bin;)
+  mvn -version
+
+  修改仓库路径：E:\apache-maven-3.5.0\conf\settings.xnl   :  <localRepository>D:/jar/repository</localRepository>
+
+2.eclipse配置本地maven：
+  window--preferences--maven
+
+  --installations:选择本地配置的maven
+  --User Settings:
+         E:\apache-maven-3.5.0\conf\settings.xml
+         E:\apache-maven-3.5.0\conf\settings.xml
+         D:/jar/repository
+3.eclipse搭建maven项目
+    填写项目信息如下（或生产项目后在pom.xml中改写）：
+
+   <groupId>com.shc.maventest</groupId>
+   <artifactId>shcmaven1</artifactId>
+   <version>1.0</version>
+
+
+4.maven项目依赖：
+   先将maven1项目     mvn install  然后maven2才能引入maven1
+  (mvn install时如果是web项目需要将打包方式改为jar，才能方便被引入）
+
+   如下pom.xml写法<packaging>jar</packaging>
+
+  
+
+5.pom.xml基本结构
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.shc.maventest</groupId>
+  <artifactId>shcmaven1</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+  <name>shcmaven1</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+    </dependency>
+    
+    <!--servlet包引入：防止http和jsp报错-->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    
+    <dependency>
+			<groupId>test</groupId>
+			<artifactId>test_shc</artifactId>
+			<version>1.0</version>
+	</dependency> 
+    
+  </dependencies>
+
+</project>
+
+
+
+****************************  实例  ****************************************
+1.引入自定义jar
+
+  a.新建项目shcmaven1 （版本信息如下）
+	  <groupId>com.shc.maventest</groupId>
+	  <artifactId>shcmaven1</artifactId>
+	  <packaging>jar</packaging>
+	  <version>2.0</version>
+	  <name>shcmaven1</name>
+
+ b.将自定义jar复制到本地仓库中：D:\jar\repository   中新建目录：
+    D:\jar\repository  \test\test1\test_shc\1.0\test_shc-1.0.jar  （jar文件中包括  Resout_shc.java 类)
+ c.shcmaven1 引入jar包：
+     <dependency>
+		<groupId>test.test1</groupId>
+		<artifactId>test_shc</artifactId>
+		<version>1.0</version>
+	</dependency>
+ d。测试：cmd进入shcmaven1更目录：mvn test(不报错）；
+          Result_shc result=new Result_shc();直接写java代码（有引入jar包中的类的提示）
+
+2.依赖（新建shcmaven2 项目 引入shcmaven1 项目----shcmaven2便拥有shcmaven1中所有jar）：
+   a。新建第二个maven项目 shcmaven2：
+	  <groupId>com.shc.maventest</groupId>
+	  <artifactId>shcmaven1</artifactId>
+	  <packaging>jar</packaging>
+	  <version>2.0</version>
+	  <name>shcmaven1</name>
+   b.cmd进入shcmaven1项目中  mvn install   
+      (安装shcmaven1）由于shcmaven1中 <packaging>jar</packaging>。所以此命令会导出jar包形式）
+   c.shcmaven2中引入shcmaven1（获取shcmaven1中所有类以及jar）
+        <!--引入maven项目-->
+		<dependency>
+				<groupId>com.shc.maventest</groupId>
+	  			<artifactId>shcmaven1</artifactId>
+	 		    <version>1.0</version>
+		</dependency>  
+		
+		注：shcmaven1中jar  依赖范围设置
+		 <scope>compile</scope>  
+		 才会对shcmaven2（主程序）有效；
+		 
+		 
+**************************************************
+依赖范围
+1. <scope>test</scope>      ----测试才需要，打包后忽略
+   <scope>provided</scope>  ----编译才需要的jar（例如servlet）部署后忽略
+   <scope>compile</scope>   ----参与打包
+
+ 例如
+<dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope><!--部署后不要了：tomcat中自带-->
+    </dependency>		 
+
+
+2.maven设置jdk：
+  settings.xml中设置如下：		
+  	<profile>
+	  <id>jdk-1.7<id>
+	  <activation>
+	     <activeByDefault>true</activeByDefault>
+		 <jdk>1.7</jdk>
+	  </activation> 
+	  <properties>
+	     <maven.compiler.source>1.7</maven.compiler.source>
+		 <maven.compiler.target>1.7</maven.compiler.target>
+		 <maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+	  <properties>
+	<profile>
+	
+3.eclipse执行maven命令：右击pom.xml	 
+4.依賴的排除(<exclusions>)：
+  例如
+        <dependency>
+				<groupId>com.shc.maventest</groupId>
+	  			<artifactId>shcmaven1</artifactId>
+	 		    <version>1.0</version>
+	 		    <exclusions>
+	 		       <exclusion>
+	 		         <groupId>javax.servlet</groupId>
+	 		         <artifactId>javax.servlet-api</artifactId>
+	 		       </exclusion>
+	 		    </exclusions>
+		</dependency> 
+ 5.依赖传递版本选择：依赖传递路径最短；路径相同时看依赖先后引入顺序。
+ 
+ 6.统一声明引用
+ （例如版本号统一声明引用，方便同事改多个依赖的版本）：
+         在<dependencys>外新建标签:
+       <properties>
+         <spring_Edition>4.0</spring_Edition>
+       </properties>  
+        所有需要4.0的依赖版本都可以写为：     
+    <version>${spring_Edition}</version>
+   (注：<properties>标签类还可以写其他内容供引用）
+   
+ 7.继承（父工程统一管理版本）
+       新建父工程打包方式pom。
+       子工程中引入父工程：
+     <parent>
+      <groupId>com.shcjar</groupId>
+      <artifactId>parent</artifactId>
+      <version>1.0</version>
+      <relativePath>../parent/pom.xml</relativePath>
+    </parent>  
+ 8.聚合：
+ 父工程中pom.xml中设置：
+  <modules>
+     <module>../maven1</module>
+     <module>../maven2</module>
+     <module>../maven3</module>
+  <modules>  
+        然后父工程安装：mvn install   三个子工程也就随之安装了。
+        
+        
+ 

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.DepartmentMapper">
+
+	<resultMap id="Department" type="com.tgb.model.Department2">
+	   <id property="id" column="DEPARTMENT_ID"/>
+	   <result property="name" column="DEPARTMENT_NAME"/>
+	   <result property="pId" column="PARENT_ID"/>
+	   <result property="code" column="DEPARTMENT_CODE"/>
+	   <result property="is_del" column="IS_DEL"/>
+	</resultMap>	
+	<insert id="save" parameterType="com.tgb.model.Department">
+		<selectKey resultType="integer" order="AFTER" keyProperty="department_id">
+			select seq_department.currval from dual		
+		</selectKey>
+		insert into tt_department(department_id,department_code,department_name,parent_id,remark) values(seq_department.nextval,#{department_code},#{department_name},#{parent_id},#{remark})
+	</insert>
+	
+	<update id="update" parameterType="com.tgb.model.Department">
+		update tt_department set department_code=#{department_code},department_name=#{department_name},parent_id=#{parent_id},remark=#{remark} where department_id=#{department_id}
+	</update>
+	<!-- 
+	<delete id="delete" parameterType="int">
+		delete from tt_department where department_id=#{department_id}
+	</delete>
+	 -->
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="com.tgb.model.Department">		
+		select * from tt_department where department_id=#{department_id} and  is_del=0
+	</select>
+	
+	<select id="findAll" resultType="com.tgb.model.Department">
+		select * from tt_department where is_del=0
+	</select>
+	<select id="findByName" parameterType="string" resultType="com.tgb.model.Department">
+		select * from tt_department where department_name=#{department_name} and  is_del=0
+	</select>	
+	<select id="findCount"  resultType="Integer">
+		select count(*) from tt_department where is_del=0
+	</select>	
+	<!-- ****************************************以下是使用分类方法****************************************** -->
+<!-- 查询所有节点，形成树状 -->
+	<select id="finddepartment"  resultMap="Department">
+		select * from tt_department WHERE IS_DEL=0
+	</select>
+	
+	<!-- 根据父id，查出所有字节点，用于写入表中 -->
+	<select id="find"  parameterType="int" resultMap="Department">
+		select * from tt_department where PARENT_ID=#{parent_id} AND IS_DEL=0
+	</select>
+	
+	<!-- 查询当前节点下name，code是否已经存在 -->
+	<select id="find1"  parameterType="com.tgb.model.Department" resultType="java.lang.Integer">
+		select count(*) from tt_department where PARENT_ID =#{parent_id} AND IS_DEL=0
+	</select>
+	<!-- 查询当前节点下name，code是否已经存在 -->
+	<select id="find2"  parameterType="com.tgb.model.Department" resultType="java.lang.Integer">
+		select count(*) from tt_department where PARENT_ID =#{parent_id} and department_name=#{department_name} AND IS_DEL=0
+	</select>
+	
+	<!-- 
+	<insert id="save" parameterType="com.tgb.model.Department">
+		insert into tt_department(department_id,department_name,PARENT_ID,IS_DEL) values(SEQ_DEPARTMENT.NEXTVAL,#{department_name},#{parent_id},#{is_del})
+	</insert>
+	 -->
+	
+	<!-- 删除机构 -->
+	<update id="delete" parameterType="int">
+	    update tt_department set is_del=1  where department_id=#{department_id}
+	</update>
+	
+	<!-- 查询所有的子节点数目。便于新增节点时命名 -->
+	<select id="findId" parameterType="int" resultType="java.lang.Integer">
+		select count(*) from tt_department where PARENT_ID=#{parent_id} AND IS_DEL=0
+	</select> 
+	<!-- 查询所有的子节点id。 -->
+	<select id="findByParent_Id" parameterType="int" resultType="java.lang.Integer">
+		select department_id from tt_department where PARENT_ID=#{parent_id} AND IS_DEL=0
+	</select> 	
+	
+	<!-- 根据分类父id和 分类名称查询id。用于刚新增后页面id负值 -->
+	<select id="finddepartmentId" parameterType="java.util.HashMap" resultType="int">
+	select department_id from tt_department where parent_id=#{parent_id} and department_name=#{department_name} AND IS_DEL=0
+	</select>
+
+	
+	<!-- 查看名称是否存在了 -->
+	<select id="updateDepartments" parameterType="com.tgb.model.Department" resultType="int">
+      select count(*) from tt_department where parent_id=#{parent_id} AND IS_DEL=0 and  department_id  <![CDATA[<]]><![CDATA[>]]>  #{department_id} and department_name=#{department_name}
+	</select> 
+
+	
+	<update id="updateDepartment" parameterType="com.tgb.model.Department" >
+	 update tt_department set department_name=#{department_name} where  department_id=#{department_id}
+	</update>
+	
+	
+	<!-- 根据分类id查询分类名称 -->
+	<select id="findDepartmentName" parameterType="int" resultType="string">
+		select department_name from tt_department where department_id=#{department_id} 
+	</select>	
+	<!-- 根据部门编码查询部门ID -->
+	<select id="finddepIdByCode" parameterType="string" resultType="com.tgb.model.Department">
+		select * from tt_department where department_code=#{department_code} AND IS_DEL=0
+	</select>	
+</mapper>

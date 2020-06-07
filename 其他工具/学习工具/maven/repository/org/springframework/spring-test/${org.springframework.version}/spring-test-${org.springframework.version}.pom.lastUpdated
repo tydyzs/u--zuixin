@@ -1,0 +1,4 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Thu Sep 01 14:33:27 CST 2016
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1472711607331
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org.springframework\:spring-test\:pom\:${org.springframework.version} from/to central (https\://repo.maven.apache.org/maven2)\: Illegal character in path at index 70\: https\://repo.maven.apache.org/maven2/org/springframework/spring-test/${org.springframework.version}/spring-test-${org.springframework.version}.pom

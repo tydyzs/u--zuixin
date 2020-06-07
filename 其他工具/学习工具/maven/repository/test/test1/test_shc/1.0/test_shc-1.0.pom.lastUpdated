@@ -1,0 +1,6 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Tue Dec 05 14:30:37 CST 2017
+http\://repo.maven.apache.org/maven2/.lastUpdated=1512455437675
+http\://repo.maven.apache.org/maven2/.error=
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1512445303036
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact test.test1\:test_shc\:pom\:1.0 from/to central (https\://repo.maven.apache.org/maven2)\: connect timed out

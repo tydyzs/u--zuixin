@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>vue.js基本用法</title>
+</head>
+<script type="text/javascript" src="../js/vue.js"></script>
+
+
+<body>
+<div id="d1">
+  <p> {{msg}}</p>
+  <p> {{get_html()}}</p>
+  <div v-html="html_str"></div>
+  <input v-bind:value="input_value" :type="types"/></br></br>
+  {{bds1+1}}</br>
+  {{bds2?"yes":"no"}}</br>
+  {{bds3.split("bb")}}</br>
+  <input :class="'class-'+bds4" value="表达式"/></br></br>
+  //设置显示隐藏：
+  <p v-if="shows">显示隐藏</p></br></br>
+  //函数：
+    <input value="点击" type="button" v-on:click="click1"/></br></br>
+  //输入绑定到数据v-model
+   <p>{{inputs}}</p>
+   <input v-model="inputs"/></br>
+   </br></br>
+  //属性调用函数
+   <p>{{ num | click2}}</p>
+   <p>{{ num | click2 | click21}}</p>
+   <p>{{ num | click3(2,num1)}}</p>
+   </br></br>
+   <template v-if="ok1">
+   		<p>true</p>
+   </template>
+   </br></br>
+   <div v-if="Math.random() > 0.5">
+      Sorry
+    </div>
+    <div v-else>
+      Not sorry
+    </div>
+    </br></br>
+    
+    <div v-if="randoms > 0.8">
+      A
+    </div>
+    <div v-else-if="randoms > 0.5">
+      B
+    </div>
+    <div v-else>
+      Not A/B/C
+    </div>
+</div>
+</body>
+<script type="text/javascript" >
+	//创建两个对象：存放属性/存放函数
+	var data_d1={
+			msg:"999",
+			html_str:'<input id="" name="" value="提交" type="button"/>',
+			input_value:"321",
+			types:"text",
+			bds1:1,
+			bds2:true,
+			bds3:"aabbcc",
+			bds4:"1",
+			shows:false,
+			inputs:"",
+			num:1,
+			num1:2,
+			ok:true,
+			ok1:true,
+			ok2:true,
+			randoms:Math.random()
+	};
+	var fun_d1={
+			get_html:function(){
+				return "hello word!!!";
+			},
+			click1:function(){
+				alert(123);
+			}
+	};
+	var filters={
+			click2:function(value,value1){
+				var v1=value+2;
+				return v1;
+			},
+			click21:function(value,value1){
+				var v1=value+2;
+				return v1;
+			},
+			click3:function(value,value1,value2){
+				var v1=value+value1+value2;
+				return v1;
+			}
+	};
+	//初始化vue对象（将保存属性和函数的对象与html关联）
+	var vue_obj=new Vue({
+		el:"#d1",//绑定html：该id标签下所有元素适用此对象
+		data:data_d1,//绑定数据
+		methods:fun_d1,
+		filters:filters
+	});
+	var id=setTimeout(function(){//改变数据对象，html中的值随之改变
+		data_d1.msg=555;//设置数据对象改变页面的值
+		var vue_el=vue_obj.$el;	//获取vue对象的dom对象
+		var vue_data=vue_obj.$data;//获取vue对象的数据对象
+		vue_data.msg="666";//可通过设置vue中数据对象的属性
+		//alert(vue_data.msg);
+		//vue_obj.msg="777";//也可直接设置vue对象属性
+	},1000);
+</script>
+</html>

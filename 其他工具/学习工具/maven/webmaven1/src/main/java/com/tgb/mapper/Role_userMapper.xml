@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.Role_userMapper">
+	
+	<insert id="save" parameterType="com.tgb.model.Role_user">
+		<selectKey resultType="integer" order="AFTER" keyProperty="role_user_id">
+			select seq_role_user.currval from dual		
+		</selectKey>
+		insert into tt_role_user(role_user_id,user_id,role_id) values(seq_role_user.nextval,#{user_id},#{role_id})
+	</insert>
+	
+	<update id="update" parameterType="com.tgb.model.Role_user">
+		update tt_role_user set user_id=#{user_id},role_id=#{role_id}  where role_user_id=#{role_user_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_role_user where role_user_id=#{role_user_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="java.util.HashMap">		
+		select * from tt_role_user where role_user_id=#{role_user_id}
+	</select>
+	
+	<select id="findAll" parameterType="string" resultType="java.util.HashMap">
+	<![CDATA[
+		select * from (select t.*,rownum rn from (
+			select a.*,c.user_name,c.user_URL from tt_role a join tt_role_user b on a.role_id=b.role_id join tt_user c on b.user_id=c.user_id
+		) t ) where rn>(#{currentPage}-1)*10 and rn<=#{currentPage}*10
+	]]>
+	</select>		
+	<select id="findCount"  resultType="Integer">
+		select count(*) from tt_role_user
+	</select>	
+	<update id="update_2" parameterType="com.tgb.model.Role_user">		
+		update tt_role_user set user_id=#{user_id},role_id=#{role_id} where role_user_id=#{role_user_id}
+	</update>
+	<delete id="deleteByUserID" parameterType="int">
+		delete from tt_role_user where user_id=#{user_id}
+	</delete>
+	<delete id="deleteByRoleID" parameterType="int">
+		delete from tt_role_user where role_id=#{role_id}
+	</delete>
+	<select id="findByRoleID" parameterType="int" resultType="java.util.HashMap">
+		select * from tt_role_user where role_id=#{role_id}
+	</select>					
+</mapper>

@@ -1,0 +1,37 @@
+环境：
+jdk1.8;
+maven;
+
+
+
+一、目录说明
+	1、Application.java 建议放到跟目录下面,主要用于做一些框架配置
+	2、domain目录主要用于实体（Entity）与数据访问层（Repository）
+	3、service 层主要是业务类代码
+	4、controller 负责页面访问控制
+	
+二、第一个实例：hello wrod(见HelloController.java)
+  	1.写一个Controller类：
+	  	@RestController
+		public class HelloController {
+			  @RequestMapping("/hello")
+			    public String index() {
+			        return "Hello World";
+			    }
+		
+		}
+	 2.	启动主程序：DemoApplication.java(1.eclipse启动；2.mvn-install：打包后直接启动jar包（java -jar demo.jar:注意执行jar环境需要java和maven环境）。）
+	 3.浏览器访问：http://localhost:8080/hello
+	 
+三。SSM项目搭建
+#Mybatis扫描(配置xml模式使用)
+mybatis.mapper-locations=classpath*:mapper/*.xml
+
+四、前端（html,jsp,js,css...)
+
+  1.前端文件目录（src/main/resources/static)
+  2.访问地址：http://localhost:8080/demo/html/test.html
+
+
+
+

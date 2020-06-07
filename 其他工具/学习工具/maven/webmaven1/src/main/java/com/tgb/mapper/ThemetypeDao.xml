@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.ThemetypeDao">
+	
+	
+	<resultMap id="Themetype" type="com.tgb.model.Themetype">
+	   <id property="id" column="T_TYPE_ID"/>
+	   <result property="name" column="TYPE_NAME"/>
+	   <result property="pId" column="PARENT_ID"/>
+	   <result property="code" column="TYPE_CODE"/>
+	   <result property="is_del" column="IS_DEL"/>
+	</resultMap>
+	
+	<!-- 查询所有节点，形成树状 -->
+	<select id="findtype"  resultMap="Themetype">
+		select * from TT_TYPE WHERE IS_DEL=0
+	</select>
+	
+	<!-- 根据父id，查出所有字节点，用于写入表中 -->
+	<select id="find"  parameterType="int" resultMap="Themetype">
+		select * from TT_TYPE where PARENT_ID=#{id} AND IS_DEL=0
+	</select>
+	
+	<!-- 查询当前节点下name，code是否已经存在 -->
+	<select id="find1"  parameterType="com.tgb.model.Themetype" resultType="java.lang.Integer">
+		select count(*) from TT_TYPE where PARENT_ID =#{pId} and TYPE_CODE=#{code} AND IS_DEL=0
+	</select>
+	<!-- 查询当前节点下name，code是否已经存在 -->
+	<select id="find2"  parameterType="com.tgb.model.Themetype" resultType="java.lang.Integer">
+		select count(*) from TT_TYPE where PARENT_ID =#{pId} and TYPE_NAME=#{name} AND IS_DEL=0
+	</select>
+	
+	
+	<insert id="save" parameterType="com.tgb.model.Themetype">
+		insert into TT_TYPE(T_TYPE_ID,TYPE_NAME,PARENT_ID,IS_DEL) values(SEq_TYPE.NEXTVAL,#{name},#{pId},#{is_del})
+	</insert>
+	
+	
+	<!-- 删除分类 -->
+	<update id="delete" parameterType="int">
+	    update tt_type set is_del=1  where T_TYPE_ID=#{id}
+	</update>
+	
+	<!-- 查询所有的子节点数目。便于新增节点时命名 -->
+	<select id="findId" parameterType="int" resultType="java.lang.Integer">
+		select count(*) from TT_TYPE where PARENT_ID=#{id} AND IS_DEL=0
+	</select> 
+	
+	<!-- 根据分类父id和 分类名称查询id。用于刚新增后页面id负值 -->
+	<select id="findtypeId" parameterType="java.util.HashMap" resultType="int">
+	select t_type_id from TT_TYPE where parent_id=#{pId} and type_name=#{typeName} AND IS_DEL=0
+	</select>
+	
+	
+	
+		<!-- 查看名称是否存在了 -->
+	<select id="updateTypes" parameterType="com.tgb.model.Themetype" resultType="int">
+      select count(*) from tt_type where parent_id=#{pId} AND IS_DEL=0 and  T_TYPE_ID  <![CDATA[<]]><![CDATA[>]]>  #{id} and type_name=#{name}
+	</select> 
+	
+	
+	
+	<update id="updateType" parameterType="com.tgb.model.Themetype" >
+	 update tt_type set type_name=#{name} where  T_TYPE_ID=#{id}
+	</update>
+	
+	
+	<!-- 根据分类id查询分类名称 -->
+	<select id="findTypeName" parameterType="int" resultType="string">
+	select type_name from tt_type where t_type_id=#{typeId} 
+	</select>
+	
+</mapper>

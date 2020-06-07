@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.ModuleMapper">
+
+	<resultMap id="Module" type="com.tgb.model.Module2">
+	   <id property="id" column="MODULE_ID"/>
+	   <result property="name" column="MODULE_NAME"/>
+	   <result property="pId" column="PARENT_ID"/>
+	   <result property="module_url" column="MODULE_URL"/>
+	   <result property="is_del" column="IS_DEL"/>
+	</resultMap>	
+	<insert id="save" parameterType="com.tgb.model.Module">
+		<selectKey resultType="integer" order="AFTER" keyProperty="module_id">
+			select seq_module.currval from dual		
+		</selectKey>
+		insert into tt_module(module_id,module_url,module_name,parent_id,project_id) values(seq_module.nextval,#{module_url},#{module_name},#{parent_id},#{project_id})
+	</insert>
+	
+	<update id="update" parameterType="com.tgb.model.Module">
+		update tt_module set module_url=#{module_url},module_name=#{module_name},parent_id=#{parent_id} where module_id=#{module_id}
+	</update>
+	<!-- 
+	<delete id="delete" parameterType="int">
+		delete from tt_module where module_id=#{module_id}
+	</delete>
+	 -->
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="com.tgb.model.Module">		
+		select * from tt_module where module_id=#{module_id} and  is_del=0
+	</select>
+	
+	<select id="findAll" resultType="com.tgb.model.Module">
+		select * from tt_module where is_del=0
+	</select>
+	<select id="findByName" parameterType="string" resultType="com.tgb.model.Module">
+		select * from tt_module where module_name=#{module_name} and  is_del=0
+	</select>	
+	<select id="findCount"  resultType="Integer">
+		select count(*) from tt_module where is_del=0
+	</select>	
+	<!-- ****************************************以下是使用分类方法****************************************** -->
+<!-- 查询所有节点，形成树状 -->
+	<select id="findmodule" parameterType="int"  resultMap="Module">
+		select * from tt_module WHERE project_id=#{project_id} and IS_DEL=0
+	</select>
+	
+	<!-- 根据父id，查出所有字节点，用于写入表中 -->
+	<select id="find"  parameterType="int" resultMap="Module">
+		select * from tt_module where PARENT_ID=#{parent_id} AND IS_DEL=0
+	</select>
+	
+	<!-- 查询当前节点下name，URL是否已经存在 -->
+	<select id="find1"  parameterType="com.tgb.model.Module" resultType="java.lang.Integer">
+		select count(*) from tt_module where PARENT_ID =#{parent_id} AND IS_DEL=0
+	</select>
+	<!-- 查询当前节点下name，URL是否已经存在 -->
+	<select id="find2"  parameterType="com.tgb.model.Module" resultType="java.lang.Integer">
+		select count(*) from tt_module where project_id=#{project_id} and PARENT_ID =#{parent_id} and module_name=#{module_name} AND IS_DEL=0
+	</select>
+	
+	<!-- 
+	<insert id="save" parameterType="com.tgb.model.Module">
+		insert into tt_module(module_id,module_name,PARENT_ID,IS_DEL) values(SEQ_MODULE.NEXTVAL,#{module_name},#{parent_id},#{is_del})
+	</insert>
+	 -->
+	
+	<!-- 删除机构 -->
+	<update id="delete" parameterType="int">
+	    update tt_module set is_del=1  where module_id=#{module_id}
+	</update>
+	
+	<!-- 查询所有的子节点数目。便于新增节点时命名 -->
+	<select id="findId" parameterType="int" resultType="java.lang.Integer">
+		select count(*) from tt_module where PARENT_ID=#{parent_id} AND IS_DEL=0
+	</select> 
+	<!-- 查询所有的子节点id。 -->
+	<select id="findByParent_Id" parameterType="int" resultType="java.lang.Integer">
+		select module_id from tt_module where PARENT_ID=#{parent_id} AND IS_DEL=0
+	</select> 	
+	
+	<!-- 根据分类父id和 分类名称查询id。用于刚新增后页面id负值 -->
+	<select id="findmoduleId" parameterType="java.util.HashMap" resultType="int">
+	select module_id from tt_module where parent_id=#{parent_id} and module_name=#{module_name} AND IS_DEL=0
+	</select>
+
+	
+	<!-- 查看名称是否存在了 -->
+	<select id="updateModules" parameterType="com.tgb.model.Module" resultType="int">
+      select count(*) from tt_module where project_id=#{project_id} and parent_id=#{parent_id} AND IS_DEL=0 and  module_id  <![CDATA[<]]><![CDATA[>]]>  #{module_id} and module_name=#{module_name}
+	</select> 
+
+	
+	<update id="updateModule" parameterType="com.tgb.model.Module" >
+	 update tt_module set module_name=#{module_name},module_url=#{module_url},project_id=#{project_id} where  module_id=#{module_id}
+	</update>
+	
+	
+	<!-- 根据分类id查询分类名称 -->
+	<select id="findModuleName" parameterType="int" resultType="string">
+		select module_name from tt_module where module_id=#{module_id} 
+	</select>	
+</mapper>

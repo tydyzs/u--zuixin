@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace：必须与对应的接口全类名一致
+	id:必须与对应接口的某个对应的方法名一致
+	
+ -->
+<mapper namespace="com.tgb.mapper.TsubjectMapper">
+	
+	<insert id="save" parameterType="Tsubject">	
+		<selectKey resultType="integer" order="AFTER" keyProperty="subject_id">
+			select seq_subject.currval from dual		
+		</selectKey>
+		insert into tt_tsubject(subject_id,subject_name,t_type_id,setman,setdate,modify_date,is_function,is_groupby,is_order,is_del,themebz) values(seq_subject.nextval,#{subject_name},#{t_type_id},#{setman},#{setdate},#{modify_date},#{is_function},#{is_groupby},#{is_order},#{is_del},#{themebz})
+	</insert>
+	
+	<update id="update" parameterType="Tsubject">
+		update tt_tsubject set subject_name=#{subject_name},t_type_id=#{t_type_id},setman=#{setman},setdate=#{setdate},modify_date=#{modify_date},is_function=#{is_function},is_groupby=#{is_groupby},is_order=#{is_order},is_del=#{is_del}  where subject_id=#{subject_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from tt_tsubject where subject_id=#{subject_id}
+	</delete>
+	
+	 <!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路劲 -->  
+	<select id="findById" parameterType="int" resultType="Tsubject">
+		select subject_id,subject_name,t_type_id,setman,setdate,modify_date,is_function,is_groupby,is_order,is_del from tt_tsubject where subject_id=#{subject_id}
+	</select>
+	
+	<select id="findAll" resultType="Tsubject">
+		select subject_id,subject_name,t_type_id,setman,setdate,modify_date,is_function,is_groupby,is_order,is_del from tt_tsubject where is_del=0
+	</select>
+	
+	<!-- 根据主题ID删除业务主题(修改是否删除的字段) -->
+	<update id="delete_1" parameterType="int">
+		update  tt_tsubject set is_del=1 where subject_id=#{id} 
+	</update>
+	<!-- 根据主题名称模糊查询业务主题 -->
+	<select id="querySubject" parameterType="string" resultType="com.tgb.model.Tsubject">
+		select * from tt_tsubject where subject_name like CONCAT(CONCAT('%',#{subjectName}),'%') and is_del=0
+	</select>
+	<!-- 根据主题名称模糊查询业务主题 -->
+	<select id="checkSubject" parameterType="Tsubject" resultType="Integer">
+		select count(*) from tt_tsubject where subject_name = #{subject_name} and t_type_id=#{t_type_id} and is_del=0
+	</select>	
+	<select id="findById_2" parameterType="int" resultType="java.util.HashMap">
+		select a.*,b.type_name from tt_tsubject a join tt_type b on a.t_type_id = b.t_type_id where subject_id=#{subject_id}
+	</select>	
+	<select id="findTableById" parameterType="int" resultType="java.util.HashMap">
+		select a.*,b.s_tables_id s_tables_id_2 from tt_s_tables a join tt_old_tables b on a.e_name=b.e_name where a.subject_id=#{subject_id}
+	</select>
+	<select id="findColById" parameterType="int" resultType="java.util.HashMap">
+		select a.*,b.e_name,b.c_name from tt_include_col a join tt_s_tables b on a.s_tables_id=b.s_tables_id where a.subject_id=#{subject_id}
+	</select>	
+	<select id="findConById" parameterType="int" resultType="java.util.HashMap">
+		select * from tt_tcon where subject_id=#{subject_id}
+	</select>
+	<select id="findWhereById" parameterType="int" resultType="com.tgb.model.Twhere">
+		select where_id,l_bracket,s_tables_id,e_name,c_name,include_col_id,col_e_name,col_c_name,operator,col_value,r_bracket,connector,subject_id from tt_twhere where subject_id=#{subject_id} order by where_id
+	</select>
+	<select id="findFunctionById" parameterType="int" resultType="java.util.HashMap">
+		select * from tt_tfunction where subject_id=#{subject_id}
+	</select>
+	<select id="findGroupById" parameterType="int" resultType="java.util.HashMap">
+		select * from tt_tgroup where subject_id=#{subject_id}
+	</select>	
+	<update id="delete_subject" parameterType="int">
+		update  tt_tsubject set is_del=1 where subject_id=#{id}		
+	</update>
+	<update id="delete_useSubject" parameterType="int">		
+		update  tt_use_subject set is_del=1 where subject_id=#{id}
+	</update>
+	<!-- 根据表名称模糊查询表 -->
+	<select id="queryOld_table" parameterType="string" resultType="com.tgb.model.Old_tables">
+		<!--select * from tt_old_tables where c_name like CONCAT(CONCAT('%',#{c_name}),'%')-->
+		select distinct a.* from tt_old_tables a
+		join
+		tt_old_inc_col b
+		on
+		a.s_tables_id=b.s_tables_id
+		where 
+		a.c_name like CONCAT(CONCAT('%',#{c_name}),'%')
+		or
+		b.col_c_name like CONCAT(CONCAT('%',#{c_name}),'%')
+	</select>
+	<!-- 定义主题总数 -->
+	<select id="findSubjects_count" resultType="Integer">
+		select count(*) from tt_tsubject where is_del=0
+	</select>
+	
+	<!-- 查询所有的主题，按照时间排序 -->
+	<select id="AllSubjects" parameterType="int" resultType="com.tgb.model.Tsubject">
+	<![CDATA[	
+	select * from (select t.*,rownum rn from (select subject_id,subject_name from TT_TSUBJECT where is_del=0 order by SETDATE desc) t ) where rn>(#{currentPage}-1)*20 and rn<=#{currentPage}*20	
+	 ]]>
+	</select>	
+	
+	<!-- 根据usercode查询username -->
+	<select id="finduser" parameterType="string" resultType="map">
+     select user_id ,user_code ,user_name from tt_user_new where station=0 and user_code=#{usercode}
+    </select>										
+</mapper>
