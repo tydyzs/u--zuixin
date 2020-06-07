@@ -1,0 +1,38 @@
+ function lincun(){
+		    	// alert(1); 
+		    	 
+		    	var map=["0021","00","44344","4444" ];
+		    	mm(map);
+		    	// $("#ljf2").attr("or");
+		    }
+		    
+		    
+		    function mm(map){
+		    	var z=0;
+		    	for(var key in map){
+		    		if(map[key].indexOf(",")!=-1){
+		    		z=1;	
+		    		}
+		    	}
+		    	if(z==1){
+		    		alert("别名不能有逗号啊！");
+		    		return;
+		    	}
+		    	for(var key in map){
+		    		var str=map.join()+","//0,2,3,2
+		    		var v=map[key];
+		    		str=str.replace(v+",","");
+		    		str=","+str;
+		    		var n=str.indexOf(","+v+",");
+		    		if(n!=-1){
+		    			alert("名称有重复");
+		    			return;
+		    		}
+		    	}
+		    	alert("成功");
+		    }
+		    
+		    
+		    
+		    
+		    

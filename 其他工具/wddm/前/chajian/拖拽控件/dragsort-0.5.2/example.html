@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>DragSort Example</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<script type="text/javascript" src="../banner/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="jquery.dragsort-0.5.2.min.js"></script>
+	
+	<ul class="list2">
+		<li><div>10</div></li>
+		<li><div>11</div></li>
+		<li><div>12</div></li>
+		<li><div>13</div></li>
+		<li><div>14</div></li>
+		<li><div>15</div></li>
+		<li><div>16</div></li>
+		<li><div>17</div></li>
+		<li><div>18</div></li>
+	</ul>
+
+
+	<script type="text/javascript">
+		$(".list2").dragsort({ dragSelector: "div", dragBetween: true, dragEnd: saveOrder, placeHolderTemplate: "<li class='placeHolder'><div></div></li>" });
+		
+		function saveOrder() {
+			//var data = $("#list1 li").map(function() { return $(this).children().html(); }).get();
+			//$("input[name=list1SortOrder]").val(data.join("|"));
+		};
+	</script>
+</body>
+</html>

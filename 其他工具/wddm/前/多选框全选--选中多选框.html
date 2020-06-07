@@ -1,0 +1,39 @@
+﻿<!doctype html>
+
+<html>
+
+    <head>
+
+             <title>模板</title>
+
+             <META CHARSET="UTF-8"/>
+  
+  
+       <script>
+      	var num=1;
+	function abc(){
+		num++;
+		var aaa=$(".aaa");
+		for(var i=0;i<aaa.length;i++){
+			if(num%2==0){
+				 aaa[i].checked=true;
+			}else{
+			     aaa[i].checked=false;
+			}
+			 
+		}
+	}
+	</script>  
+    </head>
+     
+     
+    
+     <body>
+
+          <td><input id="bbb" type="checkbox" onclick="abc()"></td>
+          <td><input class="aaa" type="checkbox" name="text"></td>
+          <td><input class="aaa" type="checkbox" name="text"></td>
+          <td><input class="aaa" type="checkbox" name="text"></td>  
+     </body>
+
+</html>

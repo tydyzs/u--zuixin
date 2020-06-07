@@ -1,0 +1,50 @@
+public List<Map> resultdata(String sql) throws Exception{
+		String driverclass="oracle.jdbc.driver.OracleDriver";
+		String url="jdbc:oracle:thin:@150.21.9.70:1521:orcl";
+		String username="system";
+		String password="idata";
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		
+		 Class.forName(driverclass) ;
+		 con=DriverManager.getConnection(url, username, password);
+		 ps=con.prepareStatement(sql);
+		 rs=ps.executeQuery();
+		 
+		 ResultSetMetaData rsmd=rs.getMetaData();
+		 
+		 
+		 
+		 String key="";
+		 Object value="";
+		
+		 
+		 
+		 List  s=new ArrayList();
+		 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+			  s.add(rsmd.getColumnName(i));
+		} 
+		 
+		 List<Map> listdata=new ArrayList<Map>();
+		 while(rs.next()){
+			 Map map=new HashMap();
+			 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+				 System.out.println(s.get(i-1));
+				map.put(s.get(i-1), rs.getString(i));
+				System.out.println(11);
+			}
+			listdata.add(map); 
+			 System.out.println(55);
+		 }
+			
+			try {
+				rs.close();
+				con.close();
+				ps.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return listdata;
+	}

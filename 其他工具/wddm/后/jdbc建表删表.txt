@@ -1,0 +1,33 @@
+//数据库建表删表
+	public static void issql(String sql){
+		String driverclass="oracle.jdbc.driver.OracleDriver";
+		String url="jdbc:oracle:thin:@150.21.8.27:1521:orcl";
+		String username="zengcheng";
+		String password="Idatatech2016!";
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		
+		try {
+		 Class.forName(driverclass) ;
+		 con=DriverManager.getConnection(url, username, password);
+		 ps=con.prepareStatement(sql);
+		 rs=ps.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("建表失败",e);
+		}finally{
+			
+			try {
+				rs.close();
+				con.close();
+				ps.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}	
+
+		
+	}

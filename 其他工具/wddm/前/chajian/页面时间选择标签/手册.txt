@@ -1,0 +1,6 @@
+1.讲My97DatePicker文件夹放入webRoot下。
+2.head标签映入js如下。根据路径写src
+   <script language="javascript" type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
+3.body中需要的地方写：
+                ----根据需求写年月日十分秒
+    <input class="Wdate" type="text" onClick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd-HH-mm-ss'})">

@@ -1,0 +1,24 @@
+js：
+
+
+ //打开音乐
+	   function xiaoximp3(){
+		   
+		 //测试音乐
+    	   //方法1，通过改变显示隐藏，播放
+    	   var mp='<audio  style="display:none;" controls="controls" loop="loop" hidden="hidden" autoplay="autoplay" >'+
+    	  '<source src="mp3/qq.mp3" type="audio/mpeg" />'+
+    	 ' </audio> '; 
+    	   $("#mp3div").append(mp);
+    	   
+	   }
+
+
+
+
+html：
+
+
+	<div style="display:none;" id="mp3div">
+
+        </div>

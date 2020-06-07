@@ -1,0 +1,4 @@
+  
+
+1.object---->str
+  String json_str=JSONObject.toJSONString(map_result, SerializerFeature.UseSingleQuotes);

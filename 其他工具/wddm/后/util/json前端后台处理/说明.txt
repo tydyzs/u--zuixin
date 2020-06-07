@@ -1,0 +1,11 @@
+2.a。json后台：
+    java对象转换成json字符串。json字符串转换成map。-----详情见TestJson包
+  b。前端jquery  json：
+     json字符串转json对象：jQuery.parseJSON(jsonStr);
+     json对象转json字符串：JSON.stringify(jsonObj);
+  
+          例如：var jsonstr='{"性别":"男","姓名":"张三","年龄":28}';
+    	var data=jQuery.parseJSON(jsonstr);
+    	alert(data.姓名);
+    	var str=JSON.stringify(data);
+    	alert(str)

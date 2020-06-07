@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<!-- 先布局再面板 -->
+<html>
+  <head>
+    
+    <title>My JSP 'index.jsp' starting page</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	
+	
+	<link rel="stylesheet" type="text/css" href="../util/easyui/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../util/easyui/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../util/easyui/easyui/demo/demo.css">
+	<script type="text/javascript" src="../util/easyui/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../util/easyui/easyui/jquery.easyui.min.js"></script>
+	
+	
+	
+	
+	
+	<link href="../util/LigerUI/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <script src="../util/LigerUI/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>   
+    <script src="../util/LigerUI/lib/ligerUI/js/core/base.js" type="text/javascript"></script>
+    <script src="../util/LigerUI/lib/ligerUI/js/plugins/ligerTree.js" type="text/javascript"></script>
+    <script src="../util/LigerUI/lib/ligerUI/js/plugins/ligerAccordion.js" type="text/javascript"></script>
+	
+    <%-- <link href="../util/LigerUI/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" /> --%>
+    <script src="../util/LigerUI/lib/ligerUI/js/plugins/ligerGrid.js" type="text/javascript"></script>
+    <script src="../util/LigerUI/lib/ligerUI/js/plugins/ligerTab.js" type="text/javascript"></script>
+    <script src="../util/LigerUI/lib/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script>
+	<script src="../util/LigerUI/lib/ligerUI/js/ligerui.all.js" type="text/javascript"></script>
+	
+	
+	
+
+	
+  </head>
+  
+ <body class="easyui-layout">
+	<div data-options="region:'north',border:false" style="height:40px;background:#B3DFDA;padding:10px">
+	  通用统计系统
+	</div>
+	<div id="west_id" data-options="region:'west',split:true,title:'菜单栏'" style="width:200px;padding:0px;">
+			
+			
+			<a onclick="add()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加菜单</a>
+			
+			<!-- ligerui菜单列表 -->
+			   <div id="accordion1"> 
+		         <div id="theme" title="定义主题" >
+		              <ul>
+		                    <li  href="test1.jsp">主题内容</li>
+		                    <li  href="test2.jsp">主题列表</li>
+		                </ul>
+		        </div>
+		         <div title="主题实例">
+		                <ul>
+		                    <li  href="test1.jsp">实例内容</li>
+		                    <li  href="test2.jsp">实例列表</li>
+		                </ul>
+		        </div> 
+		       <!--  <div title="主题分类" > 
+		                 <ul>
+		                    <li  href="test1.jsp">新增分类</li>
+		                    <li  href="test1.jsp">分类管理</li>
+		                </ul>
+		        </div> -->
+		       </div> 
+	</div>
+	<!-- <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
+	<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div> -->
+	<div id="easyui_center" data-options="region:'center',title:'内容'">
+	     
+	     
+	     	<div id="navtab1" style="width:100%;">
+				<div tabid="home" title="我的主页" lselected="true"  >
+				<iframe id="homepages" style="" frameborder="0" name="showmessage" src=""></iframe> 
+				</div>
+				
+				<!-- <div  title="我的主页2" showClose="true">
+				<div id="maingrid2" style="margin:10px; height:500px;">我的主页2</div>
+				</div> -->
+			</div>
+		</div>
+</body>
+
+	<script type="text/javascript">
+	var hr="../";
+	$(function(){
+		$("#navtab1").bind("contextmenu", function(){
+		    return false;
+		})
+
+        $("#accordion1").ligerAccordion(//初始化左侧菜单列表
+        {
+            height: 600
+        });
+        //下面两行设置初始时第一个标签默认关闭
+        $("#accordion1").children().eq(0).children().eq(0).attr("class","l-accordion-toggle l-accordion-toggle-close");
+        $("#accordion1").children().eq(1).hide();
+        
+        $("#navtab1").ligerTab(); //初始化标签
+        //$("#theme").attr("data-icon"+hr+"util/LigerUI/lib/images/topicon.gif")
+        
+        
+        $("#accordion1").find("li").click(function(){//菜单单击事件
+        	 caidan_onclick($(this));
+        });
+       
+        //主界面初始化
+        $("#homepages").attr("src",hr+"jsp/test1.jsp")
+        
+        
+	})
+	
+	
+	
+	 //点击菜单弹出当前页面的方法
+	function caidan_onclick(obj){
+		var href_n=hr+"jsp/"+obj.attr("href");
+        var name=obj.html();
+        var id=obj.attr("href").replace(".","");
+        //id=name;
+        var str=Math.random()*100000000+"";
+        id=str.substring(0,str.indexOf(".")-1);
+    	$("#navtab1").ligerGetTabManager().addTabItem({
+    		tabid: id,//控制标签不可重复添加
+    		text:name,
+    		url: href_n,
+   		    callback: function ()
+            {
+   		    	//alert(id);
+            }
+    		});//新增tab
+	}
+	
+	
+	function add(){
+		//alert("新增菜单");return
+		var jspname="test2.jsp";
+		var titles="主题分类";
+		
+		var caidan= '<div title="主题分类" >'+
+				            '<ul>'+
+						        '<li  href="test1.jsp">新增分类</li>'+
+						        '<li  href="test1.jsp">分类管理</li>'+
+				    		'</ul>'+
+			    		'</div>';
+		var ul_div_list=$("#accordion1").find("ul").parent();	 
+		for (var int = 0; int < ul_div_list.length; int++) {
+			var titles_div=ul_div_list.eq(int).prev().children().eq(1).html();
+			ul_div_list.eq(int).attr("title",titles_div);
+			ul_div_list.eq(int).removeAttr("class");
+			ul_div_list.eq(int).removeAttr("style");
+		}
+		var object = $.extend({} , ul_div_list,  $(caidan)); 
+		
+		$("#accordion1").html("");
+		$("#accordion1").removeAttr("class");
+		$("#accordion1").removeAttr("ligeruiid");
+		$("#accordion1").removeAttr("style");
+		
+		$("#accordion1").append(ul_div_list);
+		$("#accordion1").append($(caidan));
+		 $("#accordion1").ligerAccordion(//初始化左侧菜单列表
+			        {
+			           // height: 600//若控制大小，行太多将无法显示滚动条
+			        });
+		 $("#accordion1").children().eq(0).children().eq(0).attr("class","l-accordion-toggle l-accordion-toggle-close");
+		 $("#accordion1").children().eq(1).hide();
+		 $("#accordion1").find("li").click(function(){//菜单单击事件
+        	 caidan_onclick($(this));
+        });
+	}
+	
+	
+	
+	
+	
+	
+	</script>
+	 <style type="text/css">
+        body{ padding:20px; margin:0;}
+        #accordion1{ width:100%;overflow:hidden;text-align:center;}
+        #accordion1 li{ width:90%;height:30px; 
+                        background-color:#fea; margin:10px;
+                        font-size:20px ;text-align:center;
+                        cursor:pointer;
+                        
+                        }
+    </style>
+</html>

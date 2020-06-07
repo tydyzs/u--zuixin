@@ -1,0 +1,46 @@
+
+
+1.id选择器： var obj=mini.get("zgswjg")
+  获取元素id：var id=obj.getValue();
+  获取元素value:var va=obj.getText();
+
+2。确认框：
+   mini.confirm("是否确认发布？","确认",function(action){
+		if(action == "ok"){
+			Save(data);
+		}else{
+			return;
+		}
+	});
+
+3.json数组的字符串 转 数据对象（list<json>）
+
+  var data=mini.decode(str);//   "[{"XQBH":"0"}]" ----[{"XQBH":"0"}]
+  相反：var str=mini.encode(data);
+
+4.表格中数据获取成 数据对象（list<json>）
+
+ var data= mini.get("tableid").getData();
+//key为   <div id="tableid" class="mini-datagrid..."<div field="key1"...
+
+5.获取mini对象
+
+   *获取from对象
+      <div id="search_area">....<input>...
+
+   	var fromobj=new mini.Form("search_area");
+	fromobj.reset();//重置：清空from中所有填写
+   *获取表格对象
+  var grid_obj= mini.get("datagrid");
+	例（对表格进行查询）：grid_obj.load(queryData);
+      <div id="datagrid" class="mini-datagrid"
+			url="/fxgl_fxjh_search.json?logic-name=fxgl_fxjh_search"
+			...
+			<div property="columns">
+				<div type="checkcolumn" width="10" field="JHBH"></div>
+				<div field="JHMC" name="JHMC" headeralign="center" allowsort="true"
+					align="left" width="120">风险模型名称</div>
+6.表格设置数据：
+   var grid_obj= mini.get("datagrid");
+	grid_obj.setData(list_json);
+7.重新获取数据（刷新表单）：mini.get("tableid").load();或mini.get("tableid").load(canshu_json);

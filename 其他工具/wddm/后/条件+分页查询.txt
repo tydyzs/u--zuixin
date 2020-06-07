@@ -1,0 +1,42 @@
+  <select id="CJMX" parameterType="com.idata.syjk.modules.act.utils.CallUtil" resultMap="Call">
+      select * from(select rownum ro, CJ.* 
+     FROM(select * from SYS_CJ_LIST) CJ
+     where 1=1 
+        <if test="swjg!=null">
+        and TAX_NAME=#{swjg}
+        </if>
+         <if test="sgy!=null">
+        and TAX_STAFF=#{sgy}
+        </if>
+        <if test="yes!=null">
+        and IS_PAYMENT=#{yes}
+        </if>
+        <if test="tName!=null">
+        and NAME=#{tName}
+        </if>
+        <if test="sshy!=null">
+        and INDUSTRY_TYPE=#{sshy}
+        </if>
+        <if test="unitType!=null">
+        and PAY_UNIT_TYPE=#{unitType}
+        </if>
+        <if test="cjfs!=null">
+        and REMINDER_WAY=#{cjfs}
+        </if>
+        <if test="jibie!=null">
+        and TASKLEVEL=#{jibie}
+        </if>
+        <if test="bianhao!=null">
+        and ID=#{bianhao}
+        </if>
+          ) C 
+       
+      where 1=1 
+         <if test="starNumber!=null">
+          and C.RO>=#{starNumber}
+        </if>
+        <if test="shutdNumber!=null">
+          and C.RO <![CDATA[ <]]> #{shutdNumber}
+        </if>
+     
+  </select> 

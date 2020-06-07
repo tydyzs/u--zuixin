@@ -1,0 +1,24 @@
+将文件夹放入项目下，
+
+例子路径：/sbfxt/WebContent/shc/          ------------        zTree_v3-master/demo/cn/super/select_menu.html
+
+                                             --------zTree_v3-master/demo/cn/oneroot.html
+
+不同页面：$(document).ready(function(){}   函数中ajax一样   回调后zNodes=result.data; 下面的不定格式不同
+
+
+
+
+数据库数据。id和pid（父id）
+
+
+
+js展开：
+
+被展开  id:w_type_id（需要展开其父id才能看到此元素）
+function expandNode(e){
+var zTree=$.fn.zTree.init($(#treeDemo"),setting,zNode);
+var node=zTree.getNodeByParam("id",w_type_id);//找到id对应的节点
+var nodes=zTree.getNodeByParam("id",w_type_id);//找到父节点
+zTree.expandNode(nodes,true,null,null,null);//展开父元素；
+}

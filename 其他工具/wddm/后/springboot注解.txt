@@ -1,0 +1,8 @@
+1.校验注解：
+	1.@NotBlank：【支持数据类型：CharSequence】
+	　　检查字符序列 是否为空，以及去空格后的长度是否大于 0。  与@NotEmpty 的不同之处在于，此约束只能应用于字符序列，并且忽略尾随空格。
+	2. @NotNull：【支持数据类型：任何类型】
+	　　检查值是否 不为null
+	3. @NotEmpty：【支持数据类型：CharSequence, Collection, Map, arrays】
+	　　检查元素是否为 null 或 空
+	 4.@Digits(integer=22, fraction=2)：【支持的数据类型： BigDecimal, BigInteger,】 

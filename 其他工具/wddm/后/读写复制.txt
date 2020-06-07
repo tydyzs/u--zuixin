@@ -1,0 +1,46 @@
+public static void main(String[] args) throws Exception {
+		
+		
+	/*	//方法一：成功
+
+		RandomAccessFile f=new RandomAccessFile("C:/Users/Administrator/Desktop/666.txt","rw");
+		
+		
+		RandomAccessFile f2=new RandomAccessFile("C:/Users/Administrator/Desktop/复制后.txt","rw");
+		
+		
+		int a;byte[] by=new byte[1024];
+		while((a=f.read(by))!=-1){
+			f2.write(by,0,a);
+		}
+		
+		f.close();
+		f2.close();
+		System.out.println("复制完毕");*/
+		
+		
+		//方法二：成功
+        FileInputStream in=new FileInputStream("C:/Users/Administrator/Desktop/666.txt");
+		FileOutputStream out=new FileOutputStream("C:/Users/Administrator/Desktop/复制后.txt");
+		
+		//一个一个读写		
+	/*	int b;	
+		while((b=in.read())!=-1){
+			out.write(b);
+		}*/
+		
+		//批量读写
+		int b;
+		byte[] by=new byte[1024];
+		while((b=in.read(by))!=-1){
+			out.write(by,0,b);
+		}
+
+		
+
+		in.close();
+		out.close();
+		System.out.println("复制完毕");
+		
+		
+	}

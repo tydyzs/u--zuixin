@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Basic DataGrid - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+	<h2>Basic DataGrid</h2>
+	<p>The DataGrid is created from markup, no JavaScript code needed.</p>
+	<div style="margin:20px 0;"></div>
+	
+	<table id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:700px;height:250px"
+			data-options="singleSelect:false,collapsible:true,
+			rownumbers:true,
+				autoRowHeight:false,
+				pagination:true,
+				pageSize:10">
+		<thead>
+			<tr>
+				<th data-options="field:'col1',width:80">Item ID</th>
+				<th data-options="field:'col2',width:100">Product</th>
+				<th data-options="field:'col3',width:80,align:'right'">List Price</th>
+				<th data-options="field:'col4',width:80,align:'right'">Unit Cost</th>
+				<th data-options="field:'col5',width:250">Attribute</th>
+				<th data-options="field:'col6',width:60,align:'center'">Status</th>
+			</tr>
+		</thead>
+	</table>
+
+</body>
+
+<script>
+
+		$(function(){
+		var datas={"total":28,"rows":[
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+]}
+			$('#dg').datagrid({data:datas.rows}).datagrid('clientPaging');
+		});
+	</script>
+</html>

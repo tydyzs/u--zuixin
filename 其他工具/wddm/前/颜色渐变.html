@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+    <head>
+             <title>表格</title>
+             <META CHARSET="UTF-8"/>
+             <style type="text/css">
+	         	 #d1,#d2,#d3,#d4,#d5,#d6{ 
+                border：10px solid red;
+                width:1500px;
+                height:80px;
+                margin:10px;
+                background-color:#0ea8d8; }
+             </style>
+             
+           
+            
+           <script type="text/javascript">
+           function DivHight(){
+            var a=50;
+            var d=150;
+            var c=200;
+            var v1=true;
+            var v2=true;
+            var v3=true;
+             var id=setInterval(function(){
+     
+        
+        if(v1){
+        a+=1;
+        }else{
+        a-=1;
+        }
+        if(v2){
+        d+=6;
+        }else{
+        d-=6;
+        }
+        if(v3){
+        c+=15;
+        }else{
+        c-=15;
+        }
+        
+        
+        if(a>255){
+        v1=false;
+        }
+        if(d>255){
+        v2=false;
+        }
+        if(c>255){
+        v3=false;
+        }
+        
+         if(a<0){
+        v1=true;
+        }
+        if(d<0){
+        v2=true;
+        }
+        if(c<0){
+        v3=true;
+        }
+	           var b1= "background-color:rgb("+a+","+d+","+c+");";
+	          //alert(b);
+	           var div1 = document.getElementById('d1'); 
+               div1.setAttribute("style",b1);
+               
+               var b2= "background-color:rgb("+a+","+c+","+d+");";
+	          //alert(b);
+	           var div2 = document.getElementById('d2'); 
+               div2.setAttribute("style",b2);
+               
+               var b3= "background-color:rgb("+d+","+c+","+a+");";
+	          //alert(b);
+	           var div3 = document.getElementById('d3'); 
+               div3.setAttribute("style",b3);
+               
+                var b4= "background-color:rgb("+d+","+a+","+c+");";
+	          //alert(b);
+	           var div4 = document.getElementById('d4'); 
+               div4.setAttribute("style",b4);
+               
+                var b5= "background-color:rgb("+c+","+d+","+a+");";
+	          //alert(b);
+	           var div5 = document.getElementById('d5'); 
+               div5.setAttribute("style",b5);
+               
+                var b6= "background-color:rgb("+c+","+a+","+d+");";
+	          //alert(b);
+	           var div6 = document.getElementById('d6'); 
+               div6.setAttribute("style",b6);
+               
+               
+               
+               
+	          },300);
+	        
+	           }
+           </script>
+           
+           
+           
+    </head>
+     
+     
+     <body id="b" onload="DivHight()">
+     <div id="d1"></div>
+     <div id="d2"></div>
+     <div id="d3"></div>  
+     <div id="d4"></div>
+     <div id="d5"></div>
+     <div id="d6"></div> 
+             
+     </body>
+
+
+</html>

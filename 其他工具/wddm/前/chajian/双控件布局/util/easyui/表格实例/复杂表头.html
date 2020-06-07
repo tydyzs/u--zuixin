@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Basic DataGrid - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/demo/demo.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+	<h2>Column Group</h2>
+	<p>The header cells can be merged. Useful to group columns under a category.</p>
+	<div style="margin:20px 0;"></div>
+	<table id="dg" class="easyui-datagrid" title="复杂表头" style="width:680px;height:250px"
+			data-options="rownumbers:false,singleSelect:false">
+		<thead>
+			<tr>
+				<th data-options="field:'col1',width:80" rowspan="2">Item ID</th>
+				<th data-options="field:'col2',width:100" rowspan="2">Product</th>
+				<th colspan="4">Item Details</th>
+			</tr>
+			<tr>
+				<th data-options="field:'col3',width:80,align:'right'">List Price</th>
+				<th data-options="field:'col4',width:80,align:'right'">Unit Cost</th>
+				<th data-options="field:'col5',width:240">Attribute</th>
+				<th data-options="field:'col6',width:60,align:'center'">Status</th>
+			</tr>
+		</thead>
+	</table>
+
+</body>
+
+<script>
+	(function($){
+			function pagerFilter(data){
+				if ($.isArray(data)){	// is array
+					data = {
+						total: data.length,
+						rows: data
+					}
+				}
+				var target = this;
+				var dg = $(target);
+				var state = dg.data('datagrid');
+				var opts = dg.datagrid('options');
+				if (!state.allRows){
+					state.allRows = (data.rows);
+				}
+				if (!opts.remoteSort && opts.sortName){
+					var names = opts.sortName.split(',');
+					var orders = opts.sortOrder.split(',');
+					state.allRows.sort(function(r1,r2){
+						var r = 0;
+						for(var i=0; i<names.length; i++){
+							var sn = names[i];
+							var so = orders[i];
+							var col = $(target).datagrid('getColumnOption', sn);
+							var sortFunc = col.sorter || function(a,b){
+								return a==b ? 0 : (a>b?1:-1);
+							};
+							r = sortFunc(r1[sn], r2[sn]) * (so=='asc'?1:-1);
+							if (r != 0){
+								return r;
+							}
+						}
+						return r;
+					});
+				}
+				var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
+				var end = start + parseInt(opts.pageSize);
+				data.rows = state.allRows.slice(start, end);
+				return data;
+			}
+
+			var loadDataMethod = $.fn.datagrid.methods.loadData;
+			var deleteRowMethod = $.fn.datagrid.methods.deleteRow;
+			$.extend($.fn.datagrid.methods, {
+				clientPaging: function(jq){
+					return jq.each(function(){
+						var dg = $(this);
+                        var state = dg.data('datagrid');
+                        var opts = state.options;
+                        opts.loadFilter = pagerFilter;
+                        var onBeforeLoad = opts.onBeforeLoad;
+                        opts.onBeforeLoad = function(param){
+                            state.allRows = null;
+                            return onBeforeLoad.call(this, param);
+                        }
+                        var pager = dg.datagrid('getPager');
+						pager.pagination({
+							onSelectPage:function(pageNum, pageSize){
+								opts.pageNumber = pageNum;
+								opts.pageSize = pageSize;
+								pager.pagination('refresh',{
+									pageNumber:pageNum,
+									pageSize:pageSize
+								});
+								dg.datagrid('loadData',state.allRows);
+							}
+						});
+                        $(this).datagrid('loadData', state.data);
+                        if (opts.url){
+                        	$(this).datagrid('reload');
+                        }
+					});
+				},
+                loadData: function(jq, data){
+                    jq.each(function(){
+                        $(this).data('datagrid').allRows = null;
+                    });
+                    return loadDataMethod.call($.fn.datagrid.methods, jq, data);
+                },
+                deleteRow: function(jq, index){
+                	return jq.each(function(){
+                		var row = $(this).datagrid('getRows')[index];
+                		deleteRowMethod.call($.fn.datagrid.methods, $(this), index);
+                		var state = $(this).data('datagrid');
+                		if (state.options.loadFilter == pagerFilter){
+                			for(var i=0; i<state.allRows.length; i++){
+                				if (state.allRows[i] == row){
+                					state.allRows.splice(i,1);
+                					break;
+                				}
+                			}
+                			$(this).datagrid('loadData', state.allRows);
+                		}
+                	});
+                },
+                getAllRows: function(jq){
+                	return jq.data('datagrid').allRows;
+                }
+			})
+		})(jQuery);
+
+
+		$(function(){
+		var datas={"total":28,"rows":[
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+	{"col1":"FI-SW-01","col2":"Koi","col3":10.00,"col4":"P","col5":36.50,"col6":"large"},
+]}
+			$('#dg').datagrid({data:datas.rows}).datagrid('clientPaging');
+		});
+	</script>
+</html>

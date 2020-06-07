@@ -1,0 +1,85 @@
+//文件写入数据库
+ //保存附件
+    public ImpResult save_enclosure(ImpParam param,File impFile,ImpResult ir,String fileid){
+    	   Map<String,String> result = new HashMap<String, String>();
+        //测试上传到数据库   
+           //fileid=param.getImpParamStr();
+           try {
+        	   FileInputStream in=new FileInputStream(impFile);
+               String filename=param.getImpFileName();
+                filename=impFile.getAbsolutePath();
+               
+            String driverclass="oracle.jdbc.driver.OracleDriver";
+       		String url="jdbc:oracle:thin:@150.12.58.239:1521:gdltfxgl";
+       		String username="fxgl";
+       		String password="fxgl";
+       		Connection con=null;
+       		PreparedStatement ps=null;
+       		String sql="insert into MXXQ_FILE values (?,?,?)";
+       		 Class.forName(driverclass) ;
+       		 con=DriverManager.getConnection(url, username, password);
+       		 ps=con.prepareStatement(sql);
+       		 ps.setString(1,fileid);
+       		 ps.setString(2,filename);
+       		 ps.setBinaryStream(3,in, in.available());
+       		 int rs=ps.executeUpdate();
+       		ps.close();
+    		con.close();
+    		in.close();
+    		 result.put("msg","上传成功");
+		} catch (Exception e) {
+			result.put("msg","上传失败");
+		}
+          
+           String json_str=JSONObject.toJSONString(result, SerializerFeature.UseSingleQuotes);
+           ir.setResultJSON(json_str);
+          ir.setHandleMessage(ir.getResultJSON());
+           return ir;
+           
+    }
+	
+	
+
+//获取数据库文件
+ if("update_file".equals(type)){//获取数据库文件写如服务器
+        	String file_id = vo.getRequestParameter("file_id");
+        	  try {
+               String driverclass="oracle.jdbc.driver.OracleDriver";
+          		String url="jdbc:oracle:thin:@150.12.58.239:1521:gdltfxgl";
+          		String username="fxgl";
+          		String password="fxgl";
+          		Connection con=null;
+          		PreparedStatement ps=null;
+          		String sql="select * from MXXQ_FILE where file_id=?";
+          		 Class.forName(driverclass) ;
+          		 con=DriverManager.getConnection(url, username, password);
+          		 ps=con.prepareStatement(sql);
+          		 ps.setString(1,file_id);
+          		 ResultSet rs=ps.executeQuery();
+          		 
+          		 while(rs.next()){
+          			 InputStream in=rs.getBinaryStream("FILE_CONTENT");
+          			 String file_path=rs.getString("FILE_PATH");//C:\workspace\fxglbzb\fxglbzbrun\daieweb\components\fileio\impfile\152600959763154046728\风险模型需求模板1.xlsx
+          			 file_path=file_path.replaceAll("\\\\","/");
+          			 File f=new File(file_path.substring(0,file_path.lastIndexOf("/")));
+       				 f.mkdir();
+          			 FileOutputStream out=new FileOutputStream(file_path);
+          			//批量读写
+          			int b;
+          			byte[] by=new byte[1024];
+          			while((b=in.read(by))!=-1){
+          				out.write(by,0,b);
+          			}
+          			in.close();
+          			out.close();
+          		 }
+          		ps.close();
+          		con.close();
+   		} catch (Exception e) {
+   			e.printStackTrace();
+   		}
+        }
+        
+        
+        
+    }

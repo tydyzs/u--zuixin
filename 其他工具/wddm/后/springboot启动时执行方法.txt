@@ -1,0 +1,17 @@
+
+
+1.类继承CommandLineRunner：
+
+@Component
+public class MinioClientUtils implements CommandLineRunner {
+
+2.添加启动方法
+@Override
+	public void run(String... args) throws Exception {
+		try{
+			this.client = new MinioClient(endpoint, accessKey, secretKey);
+			log.info("MinIo初始化成功！");
+		}catch (Exception E){
+			log.error(E.toString());
+		}
+	}

@@ -1,0 +1,42 @@
+ function bb() {
+	//isjson("参数一","参数二",3);
+	
+	var data_list=[];
+	
+	var ajax_s=[];
+	
+	var ajaxn
+	for (var int = 0; int < 5; int++) {
+		var sql="";
+		ajaxn=$.ajax({
+			url:hr+"user/duoxiancheng",
+			data:{"sql":sql},
+			type:"post",
+			dataType:"text",
+			//async:false,
+			success:function(result){
+				console.log(result);
+				data_list.push(result);
+			},
+			error:function(){
+				//失败
+				alert("验证失败！");
+			}
+		});	
+		ajax_s.push(ajaxn);
+	}
+	
+	
+	console.log("ajax开始异步执行");
+	 
+	/*  $.when(ajax1,ajax2).done(function(){
+		 console.log("全部执行完毕");
+		// alert("全部执行完毕");
+	 }); */
+       //apply方便动态参数传递
+	 $.when.apply(null,ajax_s).done(function(){
+		 console.log("全部执行完毕");
+		 console.log(data_list);
+		// alert("全部执行完毕");
+	 });
+}
