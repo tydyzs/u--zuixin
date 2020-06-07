@@ -1,0 +1,2816 @@
+﻿1KB (Kilobyte 千字节)=1024B，
+1MB (Megabyte 兆字节 简称“兆”)=1024KB，
+1GB (Gigabyte 吉字节 又称“千兆”)=1024MB，
+1TB (Trillionbyte 万亿字节 太字节)=1024GB，
+1PB（Petabyte 千万亿字节 拍字节）=1024TB，
+1EB（Exabyte 百亿亿字节 艾字节）=1024PB，
+1ZB (Zettabyte 十万亿亿字节 泽字节)= 1024 EB,
+1YB (Yottabyte 一亿亿亿字节 尧字节)= 1024 ZB,
+1BB (Brontobyte 一千亿亿亿字节)= 1024 YB.
+其中1024=2^10 ( 2 的10次方）
+
+
+
+
+一：java的历史：
+sun公司发现，每一个设备都有不同的语言。研发java语言1995
+高斯林--java之父
+oracle2009年收购sun公司，取得java的版权
+
+
+
+二：java的版本：
+javaSE（标准版）---桌面应用
+
+javaEE（企业版）---服务器开发
+
+javaME（微型版）---安卓(x)
+
+
+
+//*************
+linux 系统的命令：
+0.查看linux版本：cat /etc/redhat-release
+1."cd home"   跳转到当前目录下的home目录。。。
+     一："cd /":跳转到根目录
+     二："cd ..":返回上一级
+
+2."ls"   显示当前目录下的所有文件
+3."pwd"   显示当前目录的路径
+4."rm -rf aaa.txt"  :删除该目录下的aaa.txt文件（可删除文件夹）
+5."./startup.sh"  :启动文件
+6.切换用户：su - oracle
+7.退出shell：exit
+8.复制文件：cp test.txt /usr/local/test  (将当前文件夹的test.txt复制到test文件夹中 )
+            cp -r test  /usr/local(复制文件夹 -r:递归）
+9.linux给tomcat赋权
+  chmod +x -R /usr/local/apache-tomcat-test/bin/*
+10.编辑：vim test.txt 
+    a.开始编辑：i
+    b.结束编辑：Esc；
+    c.保存并退出：shift+:    输入wq
+	d.撤销和恢复：（推出编辑状态：u：撤销；ctrl+r:恢复）
+    e.搜索：esc后输入 /  弹出一个问好然受打字回车
+			再按n（小写）查看下一个匹配
+			按N(大写）查看上一个匹配，
+	
+    *************shell脚本（保存linux命令---新建文件保存为.sh文件）**********
+    1.输出string：echo "hello world!"
+11.tomcat配置jdk：catalina.sh  :  JRE_HOME="/usr/local/jdk1.7.0_55/jre"  
+12.解压：tar zxvf FileName.tar.gz；压缩：tar zcvf filename.tar.gz testfilename
+13，jdk环境变量：
+	export JAVA_HOME=/usr/local/java/jdk1.8.0_144
+	export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	export PATH=$JAVA_HOME/bin:$PATH
+   或
+      1.vim /etc/profile添加上面三行；
+      2.source /etc/profile(使上面设置生效）
+
+14.重启weblogic:
+    一，关闭weblogic
+		1.查看端口：netstat -ntpl | grep 9902
+		2.关闭端口：kill 2702  （kill -9 2702 ）-9强制结束
+	二，启动weblogic（后台）:   nohup ./startWebLogic.sh &
+15.打印文本内容：cat aaa.txt  
+16.查看历史命令：history
+17.查看端口进程（pid)：lsof -i:端口号
+ //******linux快捷键
+ 1.复制：ctrl+insert   ； 粘贴：shift+insert
+18.linux安装telnet
+	rpm -qa telnet （安装telnet）
+	yum install xinetd telnet telnet-server -y（安装telnet-server和xinetd）
+	vim /etc/xinetd.d/telnet（默认disable是yes，修改为no即可）
+	service xinetd restart（启动xinetd）
+	netstat -tnl|grep 23(验证xinetd是否启动）
+	chkconfig telnet on（telnet设置开机启动）
+19.创建目录/创建文件（-p:创建多层目录）：
+	 mkdir -p /var/temp/nginx/client
+	 touch /data/test.txt
+20.使配置文件立即生效：source /root/.bashrc（使文件“.bashrc”生效）
+
+21:iptables -F  （谨慎操作！清楚防火墙规则）全部都清除掉，
+   再次使用iptables -L -n查看，规则都不存在了 
+22.开机执行命令：
+		1.vim /etc/rc.local
+		2、加入如下启动命令 
+		svnserve -d -r /data/svn/svnrepos
+		
+23.将服务在后端启动：(在服务前后加nohup和&：nohup ...  &。此时会自动生成nohup.out存放日志，启动日志将不会在终端打印
+	fg ；bg +进程号分别改为前端和后端)
+	例如后台启动minio：nohup ./minio server /data/ucs/minio/Photos &
+
+参数说明：
+-a:是指archive的意思，也说是指复制所有的目录
+-d:若源文件为连接文件(link file)，则复制连接文件属性而非文件本身
+-f:强制(force)，若有重复或其它疑问时，不会询问用户，而强制复制
+-i:若目标文件(destination)已存在，在覆盖时会先询问是否真的操作
+-l:建立硬连接(hard link)的连接文件，而非复制文件本身
+-p:与文件的属性一起复制，而非使用默认属性
+-r:递归复制，用于目录的复制操作
+-s:复制成符号连接文件(symbolic link)，即“快捷方式”文件
+-u:若目标文件比源文件旧，更新目标文件
+（组合：-rf）
+****************************************************************************************
+项目处理：
+1.导入非.project项目。右键--Import--Projects from Folder or Archive
+2.将项目改为java项目（自动生成.project文件）。右键项目--properties--Project Facets
+3.修改项目编译jdk版本  右键项目--properties--Java Compiler
+4.设置项目编译文件目录：右键项目--java Build Path--Source--Default output folder : .../WEB-INF/classes
+***************************************************************************************
+src:存储源文件。bin：字节码文件
+
+
+
+
+四java运行原理
+编写源文件（.java文件）----编译器编译-----字节码文件（.class）----加载----java虚拟机---运行
+
+
+
+五java的开发环境
+
+
+       JDK：（Java开发工具）-----
+
+1.编译。运行等工具。
+2。JRE（java运行环境）---
+     a。java的系统类库
+     b。JVM（Java虚拟机）
+
+
+开发工具：Myeclipse和Eclipse。前者功能强大收费，后者功能较弱免费
+            	MyEclipse 10版本----通过百度下载
+
+
+
+
+
+
+JDK的安装和配置
+
+   1.JDK的版本  JDK1.0-1.8
+        1.5之前不要使用了
+         建议使用JDK	1.7
+         （下载：Oracle官网---download--JDK1.7；或者百度JDK1.7下载。。。企业推荐前者方式）
+
+
+
+
+
+
+安装：mai
+注意事项：
+记住安装路径:JDK安装路径
+
+配置JDK到系统环境。：右击我的电脑。属性。高级。环境变量。
+1.新增环境变量JAVA-HONME（变量名：JAVA-HOME；变量值：JDK安装路径）
+2.新增。。。。CLASSPATH（变量名CLASSPATH。变量值：.）
+3.将bin目录配置到path变量里面去：在path变量最末尾加上%JAVA
+
+
+******************************************************************************************
+
+变量名的命名规则;
+1.可以是  [字母，数字，下划线_,$]  .四种组成。。。
+2.首字母不能以数字开头
+3.大小写敏感
+4.紫红色的字不能命名例如int
+5.可以用中文命名，但是不建议用中文命名
+
+
+JAVA数据类型
+1.基本数据类型：8种
+2.引用数据类型：除8种基本数据类型外其余都是引用数据类型
+ 
+  8 种基本数据类型：byte  short   int   long  
+ float  double
+   char 
+  boolean
+
+
+
+字符类型
+    char类型	
+//char c1=‘张’； 
+
+
+ a。整数类型：byte 1字节   -128---127   （很少用）
+        short 2字节  -3万----3万  （几乎不用）
+        int4字节    -21亿----21亿（最常用）
+        long8字节 ------------（较常用）
+四种都可以存整数。他们区别在于他们在内存中开辟的存储空间不同，所以存储整数的范围也不同
+
+ b。浮点类型（浮点数----小数）
+
+float 4字节   （几乎不用）
+double8字节（常用）
+
+
+
+
+
+
+引用类型：
+字符串类型：String
+字符串是两个双引号括起来的内容
+例如：String str=“我是程序员”；
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+下午:
+
+
+
+
+        布尔类型 ：boolean
+                     1.存的值只有两种：true或false
+                     2.还能存关系运算符运算的结果，还有逻辑运算结果（并或非）
+例如int x=15；
+boolean a=x<20；
+System,out.println(x)；
+输出结果：true
+
+
+         关系运算符：<   >   =   <=    >=   = =（等于） !=(不等）
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!短路运算！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+
+
+int a=100,b=200;
+
+boolean d=a<0&&b++>200;
+		System.out.println(d);//输出结果是false
+		System.out.println(b);//输出结果是200  &&中第一个已经错了第二个没有运行
+
+
+或
+int a=100,b=200;
+
+boolean d=a<0||b++>200;
+		System.out.println(d);//输出结果式true
+		System.out.println(b);//输出结果式201   ||中第一个错了第二个接着运行所以结果式201     若第一个是对的（a>0)，那么输出结果应该式200
+
+*******************************************************************************!!!!!!!!!!!!!!!!!!!!!!!!!!!!!！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+算数运算符   +  -  *  /  %  ++  --
+
+
+/：int（1.5）---1
+取余%：int num=127
+
+       int a=127%10；//得7
+++自增。变量+1：例如int a=1 则 ： a++；的输出结果是2.
+
+1.++在单独使用时放在变量前后一样。++a=a++
+2.自增放在变量后面是运算级别最低。包括=
+3.自增放在变量前面时级别最高
+int a=5;
+int b=++a;
+System.out.println(a);//6.因为第二个运算使a自曾到6
+System.out.println(b);//6
+System.out.println(a++);//5  （因为++在后。++在这段程序的最后运行。除非遇到短路++不运算。所以先显示在++）
+
+
+int a=5;
+int b=a++；
+System.out.println(a);//6虽然第二个运算式中++级别低。但是最后还是运算了++这个过程
+System.out.println(b);//5.因为第二个运算式b=a先运算了。然后在运算a++
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+逻辑运算：
+        
+         &&（并）
+
+         ||（或）
+
+        ！（非）
+
+短路运算符：条件一能得出整个运算结果的则不进行条件二的判断
+
+
+
+
+**************************************************************************************************************
+
+
+    三目运算：条件？表达式1：表达式2   （表达式1和表达式2的数据类型要一致）
+int a=90;
+
+
+int x=a>100?1:2;
+
+System.out.println(x);
+输出结果是：2
+
+	//    提示用户输入金额x。0-5000无税收   5000-8000有0.1%税收   8000-12000有0.3%税收    120000以上有0.6%税收
+	double a=x<=5000?0:0.001*x;
+	double b=x<=8000?a:a*3;
+      double c=x<=12000?b:b*2;
+  System.out.println("所需税费为："+c);
+
+
+阶梯式三目。    最后c可以是0，0.1x，0.3x，0.6x多种值
+**********************************************************************************************************
+
+********************************************************************
+
+if（条件）
+{代码一}else
+{代码二}
+
+条件正确执行代码一，否则执行代码二
+
+
+多级if：
+if(){
+}else if{
+代码1
+}else if{
+代码2
+}else{
+代码3
+}
+
+
+
+**************************************************************************
+
+第四天
+
+
+while语法：
+
+while（条件）{循环体程序}；
+****先进行条件判断。若正确则运行循环体，知道出现错误猜终止
+
+
+
+do-while语法
+do{循环体}while（条件）；
+先运行一次循环体。然后判断条件，对这继续循环。直到出错才终止。
+
+
+
+
+
+
+
+for语法
+for（表达式1;条件；表达式2）{循环体}
+
+1步：表达式1：做初始化作用。只执行一次
+2步：判断条件是否满足
+3步：执行循环体
+4步：最后执行表达式2
+表达式2用户循环体的累加
+
+
+****************************************************************************************************
+计算一段程序运行的时间
+	
+	long time1=System.currentTimeMillis();//用于显示1970.1.1 零点到现在所经历的毫秒数	
+        需要计算时间的代码；
+	long time2=System.currentTimeMillis();
+	long time=time2-time1;
+	System.out.println("中间这段程序执行的时间是："+time+"毫秒");
+************************************************************************************************************************
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+例如：char c=‘\"’;
+System.out.println(c); 输出结果是   ：（冒号）
+
+
+		    '\"' : 冒号："
+	   
+		   '\n'  : 回车
+		   
+		   '\r' : 换行
+		    
+		     '\\'  : \ 
+		     
+		    '\' :   '
+
+
+
+********************************************************************************
+Linux分两种
+
+1.带图形界面的（便于用户操作电脑）
+2.不带图形界面的（一般用于服务器）
+*****************************************************************
+
+
+
+            short s1=5;
+		short s2=6;
+		int i=s1+s2;
+		short s3=(short)i;
+
+
+若直接short s3会报错！！！！！
+
+		System.out.println(s3);
+********************************************************************************
+long型：       直接赋值的后面加L，因为直接赋值默认为int型。否则超过了int范围则出错，没超范围
+                 会自动转换
+                   运算时最好在第一个数后面加L。防止前面还没加L运算的结果已经溢出了。
+long a=1000000000000000;错误
+long b=1000000000000000L;对
+
+long c=1000000000*3*10;输出结果不是300亿。因为前面结果式30亿已经溢出（直接赋值默认int）
+long d=1000000000L*3*10;输出结果式300亿。
+！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+
+double有舍入误差。精确场合不能用，double不能精确表示1/10
+double a=3.0;
+double b=2.0;
+System.out.println(a-b);输出结果不是1.
+
+float a=2.3;  （错误！！！直接赋值小数默认为dowble型！！！）
+应该写成:float a=2.3f;
+
+byte short char可以直接赋值整数，只要不超过表示范围
+                    在运算时一律先换算成int类型在运算！！！！！！
+
+*************************************************************************************************
+char类型  字符     内部存的式int型（一个整数）   65535（全世界所有的字符总共65535个）
+
+
+System.out.println(2+2);结果是4
+System.out.println('2'+'2');输出结果是100
+
+'0'是48   '1'是49   '2'是50.......
+'a'是97   'A'是65
+
+
+特殊符号‘ “ ：   不能直接放在''里面。
+
+'\''表示’
+'\\'表示、
+'\''表示’（要想表示一个特殊符号。只需要在前面加\)
+
+
+
+***********************************************************************************************
+数据类型见的转换
+
+从小到大  byte--short--int--long--float--double 
+                             |
+                      (char为int）
+
+1.由小转到大，自动转换。
+2.由大转到小，需要强制转换
+  
+  int a=25；
+long b=a；自动转换
+int c=（int）b；强制转换
+
+
+
+int a=5/2;---2
+double b=5/2----2.0（后面两个int相除结果还是int 2赋值给b得到2.0）
+double c=5.0/2；----2.5
+
+double a=25；自动转换。输出结果25.0
+
+强制转换可能会溢出。或者出现精度损失
+
+
+******************************************************************************************
+
+
+***************************************************
+1G=1024M(兆)
+1M=1024KB(千字节)
+1KB=1024B(字节)
+1B=8Bit(位)
+
+
+1G=1024*1024*1024------1073741824
+
+************************************************************************************************4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+
+switch-case :
+）
+System.out.println("请输入选择的服务项目：1.取款 2.存款  3.退出 "）
+int a=
+ 
+switch(a){
+ case 1:
+    代码1；
+    break；
+ case 2：
+      代码2；
+     break；
+。
+。
+。
+default：
+输入其他数字输出错误的代码；
+
+
+}
+
+***************************************************************************************************************************
+
+变量超范围不能使用。变量不能同名
+
+int a=2
+if(a<1){
+int b=3
+Systmel.out.println(b)
+}
+System.out.println(b)  //错误。这个b没有声明。上面int b只能在当前{}使用
+
+*************************************************************************************************************
+Math.random()
+随机生成一个数：[0,1)范围的一个数。
+
+double d=Math.random();随机一个小数【0 1）
+
+int a=(int) (Math.random()*10);为【0；10）之间的整数
+
+****************************************************************************数组****************************
+         
+
+
+  int max=arr[0];
+		for(int i=1;i<arr.length;i++){
+			if(arr[i]>max){
+				max=arr[i];
+			}
+			
+		}
+		System.out.println("最大值为："+max);
+
+求一组数的最大值。方法：先假设最小值是第一个。然后一个个对比。如果不成力就换位
+*****************************************************************************************************
+int[] a=new int[]{1,2,3,4,5,6};
+
+int[] a1=new int[7];
+
+System.arraycopy(a,1,a1,0,4);
+
+数组的复制：a表示源数组（被复制的数组）
+              1表示源数组中第二个元素开始
+          a1表示复制的数组
+             0表示复制数组的第1个元素开始接收
+              4表示赋值四个  
+结果：
+int[] a1={2,3,4,5,0,0,0}
+
+
+int[] b=Arrays.copyof(a,10);复制：将a中的元素复制到b，其中b包含10个元素。
+
+
+
+数组扩容
+ 
+int[] arr={1,2,3,4}
+
+arr=Arrays.copyOf(arr,arr.length+1);   ----（缩容则-1）
+
+结果：
+arr变成{1,2,3,4,0}
+
+数组排序：
+
+Arrays.sort(arr);      对arr数组升需排列
+System.out.println(Arrays.toString(arr))   输出arr数组
+
+***********************************************************************************************
+
+
+import java.utill.Arrays;     使用到Arrays时。程序前面必须加这段代码（倒包）。。。（例如：arr=Arrays.copyOf(a,a.length+1); ----扩容）
+
+
+int[] arr={...};
+Arrays.sort(arr);  //对arr排序
+
+************************************************************
+
+double a=Math.sqrt(100);   表示a=100的平方根=10.0  。。。
+*****************************************************************************************************************************
+字母大小写转换。。。字符串转换成字符。。。。。
+
+
+
+String str=scan.next();//接收用户输入的字符串
+
+Str=Str.toUpperCase();//将字母字符全部变成大写的在赋值给原字符串
+
+String Str = scan.next().toUpperCase()； //接收用户输入的字母字符，同时转换成大写的字符
+
+char[] input=str.toCharArray()    //将str字符串转换成字符数组
+
+
+
+**************************************************************************************************************************************************************************
+****************************************************************************面向对象**********************
+
+
+1.现实世界是由很多很多对象组成的
+2.对象：真真正正纯在的单个的个体（你，我，一个杯子，一个椅子...）
+  类：代表一类个体。类型，类别（老师或者学生）都是一类个体，而不是一个单个个体。
+3.类中可以包含：a.所有对象所共有的属性--变量
+                   b.所有对象所共有的行为--方法
+4.一个类可以创建多个对象
+   统一个类创建多个对象，结构相同，数据不同
+5.类是对象的模板，对象是类的具体的实力
+
+Cell c=new Cell();
+System.out.printn(c.row); //输出默认值0
+c=null;
+System.out.printn(c.row); //输出报异常。null：空。表示没有指向 
+
+
+
+ 1.    alt+/    ：  先写一个main。（alt+/ ） 。弹出main方法
+2.alt+方向建：移动鼠标指针位置的那段程序；
+3.ctrl+1：将int a=9.0;改为int a=(int)9.0;
+
+
+方法签名：方法名+参数
+
+方法重载：方法名相同，参数列表不同。
+
+方法的构造：给成员变量初始化。与类必须同名。没有返回值。创建对象时被自动调用。不写默认一个无参，写了则不给默认。构造可以重载
+*********************
+
+this：在方法中访问成员变量之前默认有个this--指代当前对象，那个对象调用值得就是那个对象
+     1.this.成员变量 ：访问成员变量
+     2.this() : 调用构造方法。
+     3.this.方法名（）：调用方法
+
+**********************************************************
+成员变量：类里面的变量    （方法外）      new时存在堆中。对象被回收后清除
+***有默认值！！！
+
+局部变量：方法里面的变量，只能在这个方法其作用。---------（生命周期：调用时在栈中分配一块栈帧。用完后清除）
+****没有默认值！！！
+ 
+
+
+成员变量：有几个对象就有几份（堆中）
+成员方法：只有一份（方法区）  通过this区分具体的引用
+
+************************************************************************************************继承
+
+子类构造若没有调用父类对象，则默认有个super（）引用父类无参构造。必须调用父类构造。若写了，这不给默认。
+************************************************************************************************************************
+super：指当前对象的父类对象
+
+super. ：  访问父类的成员变量
+super.方法名()  :指父类的方法
+super（） ：调用父类的构造方法
+
+*******************************************************************************************
+重写：子类可以重写父类的方法！！！方法名相同，参数列表相同。方法体不同
+重写调用时。点谁看对象，看后面。
+
+重写要求。1.子类方法抛出异常类型<=父类（父类的异常也是父类：大异常）
+            2.子类方法访问权限>=父类（儿子更容易访问）
+            3.子类方法的返回值类是父类的子类（儿子返回值也是儿子）
+
+
+
+重写与重载：voerlride与voerload
+
+重载：同一个类中，方法名相同，参数列表不同。----编译器绑定。根据引用类型绑定
+
+重写：两个类为父子类，方法名相同。参数列表相同。----运行期绑定。根据对象类型绑定
+********************************************************************************************************************
+！！！！！！！！！！
+
+访问其它包中的类：
+
+import  被引用的包名.被引用类名;
+或者直接写全名。
+****************************************************************************************************************************
+修饰词的访问权限：：：
+
+private：私有的，本类中访问
+public:公开的，任何类中访问
+protected：，本类中或者子类，同包类中使用
+默认：同胞，本类，中访问。
+
+
+类的访问修饰父只能是，默认和public
+类中成员上面四种都可亿；
+***************************************************************************************************
+static 静态变量：（例如static int a；）
+  1. 属于类，存在方法区中。只有一份
+  2. 常常通过  类名.  来访问
+  3.何时用：所有对象数据都一样的变量。
+
+
+静态方法。也是用static修饰。
+1.属于类，存在方法区，只有一份
+2.常常通过  类名.  来访问
+3.静态方法
+4.静态方法没有隐式的this传递。所以不能直接访问实例成员变量
+5.何时用：方法的操作仅与参数相关，与对象是谁无关。 例如：Math.sprt（25）。求25的平方跟。值是多少跟里面的参数有关
+6.static 修饰的方法被访问：直接访问。例如abc();
+   非静态方法被访问：1.被静态方法访问：需要new对象在通过对象.
+                         2.被非静态方法访问：直接访问
+  
+
+static{}
+静态快，执行时只访问一次
+例如;图片，音乐.....
+**************************************************************************************************************************************************************
+final:
+最终的
+1.修饰变量：变量不能被改变，
+2.修饰方法：不能被重写
+3.修饰类：类不能被继承了
+
+
+static finall(常量
+1.必须声明同时初始化
+2.通过类名. 来访问
+3.赋值后不能改
+4.何时用。很多地方都要用一个数值时。可以直接使用类名. 来使用这个值。当需要改变值时。将常量改变，则所有地方的值都改了。
+***************************************************************************************************************************************************************************
+普通父类：所有子类都有的方法，且都一样，设计为父类。一个类只能继承一个父类
+抽象类：子类行为有不一样的时候设计为抽象类。将都一样的方法写成完整的，方法不同（方法名相同）的写成抽象方法abstract，没有{ }。  其中抽象的方法在子类中需要被重写加上{ }
+接口:(特殊的抽象类）只能有常量static final和抽象方法。实现类需要重写所有的抽象方法加上{ }.
+
+************************************************************************************************************************
+
+instanceof  ： 判断对象的类型是否一致。例如： card instanceof ABC     卡对象（card）是否是ABC卡类。如果是，则为true
+
+*******************************************************************************************************************************************************
+有参：大括号里面有不能写死的值
+***************************************************************************************************xxxxxxxxxxxxxxxxxxxxxxxxxxxx复习问题xxxxxxxxx
+1.调用类中的普通方法： 对象 点  来调用
+  调用静态方法（static修饰）可以直接  类名 点  来调用
+2.子类构造中必须写super（）...用于调用父类够找方法。若父类方法有参，这括号类传参。
+  若不写，会默认有个super（），此时父类构造中也必须有个无参构造方法
+    若父类中只有有参构造。子类不写super（参数）会报错。
+3.向上造型：
+  class ClassA {}
+  class ClassB extends ClassA {}
+   ClassA p0 = new ClassA();
+   ClassB p1 = new ClassB();
+   ClassA p2= new ClassB();
+p0=p1；//正确。    p1（B类）可以造型成为p0（A类）；
+p1=p2；//错误。
+p2=p1；//正确。p1（B）可造型p2（A）。反过来不行！
+
+
+4.重载：
+  同一个类中不能含有方法和参数都相同的方法。
+如果方法相同，参数不能相同，此时为重载
+
+
+5.面向对象：
+封装：类
+继承：父子类继承
+多态：造型。。向上造型
+
+6.point p=new point();   表示新建了一个point类的对象p。同时new的point（）是类的构造方法！！
+ 
+7.父类中的静态方法不能通过super.来访问。因为静态方法出现比对象早。直接通过类名点
+
+8.short a=1;  
+ short b=a+1    错，参与运算后a+1变成int类型，需要强转才能赋值给short
+ short b=a++   对，++   --运算不会变成int
+
+9.静态方法不能访问非静态方法（要想访问通过类名.。非静态方法可以访问静态方法
+3333333333333333333333333333333333333333333333333333333333333333333333333333         String9      333333333333333333333333333333333333
+
+     String   字符串，相当于字符数组
+
+1.查看字符串  长度（字符个数）
+   String str="123456";
+  则int a= str.length()；//a=6
+
+2.查看给定的字符串在当前  字符串中的位置
+String str="sgfasgsdfasfjyasmn";
+int a=str.indexOf("as");//a=3;      第一次出现的位置
+int b=str.indexOf("as",4);//b=9   ...表示从第4个字符开始数下一个as所在的位置
+int c=str.lastIndexOf("as");//c=14    as最后一次出现的位置
+
+3.截取 指定范围的字符串
+String str="www.oracle.com";
+String name=str.substring(5,11);//name="oracle“    留头不留尾
+String name1=str.substring(5);//oracle.com        从第5位开始截取到最后
+
+4.去除字符空白。（只能去除最前面和最后面的空白）
+String str="  sfdsdf   sdfs     ";
+
+String str1=str.trim();   //    "sfdsdf   sdfs"   头尾的空白被去除
+
+5.得出指定位置的字符
+String str="123456789";
+char c=str.charAt(5);  //c='6'
+
+6.return
+void 无返回值：return单独使用用于结束整个函数。下面的都不走了
+有返回值：return必须用于返回返回值,同时结束函数。不能单独使用
+
+7判断是否是以给定字符串开头；结尾的
+String str="123456789";
+boolean b=str.startsWith("123");  //b为true
+boolean c=str.endsWith("89");     //c为true
+
+8.将字符串中的字母 全部转换为大写或者小写
+String str="123Abc";
+String s1=str.toUpperCase();   //大写：“123ABC”
+String s2=str.toLowerCase();   //小写：“123abc”
+
+
+9.将其他类型转换为字符串类型
+int a=250;
+String str=String.valueOf(a);   //输出250的字符串   -------或者String str=a+"";
+
+
+int a=Integer.parseInt(str)   //将数字字符串转换成int
+double同理
+
+10.对字符串 str1 的：----------------StringBuilder str1=new StringBuilder("123abc");
+增: append( "")  , 删: delete( 2,6 ) ,  改: replace( 1 , 5 , " " ) ,  插: insert(2 , " " );
+
+         js改;由于只能改第一次出现的位置的。所以需要循环
+                    var c=str.indexOf(",");
+    			while(c!=-1){
+    				str=str.replace(",","&%$");
+    				c=str.indexOf(",");
+    			}
+
+**************************************************************************************************************************栈  堆   常量池-----java三种变量
+栈：局部变量--方法里的变量       
+堆：new数来的对象；实例变量：在类中声明属于对象的变量，称为对象的属性！！！！，运行期间在堆中分配空间；
+方法区：静态变量--在类声明，使用static修饰，属于全局公共的资源
+常量池：常量，直面量--直接=“”  （字符串）       
+********************************************************************************************************   正则表达式：   ******************************************************
+
+1.
+（\\+86|0086)?1\\d{10};     电话号码的正则表达式：“\\+”：“+”转义；|或 ；（）？表示可有可无   1表示第一位必须是1  {10}后面还有10位
+
+2.
+str.matches(str0) //判断字符串str是否满足正则表达式str0
+
+3.去除str数组中满足“”的内容。后赋值     给array数组
+String[] array=str.split("[0-9]+");
+
+4.将str字符串中满足前面“”表达式的内容换成后面“”字符串。重新赋值给str
+str=str.replaceAll("[0-9]+","#NUMBER#");
+
+
+
+Integer i=1;  直接将int类型当字符串类型使用。1.5版本后可以自动拆装箱
+int a=new Integer(1); 直接将字符串类型当数字用。不用对后面进行类型转换（.intValue()）
+******************************************************************************************************************时间：******************************
+**************************************************************************************************************************************************************
+//获取此时的时间
+Date now=new Date();                                
+Calendar calendar=Calendar.getInstance();      
+
+
+
+1.
+
+time=date.getTime();  给定日期date。获取1970到date时间段的毫秒数。。
+
+2.
+SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    sdf为需要的时间表达格式
+
+
+ str=sdf.format(date)         Date转换为str                    date为需要表达出来的Date时间
+ date=sdf.parse(str)          str转换为Date格式    str为需要转换的时间格式
+ date=calendar.getTime()；  calendar转换为Date  //!!!!!!l    long l= (calendar.getTime()).getTime()    两次调用getTime方法直接将calendar转成现在的毫秒数
+ calendar.setTime(date);    date转换为calendar        ----------先新建一个calendar（Calendar calendar=Calendar.getInstance(); ）
+
+！！将long值转换成Date格式时间  ：Date date=new Date(long);
+
+3.
+
+  /*
+	    * 一般操作时间的流程：
+	    * 用户输入一个日期，然后要求计算，最终得到结果。。。
+	    * 1.获取用户输入（String）
+	    * 2.通过SimepleDateFormat将字符串转换为Date
+	    * 3.创建一个Calendar，然后通过setTime方法时期表示Date表示的时间
+	    * 4.根据需求使用Calendar计算时间。计算完毕后当前Calendar就表示计算后的时间。
+	    * 5.通过Calendar的getTime获取Date。
+	    * 6.再通过SimeleDateFormat将Date转换为字符串最终展示给用户。
+	    */ 
+
+4.               //获取calendar对应时间的年份
+		int year=calendar.get(Calendar.YEAR);
+
+5.             //获取calendar这个时间对应的年份的天数
+              days=calendar.getActualMaximum(Calendar.DAY_OF_YEAR)       
+
+
+6.	        //calendar基础上加3年
+		calendar.add(Calendar.YEAR,3);          （MONTH  月）
+
+7.         //将calendar的年改成2008年
+              calendar.set(Calendar.YEAR,2008);     
+ ************* 月 日  时 分 秒 月                                                      
+                                      .DAY_OF_MONTH（或写成DATE）:月中的天：几号
+		                      .DAY_OF_WEEK:周中的天  ：周几了                    -----------------------日
+		                      .DAY_OF_YEAT:年中的天
+
+                  .HOUR_OF_DAY--------时
+                  .M I N U T E------------分
+                  .SECOND--------------秒
+************************		
+
+8.
+年：y ；    月：M ；  d ：日；   E：星期   a：上下午   H：小时（24）  h：小时（12）  m：分钟    s：秒
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------二进制
+2进制：逢2进1的计数规则
+
+
+1. 进位基数：2  。   
+2. 权：1  2  4  8  16.....   (10进制中是：个  十  百  千   万........)
+
+3. 2与10进制转换
+    
+       128  64  32  16  8  4  2  1
+229=  1    1     1   0  0   1   0  1             Integer.toBinaryString(229);  !!!!!!!!!!!!!!!!!
+          101  37   5          1
+
+4. int是21多亿的原因：
+int max=Integer.MAX_VALUE;  //int  32位数  
+System.out.println(Integer.toBinaryString(max));//  2进制31个1  (若转换成10进制，31个1是21个多亿）   11111 11111 11111 11111 11111 11111 1
+
+long max1=Long.MAX_VALUE;  //long   64位
+System.out.println(Long.toBinaryString(-1)); //64个1
+
+
+5.    取反
+  n = - (~n+1)        -----------max  min  0  -1  除外
+
+6.int中最大最小值对应的的二进制
+   -1 :  11111111111111111111111111111111                 //32个1
+   0：00000000000000000000000000000000   //32个0                 00000000（16进制）
+   max：01111111111111111111111111111111                //31个1
+  min：1000000000000000000000000000000     //31个1                      （16进制）
+
+
+
+7：  16进制：作用是缩写2进制
+
+       1100 1010(2j进制）=ca（16进制）=202（10进制）
+
+
+
+          int i=0xca;   //16进制表示2进制
+                System.out.println(0xca);//202.    16进制的ca表示10进制的202
+		
+		System.out.println(Integer.toBinaryString(0xca));//ca在二进制表示11001010
+
+
+8.  2进制运算：
+
+～：取反
+
+| ：或（绝对值-1）
+
+&： 与      a&b=a&(b-1)
+
+逻辑右移  ：>>>  例如 >>>  1  ：后面去掉1位。前面补一个0
+
+
+
+ 数学右移  ：>>   例如>>  1   ：后面去掉1位。第一个数是1则补一个1.  前面是0则补一个0    -------原有数字/2（>>2,则/4） 。。。。负数是向小方向取整
+
+ 数学左移  ：<<   例如   <<  1   ：前面去掉1位。后面补一个0.                                    -------原有数字*2  （<<2, 则*4）。。。。移位运算比乘法快很多。n=m*4写成n=m<<2
+
+
+9.颜色：RGB
+  r：红      int
+ g：禄      int
+ b：蓝      int
+int RGB = (r<<16) | (g<<8) | b ;
+
+10.文字编码
+ 
+UTF-8:  国际化最优编码：支持100000 字符
+GBK：  中国本地化：     支持20000字符
+
+
+
+
+
+*********************************************************************************************************************************************************************************
+************************************************************************************************集合框架**********************************************************************
+0. Collectiong 的两个子类：Set  ;  List
+    
+  ArrayList  实现List接口
+  HashSet实现Set接口
+
+  Collection<String> set=new HashSet<String>();  新建一个集合：  不可重复的集合
+  Collection<String> cards=new ArrayList<String>();  可以重复,有顺序------------向上造型了（没造型：List<String> cards=new ArrayList<String>();  )
+
+
+1.
+集合中存储的都是对象的引用：地址。而不是对象
+
+2.set.size() ： 集合的个数
+
+3. 判断集合是否为空：
+boolean b=c.isEmpty();
+
+  .contains（）//  是否含有某元素，，
+boolean.b=col.contains(a)：判断col集合中是否含有a元素.判断过程中是将a与col中每一个元素进行equals对比，所以声明自建的类的对象集合时必须重写equals方法，java自己的类不用重写
+
+4.  cards.add( " ")   集合cards中添加元素
+    cards.add(1," ")  集合中第2位加元素
+    list.remove(2)  删除第三个元素
+    list.get(int i)   获取第i+1个元素
+    list.set( 1, " ")  将第二个元素换成“”
+    List<Integer> list1=list.subList(3,8);  截取集合3-8位并赋值给list1
+    list.clear()    清空集合。
+
+
+
+5.  hashCode   与   equals      重写
+
+  （ java中每new一个对象，都会给他生成一个hash值obj.hashCode（）。就是int值。有可能有相同的hash值，所以比较两个对象是否相等，可以先比较hashcode。
+缩小范围后在调用equals具体查到那个）
+
+       1.当两个对象equals相等的时候（equals为true），hashCode一定相同。，
+       2.两个对象equals不相等式。hashCode相同可能性很小
+
+6.
+list.addAll(nextOne);    / /将nextOne的元素加入list中
+boolean b=list.addAll(nextOne);  //是否添加成功；只有set才可能出现false
+
+7.检测c是否  包含  c1全部内容
+  c.containsAll(c1)
+
+8.
+  Iterator:"迭代器“接口
+  Iterate：重复处理，迭代，遍历---循环处理集合中每一个元素的方案
+
+遍历集合：获取egg对象（集合的每一个元素）
+
+		Iterator ite=c.iterator();  //返回迭代器接口的子类实例
+		while(ite.hasNext()){      // 检测是否还有下一个对象
+		String egg=(String)ite.next();  //移动游标获取对象，在通过强转赋值给egg
+
+/*
+                   if(egg.equals("坏蛋")){     //删除坏蛋
+				ite.remove();
+			}*/
+
+     3行 或写成
+         for(String egg:c){  }        //遍历了c集合，遍历每一个元素，赋值给egg 。--------增强for循环。运行期自动换成上面的3行。
+                                                 缺点：不能写remove（）方法删除元素，for中的删除是java中的删除，删除后下标会变化
+           
+9. 泛型:参数化类。。。
+           泛型可以约束类中的属性，方法返回值，方法参数的类型。反省的作用是机那个类中相关内容的类型定义权交给使用额决定。从而提高累得复用性和灵活性
+             public class Point<E>{
+            private E x;   //E可以是int  double  string....
+            private E y;
+       
+ }
+             
+
+10.List
+      1.ArrayList:用数组实现的List，提供了相关的算法API。
+              优点：按照下标查找性能优秀。尾部插入删除性能好
+               缺点：中部（头部）插入和删除性能相对差。
+      2.LinkedList：采用双向循环链表实现（珍珠项链结构）。  
+               优点：头部和尾部的读写非常快。
+               缺点：中部读取和删除，性能很差
+11.
+	long t1=System.nanoTime();
+12.
+         get(index)   从List中获取指定位置上的元素
+
+
+13.         Collections.sort(list);      //对集合list排序
+
+ 14.数组集合相互转换：
+      String[] array=c.toArray(new String[c.size()]);   //集合c转换为数组array
+    
+      List<String> list=Arrays.asList(array1);            //------------数组 array1 转换为集合list
+        需要注意的是：数组转换过来的集合不能进行增加等操作。。。所以需要new一个新的集合。并将数组转换过来的集合赋值给新集合  如下：
+      List<String> list1=new ArrayList<String>(list)!!!!!!!!!!!!!!!!!!!!  将集合list的所有元素复制给list1
+
+
+15.     队列
+
+Queue<String> queue=new LinkedList<String>();      //新建一个队列对象queue。
+
+    队尾加元素：queue.offer("one");
+    获取首元素同时删除首位(最先进去的）元素： String str=queue.poll();
+    获取同时不删除               ：String str=queue.peek();
+
+16.List和数组的区别
+   List：有现成的算法，提高编程效率
+   数组：当没有现成的算法时用数组效率更高；
+
+
+
+17.map集合：    添加两个对象----key-value。通过一个属性查找另外一个              
+Map<String,String>map=new HashMap<String,String>();
+		map.put("传奇","范传奇");
+map.get("传奇");--------------------查找“传奇”对应的String（范传奇）
+       
+         -------------------  map.containsKey(c)判断map集合中的key是否含有c对象
+
+
+
+   Map<String,Employee> map=new HashMap<String,Employee>();--------------//map。根据String找员工（Employee）
+        
+                   //如果map没有数据，put式添加新数据到map  。  如果map中已经存在了对应的key，则put是替换
+		1. map.put("小泽",new Employee(2,"徐泽"));//-----如果String有但是后面不同，则是替换。如果String不匹配则是添加
+                 2.map.get(" ")      查找，如果没有，则返回null
+
+18.  HashMap          !!!
+
+散列表：        为了实现根据key 高速找Value，而提供的高性能查找算法，是计算机行业查找性能最好的算法
+          1.为什么使用：为了提高查找性能
+          2.利用“散列数组算法”进行散列查找，性能很好。。无落数据量有多少，都会在一个固定的时间找回结果
+          3.凡是软件中需要“查找”根据key查找value的时候。一定使用散列表
+          4.使用散列表的足以事项：
+            a.key-value成对数据添加到散列表..key不可重复，Value可以重复。。key-value 规定称为一个条目（Entry）
+            b.散列表中散列数组的大小称为“容量”
+            c.key-value  数量称为size
+            d.size/容量   称为加载因子。要小于75%。如果大于会自动扩容
+     
+
+hashCode与equals  ：
+散列表利用key的hashCode计算查找位置！！当找到位置以后利用key的equas比较找到每个元素！
+
+
+19.LinkedHashMap   有序的
+
+
+
+
+20.。。。总结
+
+集合常用的是： List 和 Map
+常用实现类： ArrayList（按顺序存储）--------线性表            
+                HashMap（查找性能好）--------查找表
+
+************************************************************************  File 管理文件或文件夹 **************************************
+
+File f=new File("/home/soft01/123");   ----创建f文件对象。。。。并选择目录。最后一个是需要创建的文件名
+1.		f.createNewFile();        ----新建文件
+
+2.          f.mkdir();   -----新建文件夹
+            f.mkdirs()  ----若f对象里面写的多级文件夹。则可用词方法创建
+
+3.      f.exists();       ----检测f对象目录中是否含有文件或文件夹，有则true
+        f.isFile();        -------检查文件
+        f.isDirectory();  -------检查文件夹
+
+
+
+  
+4.File.separator          ------//当前系统的路径分隔符
+5. File file=new File("绝对路径")
+    windows ：
+    1.“/d：/test”
+    2.“d：\\test“
+    3.”d：“+File.separator +”test“
+
+    Linux ：
+    1.”/home/soft01/test
+   
+File f=new File("demo");//------demo是相对路径。
+f.mkdir();   -----在当前项目创建文件夹demo
+
+
+6.  对存在的文件操作
+       1. long l=file.length();//--字节   查看文件长度
+       
+       2. f.delete()  //删除f对应的文件或文件夹
+
+
+************************************************************************************文件9  读写*************************************
+
+RAF  （随机访问的方式！就是有指针，想读哪里读到哪里）
+主要功能：在文件上实现读写操作，每次读写的数据 1 byte
+
+
+RandomAccessFile raf=new RandomAccessFile("demo.dat","rw");   //-------打开一个文件，给读写（rw）文件raf对象。。如果文件不存在，则会自动新建
+1.写一个文件
+  raf.write(0x41); //--写如一个文件。将字节0x41 （41是16进制在这里是int的低八位）这个字节写入raf文件中，只写低八位，占两个字节
+
+2.int b=raf.read();  ---读取文件，从前往后一个一个byte读取。。。char（b）是该字节对应的字母或数字。不能直接读汉字，应为汉字是两个字节
+
+
+3.关闭文件：raf.close( );
+
+
+
+4.文件批量写：
+                raf.write(buf);    将byet数组buf写入raf文件中
+		raf.write(buf,1,2);  将bute的数组buf中的1-2位写入raf文件中
+
+  
+5.文件批量读：
+          int n=raf.read(buf);  //  ----将raf文件，按照每次（buf数组长度）个byte，读取！！同时将读取内容给buf数组。。
+
+ 1.byte数量足够：n=buf.length  ;2.读到byte数量不够了：n=剩余个数。3.末尾读完了：n=-1
+
+           n=raf.read(buf))=-1         当读到buf数组末尾的时候，没有byte可读了。返回-1
+
+6.读写数字：
+     1.  raf.writeInt(999999999);   ------在文件raf中写一个int类型数字：999999999
+     2.  int i=raf.readInt();           ------读取raf中的一个int数字。如果需要读完所有的int值，可以使用死循环
+
+
+7.改变文件读写的指针位置：raf.seek( 5 );  指针到第5位byte
+  raf.seek(raf.getFilePointer()-4);//将游标向前移动4个字节
+
+8.将字符串转换成字节数组：byte[] b=str.getBytes();
+***************************************************   Stream  （流9io9） 只能从头读到尾 ***************************************
+
+ 1. 节点流：（读写字符）             //以写的方式打开，如果文件存在，就清除内容，如果不存在就自动创建，如果式只读或文件夹，就抛出异常
+	一：写  	FileOutputStream out=new FileOutputStream("/home/soft01/桌面/123");//写
+                      FileOutputStream out=new FileOutputStream("/home/soft01/桌面/123"，true);//写---追加模式：直接在后面写，不清空内容
+             例如：out.write(0x42)或out.write('A');  out.write("abcd".getBytes("UTF-8"));
+
+
+       二： 读         FileInputStream in=new FileInputStream("/home/soft01/桌面/999");   //读
+              例如：int a=in.read(); ---a是一个字符所对应的数字，char（a）是该字节对应的字母或数字。
+                          不能直接读汉字，应为汉字是两个字节（读所有文字内容得用字节流）
+
+
+2.
+                  out.flush();//强制清空缓存，及时将缓存写入文件中，文件还能写数据	(缓冲流）
+		  out.close();//关闭文件，清空缓存，文件不能再写数据了
+
+
+扩展流：//-----扩展流内部已经加上了缓冲流，所以这里都不需要再加缓冲
+1.节点流加上缓冲流
+    读：               FileInputStream fis=new FileInputStream("/home/soft01/桌面/999");
+		BufferedInputStream in=new BufferedInputStream(fis);  //------给文件加上缓冲流，大幅度提高IO性能，这种扩展流必须依赖节点流
+
+    写：（所有扩展流都自动加了缓冲，写入数据必须清空缓存才能写入out.flush()，或关闭文件）！！！！！
+               FileOutputStream fos=new FileOutputStream("/home/soft01/桌面/5556");	
+
+		BufferedOutputStream out=new BufferedOutputStream(fos);
+   两行写一行：BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream("/home/soft01/桌面/5556"));
+
+2.字节流：直接读字符串
+
+     读：InputStreamReader in=new InputStreamReader(new FileInputStream("text.txt"),"GBK");  //若使用的GBK编码写的文件，不能用UTF-8读
+    （  输出：int i;   while((i=in.read()!=-1){  System.out.print((char)i);}  ）
+ 例如：int a=in.read();  a是字符所对应的int。要想输出字符？：（char）a
+
+     写：OutputStreamWriter out=new OutputStreamWriter( new FileOutputStream("text.txt"s),"GBK");  //---给使用GBK编码写
+例如：out.write("你是");out.close();
+
+
+
+
+
+ 3.读整行：
+
+
+	      //BufferedReader流  提供了readLine（）方法能读取整行。。
+  读：        BufferedReader in=new BufferedReader(new InputStreamReader(new FileInputStream("demo.txt"),"GBK"));
+               例如：in.readLine（）；
+
+  写:                 //printWriter流  提供便于输出文本的方法println：输出一行文本，并自动插入回车字符作为一行的结束。
+                              PrintWriter pw=new PrintWriter(new OutputStreamWriter(new FileOutputStream("test.txt"),"GBK"));
+                                简写：//PrintWriter out=new PrintWriter("test.txt","GBK");
+                         例如：pw.println("我爱我家");
+
+
+4. throw和throws：
+    1. throw Exception 用于方法里面将可能出现的异常抛给调用者，调用者需要处理
+    2. throws Exception将错误跑出去用于方法名后面告诉调用者可能出错
+5.异常的处理方法：
+   1.继续抛出：在方法名后面写throws 异常名。main方法不能这样，否则会被虚拟机删除
+   2.处理异常：  try  {可能除异常的代码}  catch(异常名）{异常走的代码}
+
+6.InputStream is=DBUtil.class.getClassLoader().getResourceAsStream("db.properties");  直接读取当前项目目录下的文件db.properties
+***************************************************************************线程*************************************************************
+1.新建线程：   
+           1.	Thread t1=new MyThread1();   //建线程类MyThread1  这个类继承了Thread 。缺点，不能继承其他类了
+
+           2.   Runnable r1=new MyRunnable1();   //建类先实现Runnable接口。
+                  Thread t1=new Thread(r1);
+
+           3.    Thread rose=new Thread(){            //直接在main方法中建匿名内部类
+		  public void run(){
+                  }
+                  };
+
+
+2. 线程的启动：t1.start()
+
+3.  Thread.sleep(1000);         //卡段的时间：1秒。。。每隔1秒运行一次程序
+
+4.守护线程（后台线程）；jack.setDaemon(true)  ---- 将jack线程设置为守护线程：当其它线程全部结束，这个线程会被强制结束
+
+5. Thread t=Thread.currentThread();    获取程序运行的线程
+
+6.download.join();   show线程里面写：表示只有当download线程结束了，show才会运行
+
+7.    1. synchronized 修饰方法，不能被多个线程同时调用。只能一个线程运行完这个方法后下一个线程才能进入。这样避免了多线程并发问题------------------同步锁
+      2.synchronized(this){ }    对某段程序修饰。避免多线程同时执行这段程序
+      3.synchronzed修饰两个方法。当同一个对象分别在两个线程中调用两个方法，依然不能同时调用运行。------------------------------------------------------------------互斥锁
+
+	  volatile与synchronized不同：
+	  volatile（可见的）让变量在不同线程使用的时候，都从主存中取，而不是从各个线程的“工作内存”，以防止并发问题。
+	  synchronized让不同线程不能同时操作变量，以防止并发问题。
+	  （例如：public static volatile  int  i=0;多个线程i++操作用volatile不能保证安全，因为i++是取原i的值+1再赋值给i（此过程非原子性，依赖原值），多个线程
+	  何时用volatile？：多线程中既有读又有写的变量可以用volatile（直接读或写不依赖原值）
+	  ）
+	  
+8. list=Collections.synchronizedList(list);//------将集合list转换成为线程安全的集合 
+
+9.Object定义了两个方法
+	 * wait（） 和notify（）
+	 * wait方法可以阻塞调用该方法的线程，直到该对象的notify方法被调用，才能解除线程的阻塞状态。
+
+**************************************************************************************网络通讯****************
+1.
+UDP通讯:量大，速度快。但是不考虑对方有没有收到。大部分网络游戏通讯使用。
+TCP通讯: 能保证数据传输安全传输过去，但是速度慢，当数据量少，而且要保证完整安全传输时使用。
+
+
+2.
+客户端：private Socket socket;  // 声明一个与  服务端通信的 Socket类的引用：socket   。
+               -----------对socket初始化:  socket=new Socket("192.168.33.68",8088)
+3.
+服务端：private ServerSocket server;//声明一个服务器  端口类（ServerSocket）的应用server。
+               -----------对server初始化（就是申请一个端口）：server =new ServerSocket(8088);
+
+4.                 InetAddress address=socket.getInetAddress();
+		   String host=address.getHostAddress();//获取远程计算机(socket)的ip
+
+
+
+
+5.  
+       1.  socket.getOutputStream()  ：客户端socket 向服务端  发送文字的方法
+        例如:PrintWriter pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"GBK"));   pw.println(str)；//将str发送服务端
+
+       2.  socket.getInputStream(）  ：客户端socket 获取服务端发送的文字的方法
+        例如：BufferedReader br=new BufferedReader(new InputStreamReader(socket.getInputStream(),"GBK"));String str=br.readLine();
+               //读取服务端发送来的消息赋值给str
+
+6.Socket socket=server.accept();  卡段作用。有客户端连接才会走下面程序
+
+
+UDP:
+1.	           InetAddress address=packet.getAddress();//从服务端发过来的包中得到ip
+			
+			int port=packet.getPort();//得到端口
+
+2.   发送：            //1.创建客户端
+			DatagramSocket socket=new DatagramSocket();  
+			
+			//2.需要发送的数据
+			String str="你好，服务端";
+			byte[] data=str.getBytes("UTF-8");//将字符串变成字节数组
+			//3
+			InetAddress address=InetAddress.getByName("localhost");
+			int port=8088;
+			
+			//打包：传入四个参数：字节数组，字节个数，远端ip，远端端口
+			DatagramPacket packet=new DatagramPacket(data,data.length,address,port);
+			
+			//4.发送
+			socket.send(packet);
+
+  接收：//1   TCP协议的端口与UDP协议的端口是冲突的。两则可以同时开相同名的端口
+			DatagramSocket socket=new DatagramSocket(8088);
+			//2
+			byte[] data=new byte[100];
+			       //接收者传两个参数，字节数组及长度
+			DatagramPacket packet=new DatagramPacket(data,data.length);
+			//3
+			socket.receive(packet);//阻塞作用，有数据穿过来就解除
+			//4
+			String message=new String(packet.getData(),0,packet.getLength(),"UTF-8");//取出包中data字符0到最后一个字节之间的字节。
+			
+			System.out.println("客户端说："+message);
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////   JDBC   ///////////////////////////////////////////////////////////////////
+
+1.加载驱动，建立连接（每个数据库都有自己的驱动）
+ Class.forName("driverClass") 
+ Connection conn=DriverManager getConnection(url,un,ps)
+
+2. 创建语句对象
+ Statement stmt=conn.createStatement();
+
+3.执行SQL
+stmt.executeUpdate(sql)   曾，删，改 DML
+ResultSet rs=stmt.executeQuery(sql); 查  DQL
+execyte()   能执行所有sql操作 （不常用）一般用于DDL
+
+4.如果执行查询，处理结果集（可选）
+ ResultSet rs=stmt.executeQuery(sql); 查
+rs.next()   查询+游标
+getInt()
+
+5.释放资源
+cunn.close();
+
+6.db.properties
+属性文件
+driverClass
+url
+username
+password
+
+   
+复习：！！！！！！！！！！！！！！！！！！1
+  重要的接口和api
+1.
+Class.forName()                                                   //加载驱动。括号内写当前数据库的驱动
+2.
+Connection  conn =
+    DriverManager.getConnection(url,username,password);     //创建连接
+ 3.
+Statnment  stmt =conn.createStatement();                          //创建语句对象（java与数据库的桥梁）
+   int i=stmt.executeUpdate(sql);   曾删改 DML                     //将需要数据库执行的代码sql传给数据库(DML返回int，影响了多少条）
+   ResultSet rs=stmt.executeQuery(sql); DQL                      //查询(j结果集）  需要写rs，查.sql是传入数据库中的查询代码
+    rs.next()   //游标。返回类型：boolean如果没有数据了返回false。默认在第一格上面（第0行）
+    rs.getInt("cn")  //获取查询的结果。getDouble()...等等   cn就是sql中的查询代码的内容（字段名）。例如：ename
+******************************************************************
+例如：
+		
+
+
+                String driverclass="oracle.jdbc.driver.OracleDriver";
+		String url="jdbc:oracle:thin:@150.21.9.70:1521:orcl";
+		String username="system";
+		String password="idata";
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+
+		//加载驱动
+		Class.forName(driverclass);
+		//创建连接
+		Connection conn=DriverManager.getConnection(url,username,password);
+		//创建语句对象（java与数据库的桥梁）
+		Statement stmt=conn.createStatement();
+		//执行SQL语句（需要传入数据库的代码）
+		String sql="insert into emp_shc(empno,ename) values(1099,'mike')";
+		stmt.executeUpdate(sql);//.executeQuery()查  。
+		//释放资源
+		stmt.close();
+		conn.close();
+		
+		新建表例子：
+		String driverclass="oracle.jdbc.driver.OracleDriver";
+		String url="jdbc:oracle:thin:@150.21.8.27:1521:orcl";
+		String username="zengcheng";
+		String password="Idatatech2016!";
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		
+		 Class.forName(driverclass) ;
+		 con=DriverManager.getConnection(url, username, password);
+		 ps=con.prepareStatement(sql);
+		 rs=ps.executeQuery();
+
+
+******************************
+4. 连接池：常用的有 DBCP；C3P0
+ BasicDataSource ds=new BasicDataSource()；
+                     //设置参数
+ 	               ds.setDriverClassName(driver);  //drive=oracle.jdbc.driver.OracleDriver
+			ds.setUrl(url);             。。。
+			ds.setUsername(user);  。。。
+			ds.setPassword(pwd);  。。。
+
+5.PreparedStatement (实际开发更常用,效率更高，sql格式固定，只需要传参，所以需要多次执行时这个效率更高）     --替换Statement
+    (需要传参数。能解决spl存在的风险，例如：万能密码：a' or 'b'='b  
+    因为之前sql的结构就已经制定好了，后面参串会对单引号转义，把式子当成一个整体）
+  步骤：
+    Connection con =DBUtil.getConnection()  //创建连接，调用封装类中方法建立连接
+    String sql="....?...?...";                      //写sql
+    PreparedStatement ps = con.prepareStatement(sql);   //创建ps语句。桥梁，将sql语句传过去
+    ps.setInt(1,ename)  //给sql中的"?"传入参数，1表示第一个"?"  （sql中字段），ename需要传的参数
+     rs = ps.executeQuery(); （DQL查） （--- 或 ps.executeUpdate();（DML））  //执行
+    rs.next()   //游标。返回类型：boolean如果没有数据了返回false。默认在第一格上面（第0行）
+    rs.getInt("cn")  //获取查询的结果。getDouble()...等等   cn就是sql中的查询代码的内容（字段名）。例如：ename
+
+
+6.  事务（数据库执行过程满足4个特性）
+    1.原子性：要么成功要么失败，不可能成功一半
+    2.一致性：事务完成后，所有数据保持一致
+    3.隔离性：事务执行时不能被其他访问
+    4.持久性：事务完成后，数据改变是永久的
+
+   手动控制commit（在转账时取消自动提交，a账户-1000和b帐号+1000这两个sql不会自动提交，最终手动提交，）
+    1.关闭自动提交 conn.setAutoCommit(false);//true是自动提交
+    2.手动commit
+    3.手动rollback
+7.Dao：封装了对数据库的访问操作
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                           Web （带有网页；客户端（浏览器））
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+1.构成
+     1.HTML：勾勒除网页的额结构和内容          -----美工。
+     2.CSS：美化网页页面                          ------美工。
+     3.JavaScript：让网页呈现动态的数据和效果  ------java程序员（重点）
+
+2. HTML（部署在服务器，运行在浏览器）
+  服务端部署HTML文件。浏览器访问服务器。服务器将HTML文件返回给浏览器。浏览器解析HTML显示其内容
+
+3.XML和HTML的关系
+   1.XML：通常用来配置（存储）数据和传输数据
+    标记： <标记名></标记名>  双标记  或  </标记名>  单标记
+    元素： <标记名>内容</标记名> 
+   2.HTML（超文本标记语言，用于显示数据）是标记固定的XML。
+4.网页 （html） 编辑：
+    一.<!doctype html>     //------------------------------------------------声明HTML版本（H5）
+    二.
+     <html>               //---------------------------------------------------------唯一的跟标签
+        1. <head>       //---------------------------------------------------------用来声明页面信息
+                   1. <title>百度</title>    //--------------------------------------设置文档（HTML）的标题取名：百度
+                   2.  // ---------------------------------------解决乱码1.设置文本本身编码为utf-8，右键文本，属性，设置为utf-8编码
+                    <meta charset="utf-8"/>  //------- 解决乱码2.设置文档内容的编码为utf-8     ****两个编码相同才能解决乱码问题 
+             </head>
+
+
+
+        2.   <body>  //---------------------------------------------------body 用来写出页面内容
+                我爱你。HTML.
+             </body>
+
+
+      </html>
+
+
+5.行内元素（对文字中的一部份处理）
+    例如：北京市<i>海淀区</i>北<b>三环</b>西路<u>甲18</u>号<span style="color:red;">中鼎大厦</span>B7
+    1.行内元素  <span>文字 </span>
+    2.i:倾斜
+    3.d：加粗
+
+
+6.超连接
+             <p>
+                 <a href="http://www.tmooc.cn" target="_blank">TMOOC</a>   
+             </p>
+     //  ----- TMOOC为超链接名字，href：连接地址，target="_blank"是说在新页面打开。如果不写，默认是_self(在本窗口打开）
+              ******   href="#a1"   :连接到当前页面 name=“a1” 的那个元素；例如：连接到这个<a name="a1"> <p>这里</P></a>
+                       href=“#'    :连接到页面顶端
+  
+
+7.CSS的三种方式
+1.内联方式:直接写在元素上。例如给<p style="color:red;">加上颜色
+2.内部样式：在head里面 。style标签内写的样式，可以被当前页面的元素复用。
+   例如：给所有h2加颜色<style type="text/css"> h2{color:blue;}</style>。要想使用，只需要将名字写成h2
+3.外部样式：在css文件中单独定义的样式。它可以被所有页面复用。必须通过link标签将文件爱你应如才有效。
+  例如：新建一个my.css文件 ，里面写p {color:green;}  这样所有页面只需要将元素名字取p再可以调用这个就会起作用
+           <link type="text/css" rel="stylesheet" href="my.css"/>  
+                  type：文件中文本类型
+                   rel：文本的用途；
+                   href：文件的位置和名称。 
+8.0 选择器
+  1.元素选择器：div{ } 或p{ } 。选择所有名字相同的元素
+  2.类选择器：元素中加上<p class="delete" > </p>    语法：.delete{ }
+  3.id选择器：元素中加 <div id="d1"> </div>        语法：#d1{}
+
+8.设置元素宽高和距离
+      border：1px solid red;用来设置可见的边  （框）
+      width/heigth：设置元素自身的范围  （身体）
+      padding（内边距）：可以让内容和border产生距离   （框和里面内容的距离）
+      margin（外边距）：可以让元素与元素之间产生距离，使得多个元素看起来更舒展
+	  margin-left:50px;(左边距)
+8.1
+   1.设置边框和框线颜色：
+ p{
+ border:1px solid #000;
+                }
+   2.设置元素（例如块，的宽高） 和边距
+    #d1{ 
+                border：1px solid red;
+                width:100px;
+                height:100px;
+                margin:10px;  }
+9.颜色（RGB）：color：#2A00C1    16进制写法，每两位代表三种颜色中的一种
+               ------ rgb(255,255,255)  10进制写法
+
+                     background-color:#0ea8d8;  背景色
+                     background-image:url("../images/background.png");  背景图片
+                 
+
+
+9.元素的显示与隐藏：
+    显示 ：   .show{
+             display:block;  
+             }
+    隐藏：    .hide{
+             display:none
+             }
+
+10.字体设置：
+         font-size:50px ;  /*字体大小*/
+         font-weight:700;  /*字体加粗*/
+         color:#ff0000;    /*字体颜色*/
+
+
+11.定位9：
+              ***   ***      
+  （--左上角开始设置偏移量：left:300px;top:100px; 
+  右下角开始设置偏移量：right:5px; bottom:20px;）
+
+
+   1.流定位（默认定位）：
+      -- 块上下排列，元素左右排位
+
+   2.浮动点位
+     -- 可以让块左右排列（右浮动：原来上下顺序的倒序。左浮动后：正序排序）
+  例如左浮点：  li{ float:left;}
+   3.相对定位：
+     -- 相对自己产生偏移。
+       例如：相对自己右，下偏移2px      li{   position:relative;left:2px;top:2px;}
+
+   4.绝对定位（相对父亲定位）：
+     -- 相对于父亲产生偏移（**父类设置相对定位，子类设置绝对定位）
+      div{ position:relative;  }    /*在div上加position，为了便于给子元素p定位.该div是不许要偏移的，不舍值偏移量即可*/
+      p{ position:absolute;
+          left:0;
+          top:0; }
+
+   5.固定定位（相对浏览器页面定位，忽悠滚动条）：
+     -- 让元素相对与浏览器窗口产生偏移。
+
+12.剧中
+   1.文字图片等内容剧中
+        例如：p{text-align:center;}     --
+   2.边框设置宽高同时剧中
+     ul{
+             border:1px solid red;   /*加上边框，框线为红色*/
+             width:780px;            /*设置ul的宽为780，使其刚好能放下3个li*/
+             margin:30px auto;       /*设置外边距，同时居中*/
+           }
+   
+3. line-height:50px;  设置文字和框高相同：垂直剧中
+
+
+       *******js********* 
+13.鼠标悬停：例如 悬停在li           
+         li:hover{ 悬停需要写的代码 }
+
+       13.1 鼠标事件： onmouseover=""   鼠标悬停事件
+                         onmouseout=""    鼠标离开事件
+                         onclick=""       鼠标点击事件
+
+13.undefined ： html中变量未初始化的默认值
+
+
+14..读写文本元素的内容（div/p/h/span）
+                //读：div.innerHTML;
+                //写：div.innerHTML="";
+    读写表单元素(框内元素）（input）的值
+                //读：input.value;
+                //写：input.value="";
+15.  arguments   .  参数数组
+
+16.正则表达式
+  reg.test(str);  检测str中是否包含满足reg正则表达式的内容
+  reg.exec(str) 
+  str.replace(reg,"xx")  将str中满足reg的部分换成xx
+
+
+                    *** 外部对象***
+17.弹出框
+    1.提示框： alert("请输入合法内容！！");  
+    2.确认框：  var result=confirm("确定删除吗？");  返回布尔
+    3.反馈框：var result=prompt("你吃的啥？");    返回输入的内容
+
+18.定时器：
+   1.var id=setInterval(function(){},1000);   //一秒调用一次function方法，返回类型：定时器的id
+      clearInterval(id)   关闭定时器
+   2. var id=setTimeout(function(){},3000);  //卡段3秒（一次性定时器）。再执行function方法
+
+19.时间：
+  var time=（new Date()).toLocaleTimeString();  //获取当前系统时间，时分秒（转换成str）
+
+
+
+
+
+
+
+
+21.js中查询节点：
+   0.id的值获取标签（得到一个对象！非数组。常用！！！！）
+       var obj=document.getElementById("id");   
+   1.根据标签名获取节点(常用！！！，得到数组）：
+    var ps=document.getElementsByTagName("p");//找名为p的节点。返回数组
+   2.根据name获取（数组）
+    var radios=document.getElementsByName("sex");
+   3.根据class获取（数组）
+   var pps=document.getElementsByClassName("most");
+
+   4.层此：
+       var id=document.getElementById("city");                                     //----先根据id获取（对象）
+       var va=id.children; //只有元素，不带空格    ---获取孩子                    //----再跟据对象对象获取他的孩子  (数组）
+         (//获取某个孩子:ul.children[2];)
+          
+       
+      var shanghai=document.getElementById("shanghai")                        //----先根据id获取（对象）
+      var id=shanghai.parentNode;  //获取父亲（对象.parentNode;)               //-----再根据对象获取他的父亲   (是一个对象不是数组）
+
+------------------------------------------------
+
+------------------------------------------------
+
+21.删除某对象：
+   btn.remove()
+21.创建节点；
+   var tr1=document.createElement("tr");
+  添加节点：
+     var fun=document.getElementById("goods");     //先根据id获取一个需要添加元素的对象
+          fun.appendChild(tr1);      //给对象添加节点，父添加了一个子，这里是最后追加的方法	
+		  
+		  
+   
+
+22.元素
+  1.表格：(例如：两行三列：）
+<table>      
+       <tr> 
+          <td></td>
+          <td></td>
+          <td></td>
+       </tr>
+          <td></td>
+          <td></td>
+          <td></td>
+       <tr>
+</table>
+  2.列表：
+  <ul>
+    <li></li>
+    <li></li>
+  </ul>
+   3.按钮（button）
+   <button style="background-image: url(../img/btn02_n.png);height: 40px;width: 85px;padding: 0;" name="button" onclick="dengru()">
+           <span>登入</span>
+	</button>
+
+23.事件：（鼠标点击获取对应的标签对象，不许要每个元素都设置点击事件）
+       /********************/
+         onclick="cal(event);"          在最外面的div加上单机事件。如果参数是 event（而不是写this ）。
+         onblur            焦点移除事件
+          那么其下所有子元素input不用加单机事件，单击时都都会向cal传入自己对应的（this）对象 
+     -----具体获取相应的事件源见下面解析：
+
+
+
+   1.最小级标签调用方法向外冒泡：  
+      
+        （可以向外冒泡。直到最外面一级标签都能收到感应）
+                 
+   2.最大标签调用方法传参，获取小标签对象： function f3(e){
+     var obj=e.srcElement||e.target;//获取事件源(包括p/div/input  .元素节点名。点击整个标签里面的所有小元素都能感应到，并返回点击的那个标签对象)
+      alert(obj.nodeName);//打印节点名
+                  }
+   3. alert(e.clientX+","+e.clientY); //取坐标。//通过事件对象获取事件发生时具体位置（坐标）e就是点击的具体位置（点击的地方通过调用f2方法）
+
+
+   注****  ：获取相应的事件源的值 ：var str=obj.value;   而不是 .innerHTML   
+
+
+******************jQuery**********
+
+
+
+0.选择器（简化了js中调用方法获取元素节点）：
+  例如:选择div元素：$("div");   // 获取一个jQuery对象
+    ----jQuery对象本质上十一个DOM对象数组。区别：DOM对象只能一个个操作（例如获取儿子对象数组后只能一个个的操作）
+           。而jQuery对象可以直接全部操作（即一次操作整个DOM数组）
+
+24.读写节点（obj是某个对象,通常通过选择器选择）：
+    1.读写文本内容（p/div/h/... 可以写标签！)
+  $obj.html(); 读取节点内容
+  $obj.html(“abc”); 写节点内容
+    2.读写文本框内的值
+  $obj.val();
+  $obj.val(123);
+    3.读写属性的值
+  $obj.attr("属性名")//读
+  $obj.attr("属性名",“属性值”)//写
+
+21.追加一个节点：obj.append($a)    
+   在最前面追加：$("#tableid").prepend(tr);
+   在某个tr前面追加：$("#tr_n").before(tr);
+   在某个tr后面追加：$("#tr_n").after(tr);
+ obj.remove():删除节点
+
+
+25。获取节点（obj是某对象）
+    $obj.parent()   父亲
+    $obj.children()   孩子（数组）//!!!要想获取第一个个孩子：$obj.children().eq(0)
+    $obj.prev()   哥哥
+    $obj.next()   弟弟
+    $obj.siblings()  //获取所有兄弟（数组）
+    var $li=$("#note_list li a.checked")   ----选中有某样式的元素（集合）这里选中id为note_list中li中a有checked样式的元素
+    var str=$obj.text();  //获取obj标签下字符串内容。不包括子标签
+
+
+
+   凡事jQuery里面出现了数组，要想选择某个元素不能直接[下标]。而是：数组.eq(下标)
+
+25.样式
+  addClass("")  ：增加样式
+  removeClass("") ：移除样式
+  removeClass()  :移除所有样式
+
+26. //jQuery方法若返回的式节点，通常类型就是jQuery对象（前面要加$)；若返回的是内容/值，则类型就是String
+    例如:var $tds=$(btn).parent().siblings();
+27. 事件
+  1.页面加载事件$(function(){})----页面加载后调用function方法
+      或（js: window.onload=function(){})
+  2.获取事件对象：
+    $("div").click(function(e){});  //单击整个div时调用方法，e就是单击的对象
+  3.获取事件源（获取点击的那个标签对象）
+    var obj=e.target; // 对象.target
+
+28.jquery冒泡阻止，最里面的元素加  return false;
+
+
+
+
+
+
+
+--------------- 知识点-------------------
+
+1.js里面获取文本元素的内容（div/p/h/span）。都是字符串类型。
+    （若要做+运算时，必须转换成数字。其它算法可不转，因为字符串只能做+运算）
+
+  例如：parseFloat(money）;   //将获取到的金额转换成浮点型数字
+        parseInt(money);   //转换成整形数字
+
+2.var result=eval(exp);  //计算exp表达式的值
+
+
+
+
+
+
+******************************************************************************
+*****************************************************************************
+***************************************  servlet *****************************。
+
+
+***************************************Servlet****************************************
+1.  Servlet：是sun制定的，用于在服务器端处理HTTP协议（通俗的说就是生成html）的组件（满足规范的对象）
+   过程：
+   动态网页（例如qq空间）访问服务端的某个组件（java里面组件就是Servlet），
+   这个服务端的组建动态生成一个HTML，返回给浏览器。
+2.服务器（是一个软件）
+   1.--Tomcat：是Apache推出的免费开源服务器
+      JBOSS；
+      WebLogic
+   2.Tomcat使用：
+
+     windows下--
+      a.安装JDK (配置JAVA_HOME，PATH，CLASS_PATH  由于装机时已经配置过了)，省略
+      b.安装Tomcat
+         下载Tomcat，解压放到某盘符
+      c.启动Tomcat
+         打开“tomcat/bin/ 目录。双击startup.bat
+      d.访问Tomcat：
+         打开浏览器，在地址栏输入地址：http://localhost:8080  回车，看到一只猫
+      e.关闭Tomcat：
+          打开“tomcat/bin/ 目录。双击shutdown.bat
+3.Tomcat使用时常见问题
+    1.端口被占用：Tomcat默认式8080.
+       解决：修改配置文件：tomcat/conf/server.xml  .大概70行（或ctrl+f搜8080）
+3.Servlet开发与部署
+.开发Servlet(自动部署)
+  1）创建Web项目
+    自带Web目录的Java项目。
+  2）开发Servlet
+  3）配置Servlet
+  4）自动部署项目(MyEclipse)
+    a.配置服务器
+      告诉MyEclipse，Tomcat在哪。
+      -->Configurer Server
+      -->Servers
+      -->Tomcat
+      -->Tomcat7.x(Tomcat6.x)
+      -->Enabled
+      -->选择一个Tomcat
+      -->JDK
+      -->选择一个JDK
+    b.启动/关闭服务器
+      --Tomcat7.x Start
+      --Tomcat7.x Stop Server
+    c.启动/关闭服务器的另一个办法
+      -->window-->show view-->Servers
+      --在Servers界面下，选择Tomcat
+      --点击[Run Server](三角按钮)
+        启动Tomcat
+      --点击[Stop Server](红色方块按钮)
+        关闭Tomcat
+    d.部署项目
+      --在Servers界面下，点击Tomcat
+      --点击[Add Deployment](黑色按钮)，
+        在弹出框中选择要部署的项目，
+	确定。
+      --重新启动并访问项目
+    e.重新部署
+      --当修改代码后，需要重新部署项目
+      --在Servers->Tomcat下，点击已经
+        部署的项目，右键[Redeploy]即可。
+        
+
+
+4.HTTP协议
+  1）什么是HTTP协议
+    对浏览器与服务器的通信做了规定：
+    a.如何通信
+      --建立连接
+      --发送请求
+      --接收响应
+      --关闭连接
+
+      这样的通信方式，可以最大限度的
+      降低服务器的压力，它最大的特点
+      是一次请求一次连接。
+    b.通信的数据格式
+      请求数据包：
+        --请求行
+	--消息头
+	--实体内容
+      响应数据包：
+        --状态行
+	--消息头
+	--实体内容
+      以上2份数据不用记，在服务器端
+      或在浏览器上都可以看到。
+  2）如何处理HTTP协议
+    a.通信的过程
+      由浏览器的通信组件和服务器的
+      通信组件自行处理。
+    b.通信的数据
+      --在Java中，Servlet用来处理
+        此通信的数据。
+      --Servlet.service(request,response)
+      --request用来处理请求数据
+      --response用来处理响应数据
+
+  				
+
+5.乱码问题
+   1） 读取实体内容时的解码方式： req.setCharactorEncoding("UTF-8")     
+
+   2）  生成响应的乱码
+    设置服务器编码为utf-8 ：  res.setCharactorEncoding("utf-8")
+
+
+6.emp例子走向：
+1.浏览器输入网址--
+2.服务器加载web.xml（通过网址 例如.do的网址的到小名然后的到java类）
+3.java类（Servlet类）中service方法获取Servlet访问路径：
+  String path=req.getServletPath(); 
+4.判断.do的具体是哪个（例如findEmp.do) 调用该类中相应的一个方法（例如添加员工的方法）然后通过集合给浏览器返回一段标签，浏览器解析了标签就显示除来一个表。
+5.点击findEmp.do网页中的添加按钮，这里通过超链接（或修改网址的方法）跳转到add_Emp.html网址中去。
+6.addEmp.do网页中有一个表单。添加完毕后点击“提交”
+  form属性 action="addEmp.do" 意思是提交事件，跳转到addEmp.do网页
+7.再次通过web.xml跳到ManinServlet（Servlet类）再次判断。调用添加员工的   方法。最后一段代码：res.sendRedirect("findEmp.do");  //  重定向   到findEmp.do。对后有回到findEmp.do网页中
+
+注：重定向 ：res.sendRedirect("findEmp.do");  //  重定向   到findEmp.do
+
+（每个浏览器发送请求访问Tomcat时，Tomcat都会给他创建并启动一个线程,调用内部部署的对应的Servlet。
+   即：Tomcat处理请求时，一个客户端一个线程。）
+
+ 
+
+
+//--------------------
+启动 startup, new-startup
+
+shutdown时 调用destroy()当法结算
+
+一:Servlet类中:
+protected void service() 方法可以处理get和post（数据传输方式）两中类型的请求     ----常用
+protected void doGet()   -----少用
+protected void doPost()
+   
+
+//------------------------------------------------------
+
+8.
+
+
+
+9.
+Servlet类中service方法的两个参数：
+HttpServletRequest req  ：发送请求
+HttpServletResponse res ：响应浏览器
+
+
+10.
+转发:            req.setAttribute("user",u);      //将user数据绑定req。取名u
+		req.getRequestDispatcher("demo.jsp").forward(req,res);   创建转发器。同时转发
+从定向： //当前路径;EmpManager/addEmp   目标路径：EmpManager/findEmp
+		  
+		  res.sendRedirect("findEmp");
+
+11.转发和重定向：
+  1.转发：1. 一次请求；2.地址不变；3.共用一个request，可以通过request共享数据 ；
+            4.只能将请求转发到项目内部资源（转发不经过浏览器） ----第一个依赖第二个 。
+  2.重定向：1.两次次请求；2.地址栏改变；3.两次请求两个request，不公用request所以不共享数据；
+              4.可以定向到项目外的资源（经过浏览器再次访问，百度，阿里巴巴...)   ----第一个和第二个独立
+（ 通常使用情况：
+           1.保存，删除后，一般重定向到查询；
+           2.查询时，有Servlet负责处理请求查询出数据，由查询页面负责显示数据，期间使用转发；
+  3.操连接：浏览器直接跳转到另外一个网页。
+
+12.document.forms:页面上的一组form.返回一个数据
+
+13.WEB-INF : JSP受保护。必须通过转发才能访问
+   WebRoot：静态资源，直接访问
+14：EL:读取实体类的属性。还有一些运算
+ 例如： ${对象名.属性名}
+   <c:if test="${user.sex=='Male'}">男</c:if>
+//****************************************************************************************************************
+
+程祖红 ： chengzh@tedu.cn
+
+	
+1.Cookie不能处理中文:
+  只能放合法ascii字符，需要将中文转换成响应的ascii字符的表示形式
+//生成Cookie的值式处理：
+   String str2=URLEncoder.encode(str,"utf-8");
+//显示Cookie的值时需要处理：
+   String str3=URLDecoder.decode(str2,"utf-8");
+
+2.创建并响应Cookie：
+  Cookie c=new Cookie("username","Sally");
+  response.addCookie(c);
+  读取	Cookie：
+   Cookie[] cookies=request.getCookies();
+
+3.访问Cookie：请求访问路径必须是被访问Cookie的路径或子路径
+  可以改变Cookie路径：c.setPath("/web01");   //先设置路径
+                           response.addCookie(c);   //在生成Cookie
+
+4.Cookie存活周期
+  1.默认：<0   放在内存。关闭浏览器就会消失
+  2.>0:c.setMaxAge(40);//c只能活40秒
+  3. =0
+5.编码问题：//Cookie不能处理中文，只能放合法ascii字符，需要将中文转换成响应的ascii字符的表示形式
+		 //所以添加数据都要进行编码处理
+  1.Cookie c2=new Cookie("city",URLEncoder.encode("北京","utf-8"));  
+
+  2.out.println("cookie名称："+name+"cookie值："+URLDecoder.decode(value,"utf-8")+"<br/>");
+
+
+//************session*******************
+
+6.session ：	      
+            //获取session
+		HttpSession session=request.getSession(true);//如果没有则创建。如果有这返回，然后找session的id。如果没有则创建一个id
+								      //false：如果没有则返回null。如果有则找id。没有id返回null
+		                                                      //( )不写默认为true
+		//获取session  id		
+		String sessionId=session.getId();
+
+7.session存活时间：默认是半个小时
+session.setMaxInactiveInterval(30);  //session设置存活时间。30秒后被服务器清除
+
+8.session验证：
+   （step1在登入成功之后，将一些数据绑定到session对象上，比如：
+      session.setAttribute("admin",admin);
+      step2对需要保护的资源（只有登入之后才能访问的地址），进行session验证，比如：
+      object obj=session.getAttribute("admin");
+      if(obj==null){
+      //没有登入
+       ）
+
+9.  存活时间：
+  request<session<上下文
+在满足使用条件的情况下使用时间最短的节省内存
+
+//********** 过滤器************
+  （拦截servlet容器的带哦用过程并进行响应的处理）
+ 1.建一个类，实现Filter接口 。重写doFilter方法：request,response,FilterChain
+2.web.xml中配置：  <filter>  <filter-mapping>
+
+
+
+一:Servlet类中:
+protected void service() 方法可以处理get和post两中类型的请求     ----常用
+
+protected void doGet()   -----少用
+protected void doPost()
+
+
+二:线程安全出现的问题
+多个线程同时访问一个对象且对某个属性修改就可能出现多线程问题.
+
+什么时候会有线程安全:
+1.多线程同时访问堆中对象
+2.该对象单例:
+3.修改了其成员
+
+解决方法:1.不用成员 2.加锁
+
+
+
+
+**************************spring  （spring.ioc)***************************
+1.spring作用：
+     1.简化开发：
+            例如：jdbc中访问数据库需要建立连接等步骤，这里只需要调用一个方法
+     2.解耦：
+            spring帮我们管理对象之间的关系，对象与对象之间是低耦合的
+     3.集成
+             spring可以继承其他第三方的一些框架，比如mybatis
+
+2.注入过程：
+
+   set注入：   （要求：set方法+无参构造器）  过程：
+
+    一。容器中(app文件中）：
+             1.声明id。便于容器对象获取
+             2.声明需要注入数据的是哪个类 （通过构造器创建bean对象，包名.类名）
+             3.给实体属性赋值
+     ------ 例如：将Computer类属性注入Student类中 
+
+ 
+    
+     <!-- 容器在创建好student对象之后，回调用该对象setComputer方法 -->
+      <bean id="tea" class="bean.Teacher">
+        <property name="computer" ref="cp1"/>       //。。。通过ref将id为cp1的数据传过来
+        <property name="name" value="李宏鹤"/>
+        <property name="age" value="32"/>
+     </bean> 
+     //。。。。。。
+     <bean id="cp1" class="bean.Computer">
+         <property name="name" value="联想T40"/>
+         <property name="mainboard" value="微星"/>
+         <property name="cpu" value="Intel"/>
+     </bean>
+
+
+     二。测试类中：
+            1.创建容器对象
+            2.通过容器对象的getBean方法（传入id，和实体类），返回一个赋值后的实体类对象
+            3.输出实体对象。（实体类中需要toString（））
+          ------ 例如：
+                AbstractApplicationContext ac=new ClassPathXmlApplicationContext("bean/applicationContext.xml");
+		Teacher tea = ac.getBean("tea",Teacher.class);  //根据id。从容器获取
+		System.out.println("Teacher:"+tea);
+
+   构造器注入：（要求：有参构造器）
+      <bean id="cp1" class="bean.Computer">
+         <construct-arg index="0" ref=""/>
+      </bean>
+
+3.	<bean id="someBean1" class="bean.SomeBean" scope="prototype"/>
+      每次getBean（），都会返回一个实例。若不写默认永远只有一个实例
+
+
+4.标注：
+   （要想标志起作用，先在qpplicationContext文件中配置  指定包名
+<!-- 配置主建扫描 -->
+<context:component-scan base-package="controller"/>
+<mvc:annotation-driven/>
+）
+
+    一：用于set注入
+  过程:（！！！ 1. Commputer类前写：@Component("cp")  。
+            2.Student的Computer属性的set方法前写：@Resource(name="cp") ；同时类前面写@Component("stu") 
+            3.测试类：Student stu=ac.getBean("stu",Student.class);  //得到一个stu对象。如果学生类有toString可以在这里输出 ）
+  
+   1.    配置文件applicationContext文件中写一句：  
+      //容器启动之后，会扫描指定包以及子包下面的所有的类，如果该类包含了一些特定的标注，则容器会将这些类（bean）
+      //纳入容器进行管理（相当余在配置文件当中的<bean>)
+       
+       <context:component-scan base-package="bean"/>
+   2.@Component("cp")    //需要注入到别的类的类上写(将Component这个类交给spring容器管理）
+   3.@Component("pg")     //需要被注入的类（例如学生类）  写。  同时set方法前面写：@Resource(name="cp")  此id“cp”便于测试
+   4.测试：Student stu=ac.getBean("stu",Student.class);
+		System.out.println(stu);
+   
+    二：直接给属性赋值：
+     例如给年龄赋值：
+     @Value("22")
+
+  两种方式：
+    1.@Resource
+	  private Old_inc_colService old_inc_colService;
+	2.@Autowired
+	  private TsubjectService tsubjectService;
+
+
+//--------------------------------------------------------------------------------------------------------------------------
+                       *************** 读*写的几种方式*******************
+                       ******************************************************
+                1.读：//方式1：通过request直接向页面获取值
+	                  @RequestMapping("/login.do")
+                          public String checkLogin(HttpServletRequest request){  }
+
+	             //方式2：实例类获取参数
+				//将请求参数封装成一个java对象，该对象的属性名称与请求参数名称都要求一致。并且有对象的get/set方法
+				@RequestMapping("/login3.do")
+				public String checkLogin3(User user){  }
+
+                2.写：
+                     //方式一 ( 常用！！！！！！）：使用ModelMap参数对象  直接写绑定名和绑定值 !!!!
+	               @RequestMapping("/login5.do")
+	               public String checkLogin5(User user,ModelMap data){     //两个参数，第一个式用于读取（这里可不写）  第二个使用来写入
+		data.addAttribute("user",user);
+	        data.addAttribute("message","welcome ooo");   //获取值的那个jsp中写<h1>${message} ${user.username }</h1>  获取值
+                                }  两个参数，一个用于读，一个用于写
+                     //方式二 request和session
+                     @RequestMapping("/login7.do")
+	           public String checkLogin7(User user,HttpServletRequest request,HttpSession session){
+                        request.setAttribute("user",user);   
+		        session.setAttribute("message2","heqqqqqqq");      //jsp中获取数据的语法跟方式一一样：根据绑定名获取绑定值
+
+
+
+
+
+
+
+
+6.spring  用标注@完成：页面中值的读取与写入
+   步骤：
+   1.准备工作：lib文件加导入响应的包，src下导入applicationContext.xml文件
+      web文件配置成*.do跳到springDispatcherServlet 类，app文件只需要配置
+       视图解析器和主键扫描（用于扫描标注@）
+    2.写一个带文本框的表单jsp（后面用于读取框的值）。写一个实体类用于存读 取的值，这里属性名与input的name一致。写一个类（控制器）类的前面加：@Controller
+    3.控制器类中读取jsp的值：
+          1.写一个方法前面加@RequestMapping("/shengao.do")，表示浏览器输入这个网址，就会调这个方法。
+           2.return "shengao";  这个放回值为String的方法返回值式前缀。页面会跳转到shengao.jsp.
+           3.在页面上填写完数据后，点击提交。form标签提交时间设置跳转到jieguo.do.
+            4.再写一个方法前面加@RequestMapping("/jieguo.do")。上一步跳转到这个jieguo.do表示需要调用接下来这个方法。方法有两个参数：public String che1(User user,ModelMap data) 。前参数用于读取数据。后参数用于将数据写入另外一个页面
+            5.读取参数：	double sg=user.getSg();
+		                double tz=user.getTz();	
+             6.写入另一个jsp：
+             data.addAttribute("bbb","Bmi:"+c);
+             data.addAttribute("aaa","太重了，回去减肥。。。xxxxxxxxxxx");
+             7.另一个jsp中读取上一步写入的值：
+                <%@page pageEncoding="utf-8" contentType="text/html; charset=utf-8"%>
+                   <h1>${bbb}</h1>
+                    <h1>${aaa}</h1>
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+
+梁建全：liangjq@tedu.cn
+
+
+
+Ajax********(以js为基础的网页编程框架）**********   Asynchronous JavaScript and XML
+1.
+各种技术的作用：
+  1.以XMLHttpRequest对象（Ajax对象；中介）为和型，异步方式（多个同时干）发送请求和接收响应结果
+  2.客户端需要以JavaScript语言为基础，获取请求要提交的数据，使用XMLHttpRequest响应结果呈现到页面都需要js实现
+  3.采用XML会哦JSON数据格式进行浏览器和服务器之间的数据交换
+  4.采用HTML/CSS左数据渲染
+
+2.
+  Ajsx工作流程：
+      用户事件---浏览器调用XMLHttpRequest----向服务器发送请求----ServletMVC处理请求----
+      返回数据（JSON或String，以前是返回一个jsp页面，这里只需要返回数据）------返回给了XMLHttpRequest------（自动调用我们写好的函数）呈现给页面
+3.优点
+   1.相比jsp模式，这里采用异步（连续点击，连续对页面进行操作），jsp必须返回后才能进行下一步操作
+   2.服务器返回的式纯数据（部分数据），不需要返回整个页面。（提升了传输效率。）
+   3.实现页面局部刷新：复杂页面有的只需要刷新页面一小块，Ajax就能做到只跟新这一小块，jsp必须整个页面刷新
+
+4.JSON与str相互转换
+   1.
+            var obj1={"name":"tom","age":20};  //定义一个JSON变量（对象）
+   2.
+           var str='{"name":"rose","age":21}';  //一个JSON语法格式的字符串，假设是jsp返回过来的一个字符串
+            var obj4=JSON.parse(str); //将字符串转换成JSON对象，原始方法，jquery里面不许要转换
+            var str=JSON.stringify(obj);//json或（map对象）转换成str。引入json2.js
+
+5.spring事务特点：
+        1.读写性（默认可读写：曾删该查。）
+	2.回滚性（默认RuntimeException异常：空指针异常，数组下标越界...）
+	3.传播性
+	4.隔离性：
+		          防止出现脏读(并发问题：别人还没提交，你就读取），幻读...
+		 READ——UNCOMMITED：可以读别人未提交的
+		 READ——COMMITED：读别人已经提交的才能读
+		 REPEATABLE——READ：可以一起读（不能同时曾删该）
+		SERIALIZABLE：线性化：曾删该查都不能同时	
+             (注：若不使用事务，那就得用最原始的方法：try-catch（出现错误catch里面写回滚），这样左麻烦）
+
+
+
+
+
+
+//*************************************************************************************************
+快捷键
+  1. Ait+Shift+M  : 选中的代码做成一个方法。其他地方可以调用
+  2.Ctrl+f  ：文本中搜索想要的词 
+  3.ctrl+shift+t: 查询类
+  4.ctrl+o :查询方法
+
+ ************************************************************************
+*********************************设计模式*******************************
+**************************************************************************
+
+1.单例模式（一个类只有一个对象，构造方法用private修饰，无法创建新的对象）：
+public class Singleton {
+ 
+ private static Singleton singleton;
+ 
+ private Singleton() {
+ }
+ 
+ public static Singleton getInstance() {
+  if (singleton == null) {
+   singleton = new Singleton();
+  }
+  return singleton;
+ }
+}
+2.工厂模式（创建一个工厂类，专门用来获取某个借口的各个实现类）
+public class Factory{
+    public static ISample creator(int which){
+        if (which==1)
+            return new SampleA();
+        else if (which==2)
+            return new SampleB();
+    }
+}
+
+
+
+******************************************************************************
+*****************************************************************************
+*************************************** 笔记9*********************************
+0.获取当前系统时间：
+   1.当前Date格式时间：Date date=new Date();
+   2.1970的元旦到当前毫秒：long l=System.currentTimeMillis()    或  long l=  ( new Date().getTime() )
+1.   ++    --   运算已经强制转换过      byte b=2;      b+=10-------byte=(b)(b+10) 
+    byte a=10+20.编译其自动运算成30，没有错误
+    byte a=10+130;超范围，编译错误
+2.   double精度：运算的数必须是2的n次方。不能是1/10.就像10进制不能精确1/3soft01
+    解决运算中的精度问题：使用 BigDecimal类：
+		BigDecimal bs=new BigDecimal("0.1");
+		BigDecimal b1=new BigDecimal("0.2");//需要传入string才能保证运算精确
+		BigDecimal add =bs.add(b1);
+		System.out.println(0.2+0.1);//精度丢失
+		System.out.println(add.toString());//精度精确
+
+3.  异常：    try{   代码一   }catch(  异常1  ){  代码二  }    ----- --------如果 代码一出现异常1这种异常，则走代码二
+4.局部内部类：当一个  局部内部类  调用当前方法中的其他  局部变量  时 那个变量必须前面加final 
+5.接收用户输入的字符串;  String str=sca.nextLine();
+6.byte[] data=str.getBytes("UTF-8");//将字符串变成字节数组
+7.集中结束循环：
+    break：结束一层循环
+    continue; 结束循环下面的代码，重新运行循环，而不是结束循环
+    return：结束整个函数
+8.集合用for循环，其中最好不要有.remove（）删除元素的操作，因为下次循环的集合按造上次删除后的集合来算，也就是下标有跟新：
+9.子类重写方法有异常抛出，父类也必须写异常抛出。否则编译错误 
+10.（所有扩展流都自动加了缓冲，写入数据必须清空缓存才能写入out.flush()，或关闭文件）！！！！！                  
+11.用多个catch处理异常时，先写小类型，Exception最大
+12.配置参数一般用 properties :
+  例如：
+  drover=aaa
+  url=bbb
+  user=ccc
+   pwd=ddd
+13.  数据库中时间格式转换
+     select to_date('2008-8-8','yyyy-mm-dd') from dual
+      select to_char(sysdate,'yyyy-mm-dd') from dual
+14. 回退与提交。回退到指定位置
+  CREATE TABLE t_info_shc( id NUMBER(4) ) ;
+    INSERT INTO t_info_shc VALUES(2) ;
+    SAVEPOINT A ; ------标记A步
+    INSERT INTO t_info_shc VALUES(3) ;
+    INSERT INTO t_info_shc VALUES(6) ;
+    SAVEPOINT B;  ----------标记B
+
+    ROLLBACK TO A;  ----回退到A那一步
+    rollback              ------回退所有步骤
+    commit；            ------提交（提交后已近保存，回退不起作用）
+
+15.OR REPLACE   表不存在则建表，存在则是覆盖
+16。视图（改变原表内容会改变视图）
+      CREATE VIEW V_EMP_SHC_30 AS SELECT EMPNO,ENAME,SAL,DEPTNO FROM EMP_SHC   //创建一个视图 名字：V_EMP_SHC_30
+       where deptno=30;
+    （如果将原表中deptno的30全部改成20，再次查看视图，会显示0条记录）
+17.Having 与where不同：Having一般用在 group by （ 后分组）判断
+18.一个字符：1.utf-8：一个（字母，数字，符号）1个字节；一个汉字（3个字节）----
+               2.unicode：（字母，数字，符号，汉字）都是2个字节 -----------------linux系统
+               3.GBK：（字母，数字，符号）1个字节；一个汉字（2个字节）-------windows系统
+19.数据库几种删除的区别
+  drop ：删除整个表 或 删除某字段  （DDL）
+  DELETE：有条件的删除表中数据（ DML）
+  TRUNCATE ：删除表中所有数据（DDL相对delete效率高  无法回退！）
+20.计算机配色方案：RGB（红绿蓝）每种灯0-255档，三个灯的各自不同的亮度就能组合成所有颜色
+    ：color：#2A00C1    16进制写法，每两位代表三种颜色中的一种
+                 rgb(255,255,255)  10进制写法
+21. 随机生成0-99数字;Math.random()*100
+
+22.长度：
+   
+  int i=arr.length //数组中元素个数
+   int i=list.size();  //集合中元素个数
+   int i=str.length(); //字符串字符个数
+   length(str)      //数据库字符串长度
+
+23.导入JUnit（用Test测试）：
+   右键项目---Build Path---Add Libraries---Junit---Junit4---确定
+
+24.解析
+  1.（db.properties)  key--vlaue:  例如：文件里写：jdbc.user=jsd15082
+  2. java：读取db文件得到一个流：InputStream is=DBTool管理连接工具.class.getClassLoader().getResourceAsStream("util/db.properties"); 
+  3.从流中读取数据：p.load(is);
+  4.读取db文件中key对应的值（value）：
+   String user=p.getProperty("jdbc.user");
+25.MVC模式：
+            代码的分层思想。可以将代码分为如下3层：
+   1.M(Model):模型层（业务层），用来处理业务（曾删该）  例如：dao（封装了 处理数据库内数据 的一些方法）
+   2.V(View):视图层（表现/显示），用来展现数据    例如：jsp
+   3.C（Contrlooer）：控制层，用来处理请求，是M和V的桥梁。目的是对代码进行解耦，便于团队开发   例如：Servlet
+26.数字字符串相互转换：
+   int a=Integer.parseInt(str)   //字符串转换成数字
+  String str=1+"" ;                //数字转换字符串
+27；包装类：
+   int：Integer          char：Character       其余都是首字母大写
+28.javaBean: 有响应的属性以及对应的get和set方法，实现序列化接口。有无参构造器
+  
+29.group by 用在聚合函数后。having用在group by后
+
+30.视图的作用：一个虚表（主表查询出来的表）。
+      1.在数据库中没有数据存放，存放的是查询逻辑，这样便于用户操作，不用每次都写一大段查询语句同时节约空间
+       2.可以保护机密文件
+
+31.xml中大于小于符号转义。<![CDATA[ <]]>  :例如对小于转义
+
+
+32.页面时间格式转换（js时间转换）：
+    var d=new Date(1461638720000).toLocaleString();
+
+33.页面摸个div显示最外层(数字大小决定显示顺序呢）
+
+   #d1{
+position:relative;
+z-index:9999;
+}
+
+34.父子页面窗口问题
+
+      1.获取父窗口元素：
+   var date=$("#date",window.parent.document).val();(openr方式:opener.document.getElementById('#id'))
+   2.调用父窗口方法window.parent.aaa();（openr方式打开的子窗口：opener.aaa();）
+   
+   3.父页面调用子页面a()方法(调用属性同理)
+   window.iframepage.a();//iframe标签的name=iframepage
+   open方式子页面：
+   var open_jsp=window.open("sel_table.jsp","","width=600,height=750");
+   open_jsp.aa();
+   
+   
+   4.综合
+      获取父父页面的子页面元素：$('#gwqh_tab label',window.parent.parent.iframe_name.document);
+
+35.获取选中
+
+  一：获取下拉框（select）被选中的值：
+  javascript原生的方法
+
+  1: 拿到select对象： var  myselect=document.getElementById("test");
+
+  2：拿到选中项的索引：var index=myselect.selectedIndex ;             // selectedIndex代表的是你所选中项的index
+
+  3:拿到选中项options的value：  myselect.options[index].value;
+
+    拿到选中项options的text：  myselect.options[index].text;
+  jquery方法：$("#selectid option:selected").val();
+	。。。或
+    var sel_val = $('select[name=city]').val();。。。或
+   获取id：$('select[name=city] option:selected').attr("id")。。
+ 
+   二。获取单选框被选中
+   <input type="radio" name="aaa" checked  value="男"/>男
+   <input type="radio" name="aaa"   value="女"/>女
+   var a=$('input[name="aaa"]:checked').val();
+
+   三。获取多选框被选中
+   function you(){
+	//var test1="";
+	$("input:checkbox[name='text1']:checked").each(function(){
+	//test1+=$(this).val()+"1";
+	alert($(this).val());//循环alert出所有的选中的value
+					});
+			}
+
+     或
+     补充：var strList=$("input:checkbox[name='text']:checked");//获取被选中的多选框---数组
+
+ 36.jquery获取 被点击的元素 id   (如果获取class，将"id"改成"class"
+    $(document).click(function(e){
+
+   var v=$(e.target).attr("id");
+    });
+
+
+
+
+37.file标签获取其值
+
+      var aa=document.getElementById("a").value;
+     <input type="file" id="a" name="a"></input>
+
+38.jquery获取或设置 元素宽高
+   obj.width（）;obj.height();obj.width（"50px"）;obj.height("50px");
+
+39.表格中tr位置上下移动
+   向上：tr与哥哥换位置：prevTR.insertAfter(objParentTR);
+   向下：与弟弟换位置;   nextTR.insertBefore(objParentTR);
+
+40.下拉框option。单击事件
+   $(function(){
+
+        $("#select1").change(function(e){
+      var name=$("#select1 option:selected").attr("value");
+      });
+
+      });
+
+41.文本框失去和获取焦点;
+  $("#p").blur();$("#p").focus();
+
+42。将多行文本框（textarea标签）中的换行"\n"换成";"
+     var str=$(#"textarea1).val();
+    var c=val.indexOf("\n");
+	while(c!=-1){     //由于一次只能对第一个换行符转换
+	val=val.replace("\n",";");
+	  c=val.indexOf("\n");
+	    }	
+ 
+  直接替换所有：str=str.replace(/"/g,"&quot;")//将"全部替换成&quot;  
+   如果需要替换的是特殊字符例如 . 将.写成\.  
+43（.获取请求参数 get请求参数）
+   var id="<%=request.getParameter("id")%>";
+   var user_codes = encodeURIComponent("<%=request.getParameter("user_code") %>");	
+     如需处理get中文乱码：
+    var name="<%= new String( request.getParameter("name").getBytes("iso-8859-1"),"utf-8")%>";
+
+44。js中json使用（js中map对象使用）:
+
+   var aaa={"1":11,"2":22,"3":33,"a":"aa"};
+   
+   //新增
+   aaa.si="44";
+   或aaa["4"]="44";
+   //动态新增
+   var vals="5";
+   aaa[vals]="55";
+   
+   获取：
+   var n="a";
+   aa=aaa[n];或
+   a=aaa.a
+   
+   
+   
+  for(var i in aaa){//遍历json
+   alert(i+"="+aaa[i]);
+   }
+   
+
+45.mybatis直接传入sql执行：返回对象
+ <select id="implementsql" parameterType="map" resultType="java.util.Map">
+	  ${sql}
+</select>
+
+public List<Object> implementsql(Map map);
+
+
+46.js数组和str转换
+  var map=["1","22","333"];
+   1.var str=map.join();//1,22,33
+   2.var m=str.split(","),//["1","22","333"];
+
+47.遍历map
+   Map<String ,Object> map=null;
+   for(String key :map.keySet()){
+   key=key;
+   value=map.get(key);
+
+ }
+
+48.获取类的类型（obj具体是什么类）
+   String str=(Class<? extends String>) obj.getClass()+"";
+
+49.文本框灰色提示字：
+<input  id="thename" value="请输入使用主题名称" style="height:22px" onFocus="if(value==defaultValue){value='';this.style.color='#000'}" onBlur="if(!value){value=defaultValue; this.style.color='#999'}" style="color:#999" />
+
+
+50.鼠标左右中建事件：
+ $(function(){
+	$("#table_01").mousedown(function(e){//鼠标事件e：1=鼠标左键，2=鼠标中键，3=鼠标右键
+		alert($(e.target).html());//点击的具体元素对象
+		if(3==e.which){
+			alert("这是右击事件！");
+			alert(this.text());
+			var trlist = $(this).children().eq(0).children();
+			for(var i=0;i<trlist.length;i++){
+				var td1  = trlist.eq(i).children().eq(0).html();
+				var td2  = trlist.eq(i).children().eq(1).html();
+			}
+			//alert(td1);
+		}else if(1==e.which){
+			alert("这是左击事件！");
+		}else{
+			alert(e.which);alert("鼠标中建")
+		}
+	});
+})
+
+
+51.js设置style中具体属性：
+   
+ （只能是dom对象）：1.$("#zhuzidiv")[0].style.left="70px";
+                    2.$("#zhuzidiv")[0].style.height="700px";
+
+52：过滤选择器（排除选择器）：$("li:not(.notdel)").remove();
+    属性选择器:  $("#div_id input[name='name1'][value='value1']");//获取某个div下name=name1切value=value1的所有input元素
+
+
+53：滚动条保持在最低端：页面加载函数（或有新数据）
+   $("div1").scrollTop($("div1")[0].scrollHeight);
+
+54.回车事件（键盘事件）：
+
+
+1.页面刷新时注册键盘事件：
+
+  $("#inputid").keyup(function(event){
+   if(event.keyCode==13){
+    alert("按了回车键");
+  } 
+ }
+
+2.标签内注册单击事件：
+
+   a.标签内：onkeyup="return disableEnter(event)"
+   b.js：function disableEnter(event){
+
+
+            }
+
+  
+
+
+55.js使浏览器后退
+   history.go(-1);---------同理：0（刷新）；1（前进）
+
+56,js  cookie：
+   1.生成cookie（如果值为中文会乱码）
+
+       var username="张三";
+       var userId="123";
+
+        usernames=encodeURIComponent(username,"utf-8");//对中文编码再保存
+	alert(usernames);
+	alert(decodeURIComponent(usernames));//获取cookie后 对中文解码
+
+	document.cookie="username_zdybb="+usernames;  //新增cookie
+	document.cookie="userId_zdybb="+userId; 、
+
+    2.获取cookie 
+   var str=document.cookie;  //获取所有cookie。然后根据";"和"="截取字符串来获得对应的值
+   
+   ******后台处理get请求乱码问题：
+      String  username=new String(username.getBytes("iso8859-1"),"utf-8");//如果前端为gbk就替换utf-8为gbk
+
+57,jquery判断元素在数组中的位置
+
+  alert(jQuery.inArray(bnt,bnttd));//判断bnt在bnttd数组中的位置
+
+
+
+
+58 	//js对字符串的编码与解码。可解决中文乱码等问题
+   
+ 1.16进制方法
+       var mima=escape("i im 沈换成");
+	alert(mima);
+	var mingma=unescape(mima);
+	alert(mingma);return
+ 2.usernames=encodeURIComponent("沈焕成","utf-8");
+   value=decodeURIComponent(usernames)
+
+59.鼠标移入变手型css：cursor:pointer;
+
+60.获取客户端ip
+               String ip=request.getHeader("x-forwarded-for");
+		if(ip==null||ip.length()==0||"unknown".equalsIgnoreCase(ip)){
+			ip=request.getHeader("Proxy-Client-IP");
+		}
+		if(ip==null||ip.length()==0||"unknown".equalsIgnoreCase(ip)){
+			ip=request.getHeader("WL-Proxy-Client-IP");
+		}
+		if(ip==null||ip.length()==0||"unknown".equalsIgnoreCase(ip)){
+			ip=request.getRemoteAddr();
+		}
+		if("0:0:0:0:0:0:0:1".equals(ip)){
+			ip="127.0.0.1";
+		}
+
+
+*********************************************************************************************************
+1.分割字符串特殊符号：@ % & #
+
+2.mybatis 用map返回为null不显示key(注jar包版本：mybatis3.2.5。。）
+
+  mybatis-config.xml文件中加上：
+
+
+<!-- map中返回为空则没有key的问题 -->
+     <settings>
+       <setting name="callSettersOnNulls" value="true"/>
+     </settings>
+3.点击其他地方隐藏某个元素（若点击非.zs_data，则隐藏#iframe_zsxm）
+$(function(){
+	$("body").click(function(e){
+		if(!$(e.target).closest(".zs_data").length){
+			$("#iframe_zsxm").hide();
+		}
+	})
+})
+   *******获取其他：
+	$("").not(".zs_data");
+4.jquery获取元素html代码：
+  var str=$(obj).prop("outerHTML");
+
+5.tomcat配置内存大小（tomcat/bin/catalina.bat)：
+   set JAVA_OPTS=-Xms512M -Xmx1024m
+   set CATALINA_OPTS=-Xms128M -Xmx256M
+   
+   myeclipse配置内存：
+   window--preferences--java--installed jres--选择一个jdk（edit）--default vm arguments(-Xms128m -Xmx1024m)
+6.eclipse 配置eclipse Marketplace
+ 修改eclipse.ini，然后重启eclipse
+-vmargs
+-Xmx512m
+...
+-Djava.net.preferIPv4Stack=true
+
+ 7.类名获取对象
+			//java反射获取处理类
+			@SuppressWarnings("rawtypes")
+			Class handler = Class.forName(handlerClassName);
+			AbstractWordExportHandler wordExportHandler = (AbstractWordExportHandler) handler.newInstance();
+			（java反射：Java让我们在运行时识别对象和类的信息，主要有2种方式：一种是传统的RTTI，它假定我们在编译时已经知道了所有的类型信息；
+			另一种是反射机制，它允许我们在运行时发现和使用类的信息。）
+8.mybatis一级缓存和二级缓存：
+	一级：同一个sqlSession，多次调用一个id的sql。第一次存入缓存，后面直接从缓存获取
+	二级：不同sqlSession，多次调用一个id的sql。第一次存入缓存，后面直接从缓存获取
+9.事务级别：
+	数据库事务的隔离级别有4种，由低到高分别为Read uncommitted 、Read committed 、Repeatable read 、Serializable
+	1.Read uncommitted（读未提交。可出现脏读：可读取还没提交事务时的数据。这就是脏读。）
+	2.Read committed（读提交（解决脏读）。会出现不可重复读：一个事务范围内两个相同的查询却返回了不同数据（中途其他事务提交了update)）
+	3.Repeatable read(重复读（解决了不可重复读）。一个事务开启，不允许其他事务的UPDATE修改操作。还是会有"幻读"(读两次数据不同（第一次读取，第二次打印，两者不同），中间其他事务提交了insert)的可能）
+	4.Serializable （序列化。在该级别下，事务串行化顺序执行，可以避免脏读、不可重复读与幻读）。。但是这种事务隔离级别效率低下，比较耗数据库性能，一般不使用。）

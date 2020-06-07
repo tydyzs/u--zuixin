@@ -1,0 +1,1970 @@
+一、
+安装好oracle后将密码设置永不过期
+进入cmd
+--sqlplus /nolog
+--sql>connect /as sysdba --(以管理员sysdba的身份连接数据库)
+--sql>select username,profile from dba_users;   --(查看用户的proifle是那个，一般是default)
+--sql>select * from dba_profiles s where s.profile='DEFAULT' AND RESOURCE_NAME='PASSWORD_LIFE_TIME';  --(查看指定概要文件 如default 的密码有效设置，默认是180天)
+--sql>alter profile default limit password_life_time unlimited;  --(将密码有效期改成永久)
+
+二、
+
+--表数据迁移：
+
+（****************准备工作：********************
+1.创建用户：管理员账户：create user testexp identified by shc51888;
+		赋权：grant create session,resource to testexp
+
+2.为该用户创建并指定新的表空间（查看当前用户的表空间：select default_tablespace from user_users）：
+ create tablespace test_data --test_data表空间名称 （tablespace：表空间。temporary：临时表空间）
+ logging 
+ datafile 'd:\testserver\TS_DAT_YSC_ZHPT.dbf'--oracle文件路径
+ size 32m 
+ autoextend on 
+ next 32m maxsize 20480m 
+ extent management local;
+
+3.更改用户表空间
+  alter user username default tablespace test_data--指定表空间
+  alter user username temporary tablespace test_temp; --指定临时表空间
+
+4.需要oracle安装版本一致：
+ 查看当前oracle版本：select * from v$version;
+
+5.导入导出所在的数据库字符集应相同：
+	  ******修改oracle字符集****
+	1.cmd执行以下语句链接oracl：sqlplus system/Shc51888@localhost:1521/orcl
+	2.sql>connect /as sysdba --(以管理员sysdba的身份连接数据库)	
+	3.查看字符集：select userenv('language') from dual;
+	4.依次执行：
+		shutdown immediate;
+		startup mount
+		ALTER SYSTEM ENABLE RESTRICTED SESSION;
+		ALTER SYSTEM SET JOB_QUEUE_PROCESSES=0;
+		ALTER SYSTEM SET AQ_TM_PROCESSES=0;
+		alter database open;
+		ALTER DATABASE character set INTERNAL_USE AL32UTF8;
+		shutdown immediate
+		startup
+/********************************************************/
+
+--1.表结构（或表结构和数据）cmd命令
+--导出表结构（
+$exp ysc_zhpt/ysc_zhpt@86.12.64.85/ysc_szjk file=D:/ysc_zhpt.dmp rows=n  (rows=n：只要表结构；不加：表结构和数据）
+或 
+exp clm/clm@localhost:1521/orcl file=d:/a_data.dmp
+
+--导入表结构
+$imp test_zhpt/test_zhpt@86.12.72.150/fxgldb file=D:/ysc_zhpt.dmp
+
+--导入表结构
+$imp test_zhpt/test_zhpt@86.12.72.146/fxgldb file=D:/ysc_zhpt.dmp indexes=y grants=n constraints=n statistics=none fromuser=YSC_ZHPT touser=TEST_ZHPT  rows=n (rows=n：只要表结构；不加：表结构和数据，fromuser、touser原用户和新用户）
+（fromuser=YSC_ZHPT：原库的用户；touser=TEST_ZHPT目标用户）
+
+--2.数据迁移（dblink方式）：
+
+   一、获取执行sql：SELECT 'INSERT INTO '|| table_name ||' select * from  ' || table_name ||'@YSC_ZHPT85'|| ';'
+  FROM USER_TABLES T
+ WHERE T.TABLE_NAME  not in
+       (SELECT T.TABLE_NAME
+          FROM USER_TABLES T
+         WHERE T.TABLE_NAME like 'WF_%'
+            or T.TABLE_NAME in ('PT_CXTJ_SQL',
+                                'PT_CXTJ_MODULE',
+                                'QYSDS_QCGL_FLGL_BSL',
+                                'QYSDS_QCGL_FLGL_FLGLBSK',
+                                'QYSDS_QCGL_FLGL_FLGLBSKMX',
+                                'T_PRIVILEGE'))
+    ORDER BY TABLE_NAME;
+   二、复制执行结果。新建命令窗口。执行拼接的sql语句，提交
+
+--3*****************  PLSQL导出表（无法导出blob格式）：************
+1.导出表结构：工具--导出用户对象
+2.导出表数据：工具--导出表--sql插入
+（选中本地一个.sql文件，可勾选“删除表”、“创建表”等在导出数据的同时将创建表和删除表的语句也带上）
+3.导入：通过plsql，新建命令窗口执行导出的sql文件。
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////   mysql  ///////////////////////////////////////////
+
+1.linux联网安装mysql：
+
+
+yum install -y mysql-server mysql mysql-devel
+/usr/bin/mysql_install_db
+chkconfig mysqld on
+service mysqld start
+mysql –u root –p 
+	mysql> SET PASSWORD = PASSWORD('idatatech');
+	mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'idatatech' WITH GRANT OPTION;
+	mysql> FLUSH PRIVILEGES;
+	mysql>exit;
+
+2.mysql设置表编码：
+alter table `tt_liuyan` convert to character set utf8;  
+
+	
+ 
+加密规则问题：
+
+1.C:\Program Files\MySQL\MySQL Server 8.0\bin目录下执行：
+	mysql -u root -p
+	输入密码回车
+
+2.ALTER USER 'root'@'localhost' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER;   #修改加密规则
+3.ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';   #更新一下用户的密码
+
+ FLUSH PRIVILEGES;   #刷新权限 
+ alter user 'root'@'localhost' identified by '111111';
+
+
+ 3.常用命令：
+mysql -u root -p  //进入sql命令
+mysql -uroot    //启动mysql
+show databases;   //查看有哪些库
+create database mytest;  //创建库
+drop database mytest;   //删除库
+use test;   //进入这个test库（进入才能写sql操作）
+show tables;   //查看有哪些表
+set names utf8 ;  //设置客户端和连接编码
+source sql文件位置;         //sql文件导入到端口里面一条条执行
+
+4.//建库，进入库
+DROP database IF EXISTS `cloud_note`;
+create database cloud_note;
+use cloud_note;
+
+
+
+5.//分页查询
+select * from t_emp limit 5,5;    //从第6条开始，查5条数据
+
+6.mysql日期：
+     date_format(create_date, '%Y-%m-%d %H:%i:%S')
+     select now() from dual
+
+//------------------------------------------------------------------------
+7.mysql递归：
+
+	#创建向上递归
+	set global log_bin_trust_function_creators=TRUE;#防止创建函数报错
+			DROP FUNCTION IF EXISTS getUserParList;
+			DELIMITER;;
+			CREATE FUNCTION getUserParList(areaId bigint)
+			RETURNS VARCHAR(4000)
+			BEGIN
+			DECLARE sTemp VARCHAR(4000);
+			DECLARE sTempChd VARCHAR(4000);
+			SET sTemp='$';
+			SET sTempChd = CAST(areaId AS CHAR);
+			SET sTemp = CONCAT(sTemp,',',sTempChd);
+			SELECT parent_id INTO sTempChd FROM blade_dept WHERE id = sTempChd;#parent_id表中父id；blade_dept需要创建的表；表中的id
+			WHILE sTempChd <> 0 DO
+			SET sTemp = CONCAT(sTemp,',',sTempChd);
+			SELECT parent_id INTO sTempChd FROM blade_dept WHERE id = sTempChd;#parent_id表中父id；blade_dept需要创建的表；表中的id
+			END WHILE;
+			RETURN sTemp;
+			END
+			;;
+			DELIMITER ;
+	#向上递归通过 FIND_IN_SET() 调用
+			SELECT * from blade_dept where FIND_IN_SET(id,getUserParList(1123598813738675202));
+	#创建向下递归
+			set global log_bin_trust_function_creators=TRUE;#防止创建函数报错
+			DROP FUNCTION IF EXISTS getChildrenUser;
+			DELIMITER ;;
+			CREATE FUNCTION getChildrenUser(areaId bigint)
+			RETURNS VARCHAR(4000)
+			BEGIN
+			DECLARE sTemp VARCHAR(4000);
+			DECLARE sTempChd VARCHAR(4000);
+			SET sTemp='$';
+			SET sTempChd = CAST(areaId AS CHAR);
+			WHILE sTempChd IS NOT NULL DO
+			SET sTemp= CONCAT(sTemp,',',sTempChd);
+			#parent_id表中父id；blade_dept需要创建的表；表中的id
+			SELECT GROUP_CONCAT(id) INTO sTempChd FROM blade_dept WHERE FIND_IN_SET(parent_id,sTempChd)>0;
+			END WHILE;
+			RETURN sTemp;
+			END
+			;;
+			DELIMITER ;
+	#调用：
+			SELECT * from blade_dept where FIND_IN_SET(id,getChildrenUser(0));
+	
+
+
+
+建表：
+
+ CREATE TABLE emp_shc(
+        empno NUMBER(4) not null primary key,,
+        ename VARCHAR2(10),
+        job VARCHAR2(9),
+        mgr NUMBER(4),
+        hiredate DATE,
+        sal NUMBER(7,2),
+        comm NUMBER(7,2)
+    );
+
+插入数据：
+       
+   INSERT INTO emp_SHc
+  VALUES
+  (7369,'SMITH','CLERK',7902,to_date('1980-12-17','yyyy-MM-dd'),800.00,NULL,20);
+ 
+
+提交
+COMMIT;
+  
+  
+
+****************************************************************************************************************************
+   SELECT to_char(djxh),nsrmc FROM hx_dj.dj_nsrxx@gdltcxff t WHERE t.nsrmc LIKE '%为例子%'
+   
+   SELECT 
+jylsh
+ FROM 
+GS_CXTJ.SB_KJGRSDSBGB@Gdltcxff sb
+ WHERE SB.YXBZ = 'Y'
+   AND SB.SBRQ_1 > to_date('2017-08-01', 'YYYY-MM-DD')
+   AND SB.SBRQ_1 < to_date('2017-12-01', 'YYYY-MM-DD') + 1
+   AND SB.KJYWRDJXH  =  '10124401001046486310' 
+   
+   SELECT sfzjhm,xm  ,sdqjq,sre   FROM GS_CXTJ.SB_KJGRSDSBGB_MX@GDLTCXFF WHERE JYLSH = '24417051510518732529' 
+   
+   150.20.9.111:1521/dw2    db_yw   405405
+
+****************************************************************************************************************************
+     
+DDL语句（数据定义语句，这一类SQL语句用于曾删改数据库对象。）
+
+创建表：
+
+CREATE TABLE EMPLOYee_SHC(
+id NUMBER(4),
+name VARCHAR2(20),
+
+);
+查看表的结构：desc employee_shc
+
+
+删除表：drop TABLE table_name
+
+
+1.修改表名：
+例如：将employee_shc 该名成myemp_shc 
+RENAME employee_shc TO myemp_shc
+
+
+2.向表myemp_shc中添加字段：hiredate date
+  ALTER TABLE myemp_shc
+  ADD(hiredate DATE)
+3.删除表中字段
+  例如：删除表myemp_shc中hiredate字段
+  ALTER TABLE myemp_shc
+  DROP(hiredate)
+4.修改表中现有字段
+例如：
+  ALTER TABLE myemp_shc
+  MODIFY(JOB VARCHAR2(40) DEFAULT 'clerk') 
+
+ *******表中字段添加数据********** 
+
+5.myemp_shc表其中四个字段添加数据
+INSERT INTO myemp_shc
+  (ID,NAME,salary,deptno)
+  VALUES
+  (1,'jack',5000,20)
+
+6.显示数据!!!!：
+select * FROM myemp_shc
+
+
+
+6.时间数据插入格式：
+例如：1.DATE类型：to_date('2009-09-01','yyyy-MM-dd')
+      2.TIMESTAMP 类型：('2016-07-07 00:00:00','YYYY-MM-DD HH24:MI:SS')
+
+
+
+7.
+修改表中数据：
+update myemp_shc
+SET gender='f',salary=7000
+WHERE NAME='donna'
+
+
+
+8.删除表中数据
+
+例如：删除表中满足id=1的条
+DELETE FROM myemp_shc
+where id=1
+
+9.只查看表中这四项：
+SELECT NAME,comm,JOB,deptno
+from MYEMP_SHC
+
+
+*****************************************************************************
+************************************** 字符串*********************************
+
+1.拼接：
+  例如：
+   1.
+  select ENAME||'工资'||':'||SAL||'元'||
+  from EMP_SHC
+   2.
+  select  'abc'||'123' from dual
+
+  
+2.length(char)函数
+
+select ENAME,length(ENAME)
+from EMP_SHC
+
+3.将字符串转换为全大写，全小写。首字母大写
+UPPER(char),LOWRT(char),INITCAP(char)
+  select UPPER('helloworld'),LOWER('HELLOWORLD'),INITCAP('HELLO WORLD')
+  from DUAL
+  
+
+5.TRIM:去除字符串两边满足条件的字符
+例如：
+select
+TRIM('e' from 'eeelitee')
+ from DUAL
+ 
+******只去除左边
+ Select
+ LTRIM('eseelitee','esf')
+ from DUAL
+******只去除右边：
+ select
+ RTRIM('eelitefde','efd')
+ from DUAL
+  
+  
+6.补位:
+左补位：
+Select lpad(Sal,10,' ')
+from emp_shc
+  
+实现左对其。右边补空格:
+Select rpad(Sal,10,' ')
+from emp_shc
+  
+  
+7.截取：
+例如
+从给定字符串的给定位置（10）开始，连续截取2个字符：
+  Select
+  Substr('thinking in java',10,2)
+  From Dual;
+  
+  注：1.Oracle中下标从1开始
+     2.如果位置是负数就是倒着数
+     
+     
+8.查找字符串的位置
+例如：字符串从第4为开始查找in，第二次出现的位置。。4和2可以不写，不写默认为1
+Select
+Instr('thinking in java','in',4,2)
+from dual
+**********************************************************************************
+************************************************数字函数****************************
+  
+数字函数：
+1.
+Rount(N,M)
+对n进行四舍五入操作，保留小数点后m位，若m为0，则式保留到整数位
+若为负数，则是保留十位以上的数字。
+Select Round(45.678,2) From Dual;
+Select Round(45.678) From Dual; 
+Select Round(45.678,-1) From Dual
+
+2.Trunc函数:不做舍入，直接截取
+Select Trunc(45.678,2)From Dual;
+Select Trunc(45.678) From Dual;
+Select trunc(45.678,-1) From Dual
+  
+3.取余
+Mod(M,N)  
+Select Mod(5,2) From Dual;
+Select Ename,Sal,Mod(Sal,1000) From Emp_Shc
+
+4.小数向上取整和向下取整
+Select Ceil(4.5),Floor(4.5) From Dual
+
+
+**********************************************************************************
+********************************************************日期*************
+
+
+日期：
+1.当前系统时间（data类型）：sysdate
+Select Sysdate From Dual;
+
+
+2.当前系统时间（时间戳类型）Systimestamp
+select Systimestamp From dual
+
+3.两个日期类型的值相减，差为相差的天数。日期+5：加上5天。
+   例如：1.查看到今天活了多少天
+           Select Ceil(Sysdate-To_Date('1992-2-29','yyyy-mm-dd')) From Dual
+        2.查看员工入职多少天了  Select * From Emp_Shc
+           select ename,hiredate,ceil(sysdate-hiredate)||'天' from emp_shc 
+
+4.将给定的date  转换成  给定日期格式的字符串
+    1.
+    Select Ename,To_Char(Hiredate,'yyyy-mm-dd') From Emp_Shc
+    2.
+    Select To_Char(To_Date('98-05-30','RR-MM-DD'),'yyyy-mm-dd') From Dual
+    3.
+    Select To_Char(Sysdate,'yyyy"年"mm"月"dd"日"') From Dual;
+    select to_date('2008年08月08日','yyyy"年"mm"月"dd"日"')from dual
+    
+5.给定date时间的月底那天
+  Select Last_Day(Sysdate) From Dual;
+  Select Last_Day(To_Date('1992-2-29','yyyy-mm-dd')) From Dual
+
+    
+
+6.Date加上i个月后的时间
+ 例如：计算员工20周年的时间
+  select ename,add_months(hiredate,20*12) from emp_shc
+  
+7.计算两个时间相差的月分数
+例如：计算员工工龄（月数）
+Select Ename,Months_Between(Sysdate,Hiredate) From Emp_Shc
+
+8.下一个周三的date：
+Select Next_Day(Sysdate,4) From Dual;
+
+9.求两个数据的最大对小值（类型相同或能转成相同）
+  1.算出两个日期最小的日期
+Select Least(Sysdate,To_Date('2008-10-02','yyyy-mm-dd')) From Dual
+  2.算出三个数最大的数
+Select Greatest(5,16,2) From Dual
+
+
+10.提取date的年月日
+例如：输出1981年入职的员工
+  Select Ename,Hiredate From Emp_Shc
+  where extract(year from hiredate)=1981;
+  
+ **********************************************************************************
+  *********************************************Null*****************************
+1. 
+  创建一个表student_Shc:
+  
+  Create Table Student_Shc(Id Number(4),Name Char(20),Gender Char(1));
+  
+  插入数据，第二个显式插入null，第三个隐式插入null（不写默认null）
+  
+  Insert Into Student_Shc Values(1000,'李莫愁','f');
+  Insert Into Student_Shc Values(1001,'林平之',Null);
+  Insert Into Student_shc(Id,Name)Values(1002,'张无忌');
+  
+  select * from student_shc;
+
+2.当判断值是否为NULL时，不能用 = 用IS或IS NOT
+例如：将上表中GENDER为NULL改为'm' 
+UPDATE STUDENT_SHC
+SET GENDER='m'
+where gender is null
+
+
+
+3.  字符串与NULL运算得到：字符串
+    数字与null运算得到：null
+
+
+4.将null值替换称为非null值: Nvl（exp1,Exp2) ,如果exp1不是null，直接返回exp1 。
+
+例如：将员工奖和工资相加，当奖金为null，将其变成0
+SELECT  ENAME,SAL,COMM,SAL+NVL(COMM,0) FROM EMP_SHC
+
+
+
+
+
+5.NVL2(EXP1,EXP2,EXP3):若EXP1不是NULL返回EXP2；是NULL返回EXP3
+例如：查看每个员工奖金情况。  有奖金：显示“有奖金”。NULL：显示“没有奖金”
+select ename,sal,comm,nvl2(comm,'有奖金','没有奖金') from emp_shc
+
+
+select ename,sal,comm,nvl2(comm,sal+comm,sal) from emp_shc
+
+ 
+ 
+ 
+  
+ ****************************************************************************** 
+ ***********************************************************************
+ 
+  sql   查询
+  
+  
+
+  
+1.
+字段的别名
+
+例如：如果需要区分大小写或加空格，就用“”扩起来
+select  empno id,ename name,sal*12 "Annual Sal" from emp_shc
+
+2.WHERE字句：
+  1.只显示JOB=SALESMAN的员工
+  SELECT * FROM EMP_SHC
+  where job='SALESMAN'
+
+  2.判断条件:>,  <,  = , <> (不等于) , <= , >=,
+ 
+  select * from EMP_SHC
+  wHERE SAL<2000
+ 
+  select * from EMP_SHC
+  where HIREDATE>TO_DATE('1982-1-1','yyyy-mm-dd')
+
+4.判断条件拼接：并（AND）   或（OR）
+   1.
+   select * from EMP_SHC
+   where SAL>1000 and job='CLERK';
+   2.
+   select * from EMP_SHC
+   WHERE SAL>1000 OR JOB='CLERK';
+   3.or优先级低于and
+   select * from EMP_SHC
+   WHERE SAL>1000 AND (JOB='SALESMAN' OR JOB='CLERK')
+   
+5.模糊查询：LIKE（起匹配判断作用）  其中"_"表示单一一个字符   "%"表示0个或多个字符
+ 
+ 例如：查看名字第三个字符是A的员工信息(前面两个 _ 后面一个%:允许前面有两个字符，后面有任意个字符的字符串） 
+ SELECT * FROM EMP_SHC
+ where ename like'__A%'
+ 
+ 
+6.IN : 判断给定内容等于列表中的其中之一
+    （IN 和 NOT IN常用与子查询中）
+    
+    SELECT ENAME,JOB FROM EMP_SHC
+    WHERE JOB IN('MANAGER','CLERK')
+    
+7.查询范围内的数据 BETWEEN...AND...
+  SELECT ENAME,SAL FROM EMP_SHC
+  where sal between 1600 and 3000
+    
+8.ANY 和 ALL  与>,>=,<,<=联合使用
+  >ANY：大于列表中最小的即可
+  <ANY :小于列表中最大的即可
+  >ALL：大于列表中最大的
+  <ALL：小于列表中最小的
+  
+  --例如：查询工资大于3500的员工
+  SELECT EMPNO,ENAME,JOB,SAL,DEPTNO FROM EMP_SHC
+  where sal>any(3500,4000,6000);
+  
+  
+  
+--9.WHERE中可以使用函数或表达式的结果作为过滤条件
+ -- 1.
+  SELECT ENAME,SAL,JOB FROM EMP_SHC
+  WHERE ENAME=UPPER('king');
+  --2.
+  SELECT ENAME,SAL,JOB FROM EMP_SHC
+  where (sal*12)>50000;
+  
+  
+10.去除重复：DISTINCT，
+      例如：
+     1.查询公司有多少种职位（将员工重复的职位去除）
+     SELECT DISTINCT JOB FROM EMP_SHC
+     2.可以对多个字段进行去重，对组合去重：可以有单个字段重复，但是组合不能重复
+     SELECT DIStINCT JOB,DEPTNO FROM EMP_SHC
+     
+     
+     
+11.排序。 ORDER BY字句。
+   例如：查询工资排名情况
+   1.升序
+   SELECT ENAME,SAL FROM EMP_SHC
+   ORDER BY SAL
+   2.降序
+    SELECT ENAME,SAL FROM EMP_SHC
+   ORDER BY SAL DESC
+   3.多字段同时排序（例如：部门降序后，各个部门工资升序）
+   SELECT ENAME,DEPTNO,SAL FROM EMP_SHC
+   ORDER BY DEPTNO DESC,SAL
+ 
+ 
+ 12.  
+********************
+********************
+聚合函数   分组函数/多行函数
+（聚合函数可以将多条记录中的指定字段的值进行统计，然后得出一个结果）
+
+1.求最大值和最小值 MAX() 与 MIN（）
+  例如：输出工资的最大值和最小值
+ select max(sal),min(sal) from emp_shc
+
+2.求平均值 AVG()
+  例如：
+  1.查看公司平均工资
+  SELECT AVG(SAL) FROM EMP_SHC
+  2.查看平均奖金：聚合函数忽略NULL
+  select avg(nvl(comm,0)) from emp_shc
+  
+3.求和 SUM()
+  例如:查看公司工资总和
+  SELECT SUM(SAL) FROM EMP_SHC
+   
+   
+4.统计有值（不为NULL）的条数  COUNT（）
+ 例如：
+ 1.公司有奖金的人数
+ SELECT COUNT(COMM) FROM EMP_SHC
+ 2.查看公司总共多少人（有多少条记录）
+ SELECT COUNT(*) FROM EMP_SHC
+ 
+5.GROUP BY :分组可以更细致，
+       
+ 例如: 查看每个部门工资的最高值与最低值。。 
+
+ SELECT MAX(SAL),MIN(SAL),deptno FROM EMP_SHC
+ GROUP BY deptno
+
+ ------
+      GROUP BY ：多个字段。
+  例如：查看每个部门每种职位总共多少人。。
+  SELECT COUNt(*),DEPTNO,JOB FROM EMP_SHC
+  GROUP BY DEPTNO,JOB -------------------------------相同部门且相同职位的分为一组！！
+
+  
+6.HAVING  (与WHERE不同，HAVING是查询后的数据过滤，WHERE是第一次查询时判断）
+
+   1.查看平均工资高于2000的那些部门的平局工资十多少？
+SELECT AVG(SAL),DEPTNO FROM EMP_SHC
+group by deptno
+having AVG(SAL)>2000
+
+   2.查看平均工资高于2000的部门的最高工资与最低工资
+SELECT MAX(SAL), MIN(SAL),DEPTNO FROM EMP_shc
+GROUP BY DEPTNO
+HAVING AVG(SAL)>2000
+
+   3.查看最高工资大于2950那些部门的平均工资
+SELECT AVG(SAL),DEPTNO FROM EMP_shc
+GROUP BY DEPTNO
+having max(sal)>2950
+
+    -------- having 和 where 的区别 -------
+    他们都是用于在查询中添加过滤条件的，但是他们呢的过滤时机不同，先WHERE后HAVING
+    
+    WHERE：是在第一次从表中查询数据的时候过滤。
+    having：在查询出的数据中进行统计，然后对统计结果再次进行过滤，所以where中不能使用组函数
+
+
+SELECT * FROM EMP_SHC
+select * from dept_SHC
+
+13.关联查询
+    （查询的结果集中的字段可能来自多张表。要从多张表中获取数据时，
+      就要找到这几张表中记录的对应关系，然后建立联系后分别会哦去。
+      所以连接条件---指明表间的记录的对应关系
+      在关联查询中是十分关键的！）
+      -----
+      N张表关联查询，至少要有N-1个连接条件，否则汇出先笛卡尔积。
+      这是一个无用的结果集，对系统资源开销大，甚至会导致系统瘫痪
+      
+     例如：
+     1.查看每个员工以及所在部门名称
+     SELECT E.ENAME,E.DEPTNO,D.DNAME  FROM EMP_SHC E,DEPT_SHC D
+     WHERE E.DEPTNO=D.DEPTNO
+      
+      2.查看SAkES部门的员工都有谁
+      SELECT E.ENAME,E.DEPTNO,d.dname FROM EMP_SHC E,DEPT_SHC D
+      WHERE E.DEPTNO=D.DEPTNO AND D.DNAME='SAkES'
+      
+      3.查看职位是CLERK的员工都在哪里工作？
+      SELECT E.ENAME,E.JOB,D.LOC  FROM EMP_SHC E,DEPT_SHC D
+      where e.deptno=d.deptno and e.job='CLERK'
+      
+14.内连接
+   （关联查询的另一种方式 inner join 简写join）
+     
+     1.查看每个员工以及所在部门名称
+     select e.ename,d.dname
+     FROM EMP_SHC E JOIN DEPT_SHC D
+     on e.deptno=d.deptno
+     
+
+15.关联查询出现一个问题：不满足连接条件的数据不会显示到结果集中
+   部门值改掉：
+    UPDATE EMP_SHC
+    SET DEPTNO=50
+    where ename='SCOTT'
+    
+    部门号被该的不能显示出来
+    SELECT E.ENAME,E.JOB,E.DEPTNO,D.DNAME,D.LOC
+    FROM EMP_SHC E join DEPT_SHC D
+    ON  E.DEPTNO=D.DEPTNO
+    
+16.外连接
+  （使用外连接来解决将不满足连接条件的数据在关联查询中显示到结果集中）
+  
+  外连接分为：
+    左外连接：以左表为驱动表，其数据都要显示，来自右表记录中的字段在结果机中若不满足连接条件，
+            则值为NULL
+    右外连接：以有表为驱动表。
+    全外连接：两张表的数据都要查询出来，那边不满足条件那边值为null
+    
+    例如： 查看每个员工的信息，以及所在部门的信息，若没有部门，也要将员工信息列出来
+    
+    左：显示左表（即使右表没有对应的信息）
+    SELECT E.ENAME,E.JOB,E.DEPTNO,D.DNAME,D.LOC
+    FROM EMP_SHC E    left outer JOIN    DEPT_SHC D
+    ON E.DEPTNO=D.DEPTNO
+    右：RIGHT OUTER JOIN
+    全：full outer join 
+    
+	
+	   14.15.16总结：
+	1.inner join简写join(内连接/关联查询join)：只查询关联字段量表有相同的（例如a表关联字段有n1个数据在b表有；b表有n2个在a表有。查询总数据量为n1*n2)。
+	2.left outer join简写为left join（左外连接）：内连接的所有数据+左表其他数据（此时右表的字段显示数据为空）
+	3.right outer join 简写为right join(右外连接):与左相反
+	4.full outer join 简写为full join (全外连接):左右表数据都显示
+
+*************************************************************************
+   
+   
+17.自连接：（fid，存父类的id）
+   （当前表的记录与当前表的其他记录产生对应关系，不需要额外的参与，
+     自连接的设计目的是为了解决，相同类型数据间有存在父子级关系的数据结构
+     典型的是树状结构）
+    例如：查看每个员工和他的上级
+    1.普通关联方法：
+    SELECT E.ENAME,M.ENAME FROM EMP_SHC e,emp_shc m
+    WHERE E.MGR=M.EMPNO
+    2.内连接：
+    SELECT E.ENAME,M.ENAME FROM EMP_SHC E LEFT OUTer JOIN EMP_SHC M
+    ON
+    e.mgr=m.empno
+    
+    
+    
+18.子查询:判断条件的值还不知道，需要一次查询
+（当我们需要执行某条SQL语句时，需要某些查询结果作为一句时，先期执行的这条查询语句就是子查询）
+    1.
+  例如：查看谁的工资比CLARK的高
+  
+  SELECT ENAME,SAL FROM EMP_SHC
+  WHERE SAL>(SELECT SAL FROM EMP_SHC
+              WHERE ENAME='CLARK')
+    2.          
+     ***** ddl中使用子查询***** 
+     
+     以子查询结果快数创建表：包含：empno,ename,sal,job,deptno
+     
+     CREATE TABLE MYEMPLOYEE_shc
+     AS
+     SELECT E.EMPNO,E.ENAME,E.SAL,E.JOB,D.DNAME,D.DEPTNO,D.LOC
+     FROM EMP_SHC e,DEPT_SHC D
+     where e.deptno=d.deptno
+     
+     select * from myemployee_shc
+     
+    3.DML中使用子查询
+     例如：删除与CLARK相同部门的所有员工
+     DELETE FROM EMP_SHC
+     WHERE DEPTNO=(SELECT DEPTNO FROM EMP_SHC
+                    WHERE ENAME='CLARK')
+       
+       select * from emp_shc             
+                    
+     
+     
+     
+     子查寻根据查询的结果不同应用也不玩全一样。
+     通常按照插序结果分为：
+     单行单列子查寻：查询结果为1个值
+     多行单列子查询：查询结果为1个字段，但是有多条记录
+     多行多列子查询：看起来结果集向一张表也长当作表来使用。
+     
+     4.查找和SCOTT喜爱呢个同职位的员工
+     SELECT ENAME,JOB FROM EMP_SHC
+     WHERE JOB=(SELECT JOB FROM EMP_SHC WHERE ENAME='SCOTT')
+       查找薪水比整个机构平局薪水高的员工
+     SELECT DEPTNO,ENAME,SAL FROM EMP_SHC
+     WHERE SAL>(SELECT AVG(SAL) FROM EMP_SHC)
+     
+     多行：------------
+       查看 和20号部门员工职位相同的都有谁？
+     SELECT ENAME,JOB FROM emp_shc
+     WHERE JOB IN(SELECT JOB FROM EMP_SHC WHERE DEPTNO=20)
+       查看比30部门所有人工资都高的人都有那些
+     SELECT ENAME,SAL FROM EMP_SHC
+     where sal>all(select sal from emp_shc where deptno=30)
+     
+     
+19.EXISTS
+    其后要跟一个查询语句，只要该查询能查询除至少一条数据，EXISTS表达式就返回TRUE
+    例如：查看有员工的部门信息(40部门没有员工）
+    SELECT DEPTNO,DNAME FROM DEPT_SHC D
+    WHERE EXISTS(SELECT * FROM EMP_SHC E WHERE D.DEPTNO=E.DEPTNO);
+    
+    
+20.多行子查询
+     查看部门的最低薪水，前提式该部门最低薪水高于30号部门的最低薪水
+     
+     SELECT MIN(SAL),DEPTNO FROM EMP_SHC 
+     GROUP BY DEPTNO
+     having min(sal)>(select min(sal) from emp_shc where deptno=30)
+     
+     
+     查看工资高于本部门平均工资的员工
+     SELECT E.ENAME,E.SAL,E.DEPTNO
+     FROM EMP_SHC E,(SELECT AVG(SAL) AVG_SAL,DEPTNO FROM EMP_SHC GROUP BY DEPTNO) S
+     where e.deptno=s.deptno and e.sal>s.avg_sal
+  
+21.SELECT语句中   子查询   
+   （外连接的另一种写法）
+   查看员工工资和部门名称
+   SELECT E.ENAME,E.SAL,(SELECT D.DNAME FROM DEPT_SHC D
+                         WHERE D.DEPTNO=E.DEPTNO)
+                         FROM EMP_SHC E
+                         
+
+
+22.分页查询
+  （当表中数据量很大时，查询表中数据一次性全部查询出来，会导致数据全部加载到内存中，
+    对系统支援占用有很大的影响，响应数度很慢，但王完用户也不需要一次性将这么多数据全部查看
+    这是我们可以分批查询表中数据。）
+    ---由于标准sql中没有对分页进行语法定义所以不同的数据库中分页的语法不一致 
+    
+    
+    伪列：ROWNUM (序号）
+    （该字段并不存在与任何一张表中，但是可以从任何一种那个表中去查询该字段，
+    当查询该字段，ORACLE只要可以从表中查询除一条记录，就会为该条记录中该字段
+    添加“行号”，行号从1开始，会自动增长。）
+    
+    例如：
+    1.将编号显示出来
+    SELECT ROWNUM,ENAME,SAL,JOB FROm eMP_SHC
+    
+    2.查询编号5以上的数据
+    （由于ROWNUM只有查询除一条记录后，才会改记录编号，然后ROWNUM子曾，
+    所以我们不能在第一次查询表中数据时使用ROWNUM>1以上的数字进行过滤，
+    否则将得不到任何数据）
+  --  SELECT ROWNUM,ENAME,SAL,JOB FROM EMP_SHC
+    -- WHERE ROWNUM>5
+  
+  
+    为此，需要进行两次查询，第一次仅使用ROWNUL为结果集编号，在基于这个记过集进行二次查询，
+    根据rownum的编号取需要的范围内的记录。
+    
+       正确答案：编号5以上的
+    SELECT * FROM(SELECT ROWNUM RO,ENAME,SAL,JOB,DEPTNO FROM EMP_SHC) WHERE RO>5
+    
+    3.对工资排序后，去除5-10名
+    错误代码：
+  -- SELECT * FROM(SELECT ROWNUM RO,ENAME,SAL FROM EMP_SHC ORDER BY SAL DESC ) WHERE RO>=5 and ro<10
+    （原因在于：使用ROWNUM对结果集编号是在查询过程中进行的，
+      而ORDER BY排序实在结果查询出来后进行的，所以当排序过后
+      原本的编号顺序就打乱了。为此，我们需要先排序，
+      在将排序后的结果机进行编号，然后取范围才能得到正确的结果。）
+      
+     
+     正确代码：
+   select * from(
+   
+   select rownum rn,t.*  
+     FROM(
+      SELECT ENAME,SAL,JOB,DEPTNO FROM EMP_SHC ORDER BY SAL DESC
+           ) t
+ 
+             )
+        where rn>=5 and rn<10
+
+
+    4.PAGESIZE:8  每页显示的条目数
+      PAGE：2      页数
+      START=(PAGE-1)*PAGESIZE+1
+      END=PAGE*PAGESIZE
+      
+      
+23.DECODE 分支
+   1.
+  例如：给下面三种职位张不同的工资，如果是其他职位，则不涨工资
+  
+   SELECT ENAME,JOB,SAL,
+          DECODE(JOB,
+                 'MANAGER', SAL*1.2,
+                 'ANALYST', SAL*1.1,
+                 'SALESMAN', SAL*1.05,
+                 SAL
+                 ) BONUS
+                 FROM EMP_SHC;
+    或：             
+   SELECT ENAME,JOB,SAL,
+            CASE JOB WHEN 'MANAGER' THEN SAL*12
+                     WHEN 'ANALYST' THEN SAL*1.1
+                     WHEN 'SALESMAN' THEN SAL*1.05
+                     ELSE SAL END
+            BONUS
+            FROM EMP_shc;
+     
+     2.不同的值堪称一组。 同时显示人数   
+            
+     SELECT COUNT(*),DECODE(JOB,
+                            'ANALYST','VIP',
+                            'MANAGER','VIP',
+                            'OTHER') JOB1
+      FROM EMP_SHC
+      GROUP BY DECODE(JOB,
+                            'ANALYST','VIP',
+                            'MANAGER','VIP',
+                            'OTHER')
+                            
+
+
+
+
+
+***************************排序函数**************************************
+
+排序函数：(分组在给编号）可以根据指定的字段分组，在根据另一个指定的字段排序，然后生成一个组内的编号
+
+
+1.ROW_NUMBER函数
+  （根据指定字段分组后在根据另一个字段排序，然后生成组内连续且唯一的数字。
+  排序也可亿指定多个字段。）
+  
+  例如：查看每个部门的工资排名情况，同时编号
+    SELECT ENAME,SAL,DEPTNO,
+    ROW_NUMBER() OVER( PARTITION BY DEPTNO
+                       ORDER BY SAL DESC
+                       )RANK
+    from emp_shc
+    
+    
+2.RANK生成的是不连续也不唯一的数字
+     SELECT ENAME,SAL,DEPTNO,
+    rank() OVER( PARTITION BY DEPTNO
+                       ORDER BY SAL DESC
+                       )RANK
+    FROM EMP_SHC
+    
+3.DENSE_RANK()生成的是连续但不唯一的数字
+    SELECT ENAME,SAL,DEPTNO,
+    dense_rank() OVER( PARTITION BY DEPTNO
+                       ORDER BY SAL DESC
+                       )RANK
+    from emp_shc
+
+                                                   
+     
+*******************************集合操作*****************************
+
+1.  例如：输出职位是'MANAGER'的员工和薪水大于2500的员工集合。
+   1.并集:满足一个条件即可，去除相同
+     SELECT ENAME,JOB,SAL FROM EMP_SHC
+     WHERE JOB='MANAGER'
+     UNION
+     SELECT ENAME,JOB,SAL FROM EMP_SHC
+     WHERE SAL>2500;
+     
+   2.全并集：  满足一个条件即可，同时不去除相同
+     SELECT ENAME,JOB,SAL FROM EMP_SHC
+     WHERE JOB='MANAGER'
+     
+     UNION ALL
+     
+     SELECT ENAME,JOB,SAL FROM EMP_SHC
+     WHERE SAL>2500;
+	 
+	 union（合并结果集--去除重复）；union all（合并结果集--不去重合并）；
+	 minus（返回前面select去除后面select的结果集）；intersect（返回两个select相同的结果集）
+     
+2.    交集   同时满足两个条件
+     SELECT ENAME,JOB,SAL FROM EMP_SHC
+     WHERE JOB='MANAGER'
+     intersect
+     SELECT ENAME,JOB,SAL FROM EMP_SHC
+     WHERE SAL>2500;
+     
+3.差集 :职位式manager，且sal不大与2900
+     
+     SELECT ENAME,JOB,SAL FROM EMP_SHC
+     WHERE JOB='MANAGER'
+     minus
+     SELECT ENAME,JOB,SAL FROM EMP_SHC
+     WHERE SAL>=2900;
+     
+     
+     
+     
+     
+     
+     
+  **************************
+****************************
+   
+     
+     
+     
+     
+  ********************************************************************
+  .*******************************************************************
+     
+     
+     建表：两年内销售额
+
+     CREATE TABLE SALES_SHC(
+     YEAR_ID NUMBER NOT NULL,
+     MONTH_ID NUMBER NOT NULL,
+     DAY_ID NUMBER NOT NULL,
+     SALES_VALUE NUMBER(10,2) NOT NULL
+     );
+     
+     DESC SALES_SHC
+     
+    
+    INSERT INTO SALES_SHC
+    SELECT TRUNC (DBMS_RANDOM.VALUE(2010,2012))AS YEAR_ID,
+           TRUNC(DBMS_RANDOM.VALUE(1,13)) AS MONTH_ID,
+           TRUNC(DBMS_RANDOM.VALUE(1,32))AS DAY_ID,
+           ROUND(DBMS_RANDOM.VALUE(1,100),2)AS SALES_VALUE
+    FROM DUAL
+    CONNECT BY LEVEL<=1000;
+    
+    SELECT * FROM SALES_SHC
+    
+    
+     
+1.   求每天的销售总额：
+     SELECT YEAR_Id,MONTH_ID,DAY_ID,SUM(SALES_VALUE) FROM SALES_shc
+     GROUP BY YEAR_ID,MONTH_ID,DAY_ID
+     ORDER BY YEAR_ID,MONTH_ID,DAY_ID
+     求每月的销售额：
+     SELECT YEAR_Id,MONTH_ID,SUM(SALES_VALUE) FROM SALES_shc
+     GROUP BY YEAR_ID,MONTH_ID
+     ORDER BY YEAR_ID,MONTH_ID
+     每年...
+     两年总和...
+    
+2.ROLLUP:同时在一张表统计，每天，每月，每年，两年综合的销售额
+
+   （上面4条SQL语句的分组方式式GROUP BY 子句中的字段逐个递减。若希望将这些分组
+   方式的结果并在一起显示，可以使用ROLLUP分组函数
+   ROLLUP分组函数的做法：GROUP BY ROLLUP(A,B,C)的话，那么分组会分别按照：
+   GROUP BY A,B,C
+   GROUP BY A,B
+   GROUP BY A
+   全表看作一组统计一次，然后在将上述四种分组结果并在一个结果集显示。）
+   
+     SELECT YEAR_ID,MONTH_ID,DAY_ID,SUM(SALES_VALUE) FROM SALES_SHC
+     GROUP BY rollup(YEAR_ID,MONTH_ID,DAY_ID)
+     ORDER BY YEAR_ID,MONTH_ID,DAY_ID
+     
+3.   CUBE函数：  （一张表分组情况: 年；月；日；年月；年日；月日；年月日；总和）
+    （CUBE是将给定的阐述字段的每种组合都进行一次分组，然后将这些组合统计的结果集
+      并在一起显示，分组次数是“2的参数个数次方”CUBE（A，B，C）三个参数就是2的三
+      次方8种）
+      SELECT YEAR_ID,MONTH_ID,DAY_ID,SUM(SALES_VALUE) FROM SALES_SHC
+      GROUP BY CUBE(YEAR_ID,MONTH_ID,DAY_ID)
+      order by year_id,month_id,day_id
+      
+4.GROUPING SETS()函数 （一张表内只想查看分组中的某两种或多种情况.最常用）
+  可以根据自定义的组合方式进行分组，然后将这些分组的结果并在一个结果集中显示
+  
+      例如：只查看每天和每月的销售额
+      SELECT YEAR_ID,MONTH_ID,DAY_ID,SUM(SALES_VALUE) FROM SALES_SHC
+      GROUP BY GROUPING SETS((YEAR_ID,MONTH_ID,DAY_ID),(YEAR_ID,MONTH_ID))
+      order by year_id,month_id,day_id
+      
+  
+  
+      
+*****************************************************************
+**********************************视图***************************
+
+
+视图在SQL语句中体现的样子与表一致，但其不是表，只是对应了一条SELECT语句的查询结果集
+
+
+  例如：
+1.创建一个显示30号部门员工信息的视图：
+  CREATE VIEW V_EMP_SHC_30
+  AS
+  SELECT EMPNO,ENAME,SAL,DEPTNO FROM EMP_SHC
+  where deptno=30;
+  
+2.查看视图：
+DESC V_EMP_SHC_30
+
+3.查看视图中的数据：
+  select * from v_emp_shc_30
+
+4.别名：
+  视图中对应的查询语句的字段可以添加别名，这样视图中该字段就是用别名作为字段名
+  当视图中的查询语句的对应字段含有函数或者表达式，那么该字段必须给别名！
+  CREATE OR REPLACE VIEW V_EMP_SHC_30  ----or replace 表已经存在做修改，不存在就直接创建
+  AS
+  SELECT EMPNO id, ENAME NAME,SAL SALARY,DEPTNO FROM EMP_SHC
+  WHERE DEPTNO=30
+
+
+
+
+
+     SELECT * FROM EMP_SHC
+     select * from v_emp_shc_30
+     
+     
+5.  
+  *************DML***************
+  （对视图可以进行DML操作，但是并非是对视图本身进行，而是对视图数据来源的表进行了DML。 ）
+
+   INSERT INTO V_EMP_SHC_30
+   (id,name,salary,deptno)
+   VALUES
+   (1001,'JACK',5000,30)
+   
+   DESC V_EMP_SHC_30
+   --视图看不到的字段，全部插入默认值，这里需要注意，若视图看不到的字段中含有not null
+  --约束的字段，那么向视图插入数据式不会成功的 
+ 
+        INSERT INTO V_EMP_SHC_30
+       (ID,NAME,SALARY,DEPTNO)
+        VALUES
+       (1001,'ROSE',5000,20)
+      select * from v_emp_shc_30
+       通过视图插入了一条视图看不到的数据，这回对基础表产生“污染”
+       
+       UPDATE V_EMP_SHC_30
+       SET DEPTNO=20
+       WHERE DEPTNO=30
+       修改视图也会对机表产生“污染”
+       
+       删除只能删除视图看得到的数据。。所以不会对原表产生污染
+       DELETE FROM V_EMP_SHC_30
+       WHERE DEPTNO=20
+         select * from v_emp_shc_30
+
+
+6.添加 WITH CHECK OPTION 后:避免对视图曾删改导致对基表修改
+  （视图可以对进行DML操作的数据进行检查，插入的数据必须视图可见，
+  修改的数据必须保证修改后视图对其仍然可见才可以操作，避免对基表的污染）
+  
+  
+  CREATE Or REPLACE VIEW V_EMP_SHC_30
+  AS
+  SELECT EMPNO ID,ENAME NAME,SAL SALARY,DEPTNO FROM EMP_SHC
+  WHERE DEPTNO=30
+  WITH CHECK OPTION 
+  
+7.视图只读：添加 WITH READ ONLY -----最常用
+  （后面添加这句后，视图不允许DML操作）
+  CREATE OR REPLACE VIEW V_EMP_SHC_30
+  AS
+  SELECT EMPNO ID,ENAME NAME,SAL SALARY,DEPTNO FROM EMP_SHC
+  WHERE DEPTNO=10
+  with read only
+  
+
+查看曾经创建过的所有视图
+查看数据库对象表：
+SELECT OBJECT_NAME FROM USER_OBJECTS
+WHERE OBJECT_TYPE='VIEW';
+
+单独查看视图表：
+SELECT VIEW_NAME,TEXT FROM USER_VIEWS
+where view_name='v_emp_shc_30'
+  
+     
+     
+      
+
+查看曾经创建过的所有视图
+查看数据库对象表：
+SELECT OBJECT_NAME FROM USER_OBJECTS
+WHERE OBJECT_TYPE='VIEW';
+
+单独查看视图表：
+SELECT VIEW_NAME,TEXT FROM USER_VIEWS
+where view_name='v_emp_shc_30'
+  
+
+单独查看表的数据字典：
+SELECT * FROM USER_TABLES
+
+SELECT TABLE_NAME FROM USER_TABLES
+
+  
+
+??????????????????????????????????????
+CREATE VIEW V_EMP_SHC_SALARY
+AS
+SELECT D.DEPTNO,D.DNAME,
+AVG(E.SAL) AVG_SAL,
+SUM(E.SAL) SUM_SAL,
+MAX(E.SAL) MAX_SAL,
+MIN(E.SAL) MIN_SAL
+FROM EMP_SHC E JOIN DEPT_SHC D
+ON E.DEPTNO=D.DEPTNO
+group by d.deptno,d.dname
+
+
+查看那些员工比自己所在部门平均工资高
+SELECT E.ENAME,E.SAL,E.DEPTNO FROM EMP E JOIN V_EMP_SHC_SALARY V
+ON E.DEPTNO=V.DEPTNO
+where e.sal>v.avg_sal
+
+
+
+
+
+****************************************
+序列 SEQ
+
+
+
+1.新建序列
+序列式一个数据库对象，可以为我们根据指定的步进方式提供一组数字，通常使用序列生成数字的目的
+是为了数据库某张表的主键提供值使用。
+
+CREATE SEQUENCE SEQ_EMP_SHC_EMPNO
+START WITH 100
+increment by 1;  (序列从100开始，每次增长1）
+
+2.查看（获取）序列
+序列提供了两个伪列，用于向序列获取对应的数字：
+    1.
+  NEXTVAL ：获取序列下一个数字，第一次使用序列时，该伪列获取的式START WITR指定的数字，
+  之后则是用当前数字加上步长得到的。
+    2.
+  CURRVAL：获取序列当前数字
+   （CURRVAL必须在序列串建后，至少使用NEXT_VAL生成过一个数字后才可以使用）
+   
+   SELECT SEQ_EMP_shc_EMPNO.NEXTVAL FROM DUAL
+   
+   select seq_emp_shc_empno.currval from dual
+   
+3.使用序列生成的数字作为 EMP_SHC 表主键的值   
+    ( 1步：创建序列SEQ_EMP_SHC_EMPNO（上面已完成）
+      2步：序列名.nextval )
+
+ INSERT INTO EMP_SHC
+ (EMPNO,ENAME,SAL,JOB,DEPTNO)
+ VALUES
+ (SEQ_EMP_SHC_EMPNO.NEXTVAL,'JACKSON',5000,'CLERK',30)
+ 
+
+
+SELECT * FROM  EMP_SHC
+
+
+
+4.UUID
+  UUID也可以作为主键生成方式的一种
+  UUID是一个不重复的32位字符串
+  
+  例如：
+  SELECT SYS_GUID() from dual 
+  
+
+
+5.删除序列
+drop sequence seq_emp_shc_empno
+
+
+
+
+*********************************************************
+索引   idx
+
+为了提高查询效率，排序效率，分组效率 使用的一种机制
+索引会被自动套用，索引也是数据库自行维护的，我们唯一需要关心的就是是否加索引、
+
+1.
+例如  给emp_shc表中ename加上索引：
+CREATE INDEX IDX_EMP_SHC_ENAME
+ON EMP_SHC(ENAME);
+
+2.
+多列索引：
+CREATE INDEX IDX_EMP_SHC_JOB_SAL ON EMP_SHC(JOB,SAL);
+基于函数加索引
+CREATE INDEX EMP_SHC_ENAME_UPPER_IDX ON EMP_SHC(UPPER(ENAME));
+
+3.(若表中数据经常有曾删，索引反而会降低效率，需要重构或则删除索引）
+
+  重构索引 rebuild
+  alter index idx_emp_shc_ename rebuild
+
+  删除索引
+  drop index idx_emp_shc_ename;
+4.索引实例：
+	a.like情况（建立userid索引：create index index_user on emp(userid);）
+		select * from emp where userid like '%张%'      --不走索引
+		select * from emp where userid like '张%'       --前面不加%走索引
+		select userid from emp where userid like '%张%' --只查userid，走索引
+
+**************************************************************************
+1.约束
+
+   1.建表时添加非空约束
+
+ CREATE TABLE EMPLOYESS_SHC(
+ EID NUMBER(6), 
+ NAME VARCHAR2(30) NOT NULL,            -------------------------------给name添加非空约束
+ SAKARY NUMBER(7,2),
+ HIREDATE DATE CONSTRAINT EMPLOYESS_SHC_HIREDATE_NN_SHC NOT NULL  -----给hiredate添加非空约束的同时给约束取名为nn_shc
+);
+
+DESC EMPLOYESS_SHC FROM DUAL
+
+
+   2.可以在建表之后，通过修改表的定义，添加非空约束：
+  ALTER TABLE EMPLOYEsS_SHC
+  modify (eid number(6) not null);
+  
+   3.取消非空
+  ALTER TABLE EMPLOYESS_shc
+  modify (eid number(6) null);
+
+
+2.
+
+   1.
+   唯一性:给EID添加唯一（如果第一次添加数字2，下次不能在添加数字2）  
+
+  CREATE TABLE EMPLOYEES1_SHC(
+  EID NUMBER(6) UNIQUE,                            ---列级
+  NAME VArCHAR2(30),
+  email VARCHAR2(50),
+  SALARY NUMBER(7,2),
+  HIREDATE DATE,
+  CONSTRAINT EMPLOYESS_EMAIL_UK_SHC UNIQUE(EMAIL)   ---表级
+ )
+
+  插入数据：
+  
+  INSERT INTO employees1_shc
+  (eid,NAME,email)
+  VALUES
+  (null,'lisi',null)
+
+  
+DESC employees1_shc
+select *  from employees1_shc
+
+
+   2.在建表之后添加爱唯一性约束条件：
+   ALTER TABLE employees1_shc
+   add constraint employees_shc_name_uk_shc unique(name)
+
+3.主键 约束（联合非空和唯一）
+   1.在建表时添加主键约束条件：
+  CREATE TABLE employees2_shc(
+  eid NUMBER(6) PRIMARY KEY,
+  NAME VARCHAR2(30),
+  email VARCHAR2(50),
+  salary NUMBER(7,2),
+  hiredate DATE
+  );
+
+  2.表已经创建了再添加主键约束
+    CREATE TABLE employees3_shc(
+  eid NUMBER(6) ,
+  NAME VARCHAR2(30),
+  email VARCHAR2(50),
+  salary NUMBER(7,2),
+  hiredate DATE
+  );
+  
+  ALTER TABLE employees3_shc
+  ADD CONSTRAINT employees3_shc_eid_pk_shc PRIMARY KEY(eid)
+  
+4.检查 约束
+
+   例如：员工薪水必须大于2000 (插入数据时，不能将薪水小于2000的数据插入）
+   ALTER TABLE employees3_shc
+   ADD CONSTRAINT emplyees3_shc_salary_check
+   check(salary>2000);
+  
+  
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////   复习 ///////////////////////////////////////////
+1.几种删除的区别
+  drop ：删除整个表 或 删除某字段  （DDL）
+  DELETE：有条件的删除表中数据（ DML）
+  TRUNCATE ：删除表中所有数据（DDL相对delete效率高  无法回退）
+2.SQL语句：
+①数据定义语言（DDL）：用于建立、修改、删除数据库对象
+				CREATE,ALTER,DROP,TRUNCATE
+②数据操纵语言（DML）：用于改变数据表中的数据，和事务相关，执行完后需要经过事务控制语句提交后才真正的将改变应用到数据库中
+			INSERT,UPDATE,DELETE
+③事务控制语言（TCL）：用于维护数据一致性的语句
+		COMMIT,ROLLBACK,SAVEPOINT
+④数据查询语言（DQL）：用来查询所需要数据  
+			SELECT
+⑤数据控制语言（DCL）：用于执行权限的授予和收回操作
+			GRANT,REVOKE,CREATE USER
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////  笔记  ///////////////////////////////////////////
+
+1.mybatis 新增后返回id
+
+   一.xml中：
+
+<insert id="addusetomform"  parameterType="com.tgb.model.Form_Report" >
+	   <selectKey resultType="integer" order="AFTER" keyProperty="treport_id">
+			select seq_tReport.NEXTVAL from dual		
+	   </selectKey> 
+	insert into tt_tReport values(seq_tReport.NEXTVAL,#{report_name},#{reType_id},#{setman},#{setdate},#{is_del},#{sql_code,jdbcType=CLOB},#{modifydate})
+</insert>
+ 
+   二.service中：
+    customform.addusetomform(report);//新增并返回新增的id
+    int id=report.getTreport_id();
+
+
+2.oracle查询数据的类型
+   
+  select column_name,data_type,DATA_LENGTH From all_tab_columns where table_name=upper('TT_TREPORT') and column_name='MODIFYDATE'
+  （column_name：字段名。。。data_type：字段类型。。。DATA_LENGTH：数据长度）
+
+
+3.mybatis中新增colb型数据到数据库
+
+  #{sql_code,jdbcType=CLOB},
+
+  获取clob. java直接用string
+
+
+4.mybatis同时执行多条sql
+   <select id="testxx" >
+declare 
+
+begin
+delete from tt_where_col where include_col_id=81973 and subject_id=300;
+delete from tt_where_col where include_col_id=81976 and subject_id=300;
+
+end;
+</select>
+
+5.   a.查询所有字段
+     select table_name,column_name,comments from all_col_comments(所有字段和备注)。all_tab_columns(所有表和字段）
+
+     b.查询所有的表：
+      select TABLE_NAME from all_tables where owner='HX_DEV'  //加where是查某用户所有表。不加则是查询整个库的表
+
+     c.查询所有表以及备注（一般是中文名）
+      select table_name,comments from user_tab_comments
+
+     （注：a.c将user换成all则是查询整个库的，而不是当前用户的）
+
+
+
+
+6.创建同义词语句和删除同义词语句（oracle创建别名和删除别名）
+
+  CREATE SYNONYM DW_CX_JRKCX FOR DW_CX_JRKCX_ZDYBB;  -------创建同义词语句
+（实例：CREATE SYNONYM SB_QYSDS_FLGL_BSK FOR sjck.SB_QYSDS_FLGL_BSK）
+
+   DROP SYNONYM DW_CX_JRKCX    -----------删除同义词语句
+
+
+   给数据库所有表加别名：
+  将：
+    SELECT 'CREATE SYNONYM ' || TABLE_NAME||'_ZDYBB FOR DW.'||TABLE_NAME||';' FROM ALL_TAB_COMMENTS 
+  WHERE OWNER ='HX_DM' AND TABLE_NAME NOT LIKE 'T_%'  AND TABLE_NAME NOT LIKE '%$%'
+
+  查出来的所有字符串（sql）执行一遍。。。（注：这里给 "HX_DM" 所有表加后缀"_ZDYBB"  ,)
+
+
+  查询某表对应的用户：
+   select OWNER from all_tab_comments where table_name='DM_ZS_DZSPSGXHLX'
+
+****************************************************************
+*****************************************************************
+*********三表说明
+
+
+
+   1. ALL_TAB_COMMENTS表的结构如下（所有表-别名）：
+   
+OWNER	表用户
+TABLE_NAME    表名称	 
+COMMENTS	表中文名称注释
+按照所需条件调节下面语句的内容，例如：已知表的英文名称，想查出这表的中文名字以及这张表的用户，则把TABLE_NAME LIKE '%?????%' 里面的？？？替换掉，其他条件去掉
+SELECT * FROM ALL_TAB_COMMENTS WHERE OWNER='??' AND TABLE_NAME LIKE '%?????%' AND COMMENTS LIKE '%????%';
+
+   2.ALL_COL_COMMENTS表的结构如下（所有列-别名）：
+OWNER	用户
+TABLE_NAME	表名
+COLUMN_NAME	列名称
+COMMENTS	列注释
+ALL_COL_COMMENTS表存储的是表跟列的关系表，按照所需条件调节下面语句的内容，例如：已知表的某个列的英文名称，想查出这表的名字以及这张表的用户，则把COLUMN_NAME '%?????%' 里面的？？？替换掉，其他条件去掉
+ALL_COL_COMMENTS表
+SELECT * FROM ALL_COL_COMMENTS WHERE OWNER='??' AND TABLE_NAME LIKE '%?????%' AND COLUMN_NAME LIKE '%???%' AND COMMENTS LIKE '%????%';
+
+
+
+   3.ALL_TABLES（所有表-用户等）存储的是表跟用户、列等属性的关系表
+SELECT * FROM ALL_TABLES WHERE OWNER='???' AND TABLE_NAME LIKE '%???????%';
+
+
+
+****************************************************************
+***************************************************************
+
+
+笔记
+
+1.数据库时间类型：
+   1.DATE类型：to_date('2009-09-01','yyyy-MM-dd')
+   2.TIMESTAMP 类型：('2016-07-07 00:00:00','YYYY-MM-DD HH24：MI:SS')
+
+
+
+
+
+2.创建和使用DB_LINK  (a库访问b库的表emp）
+
+
+（
+先给用户username_a授权：用sys登入后执行 grant create public database link to username_a;
+
+）
+
+  --步骤：
+
+     一.username_a在a库创建dblink（  注：1.like_name（dblink的名字，随意）2.以下参数有b库的   用户名（tycx）  密码（tycx） ip（150.21.8.17)，端口（1521），sid（orcl）  ）：
+ 
+CREATE PUBLIC DATABASE LINK like_name CONNECT TO tycx IDENTIFIED BY tycx USING '(DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 150.21.8.17)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID=orcl)
+    )
+  )';
+
+       二。在a库访问b库的emp表
+     select * from emp@like_name
+
+   (查询所有的dblink：SELECT * FROM DBA_DB_LINKS）
+   （删除dblink：drop public database link like_py1  或 drop database link like_py1
+   
+   (方法二：创建dblink----
+              create public database link sl
+ 	 connect to zengcheng identified by "Idatatech2016!"
+ 	 using '150.21.8.27:1521/orcl';
+  
+
+
+
+
+
+
+
+
+
+
+3.触发器
+
+    1.（主键自增长：需要注意4个地方--触发器的名字，表的名字，序列的名字，表需要自增的主键的名称）
+create or replace trigger 触发器名
+before insert on 表名
+for each row
+  begin
+    select 序列名.NEXTVAL into :new.表主键名 from dual;
+    end;
+
+    2.两表数据（emp数据变化，emp@shclink随之变化）同步触发器...--包含增删改。如果只需要其中默认触发，根据分号删除即可
+
+create or replace trigger trigger_name
+       after insert or update or delete on emp
+       for each row
+
+     begin
+       if inserting then
+          insert into emp@SHC_LINK
+           (userid,
+           username)
+         values
+           (:NEW.userid,
+            :NEW.username);
+        elsif deleting then
+            delete from emp@SHC_LINK where userid=:old.userid;
+       elsif updating then
+           update emp@SHC_LINK set userid=:new.userid,username=:new.username;
+         
+       end if;
+     end;
+       -- 删除触发器：     drop trigger trigger_name
+
+  3.综合实例：
+ create or replace trigger trigger_user_role
+  after insert or update or delete on db_zengsglpt.bdf2_role_member
+  for each row   declare
+   userids number(20):=0; 
+   user_average varchar2(100):='business_ordinary';
+   user_admin varchar2(100):='business_admin';  
+   user_nums number(20):=0;
+begin
+  if inserting  then   
+  select count(*) into user_nums from tt_user_new@zc where station=0 and user_code=:new.username_ and rownum<2;
+  if user_nums>0 then
+    select user_id into userids from tt_user_new@zc where station=0 and user_code=:new.username_ and rownum<2;
+    if :NEW.ROLE_ID_ =user_average then
+        insert into tt_role_user@zc (role_user_id, role_id, user_id)  values (SEQ_role_user.NEXTVAL@zc, 131, userids);  
+     elsif  :NEW.ROLE_ID_ =user_admin then
+        insert into tt_role_user@zc (role_user_id, role_id, user_id)  values (SEQ_role_user.NEXTVAL@zc, 45, userids);
+      END if;
+   end if;    
+   elsif deleting then
+    select count(*) into user_nums from tt_user_new@zc where station=0 and user_code=:old.username_ and rownum<2;
+  if user_nums>0 then
+     select user_id into userids from tt_user_new@zc where station=0 and  user_code=:old.username_ and rownum<2;
+    if :old.ROLE_ID_ =user_average then
+       delete from tt_role_user@zc where user_id =userids and role_id=131;
+     elsif   :old.ROLE_ID_ = user_admin then
+        delete from tt_role_user@zc where user_id =userids and role_id=45;
+          END if;
+   end if;             
+    END if;
+end;
+
+----
+
+
+
+
+4.oracle创建用户并赋予权限
+create user zcshc identified by 123456
+
+grant create session,resource to zcshc
+
+
+5.mybatis映射写法：
+
+<resultMap id="Themetype" type="com.tgb.model.Themetype">
+	   <id property="id" column="T_TYPE_ID"/>
+	   <result property="name" column="TYPE_NAME"/>
+	   <result property="pId" column="PARENT_ID"/>
+	   <result property="code" column="TYPE_CODE"/>
+	   <result property="is_del" column="IS_DEL"/>
+	</resultMap>
+	
+
+6.oracle循环使用（例如执行10次：SELECT SEQ_EM.NEXTVAL  FROM DUAL; ）
+    
+
+    1.	
+    declare v_num number(10):=0;
+            seq_num number(10):=0;
+    begin   
+     while v_num<10 loop
+      v_num:=v_num+1;
+    dbms_output.put_line(v_num);--打印9输出9
+    --循环执行代码块
+     SELECT SEQ_EM.NEXTVAL into seq_num FROM DUAL; 
+    --end
+    end loop;
+    end;
+	
+	2.
+	游标使用：
+	
+	  a.将数据查询并缓存：
+	     cursor sm_fm_cursor is 
+          select col1,col2 from table_test;
+	
+	 b.对数据进行循环：
+	            --循环开始
+
+			   for sm_fm_for in sm_fm_cursor loop
+				begin  
+			  dbms_output.put_line(sm_fm_for.col1);
+				end;
+			  end loop;
+			--循环结束
+ 
+	
+	
+	
+	
+	
+7.触发器结合循环（a表有数据变动时将b表（原始表）所有数据新建到c表）
+ 
+     create or replace trigger trigger_aa
+       after insert or update or delete on emp_str
+       for each row
+     begin
+       if inserting then--触发器出发
+   
+            --循环开始
+           declare v_num number(10):=0; --新建一些变量
+                   nums number(10):=0;
+                   num_id number(10):=0;
+                   num_name VARCHAR2(50):='0';
+                   is_s number(10):=0;--用于判断是否已经存在
+
+                  
+    begin   
+      select (select count(*) from emp) into nums from dual;--设置循环执行的总数
+     while v_num<nums loop
+     
+    dbms_output.put_line(v_num);
+    --下面两句为分页查询原始表中的数据并设置给变量
+   select e2.userid  into num_id from(select * from (select rownum ro,emp.* from emp) e1 where e1.ro=v_num+1) e2;
+   select e2.username  into num_name from(select * from (select rownum ro,emp.* from emp) e1 where e1.ro=v_num+1) e2;
+    --获取变量的值并新建给新表
+    select (select count(*) from emp_end where userid_end=num_id ) into is_s from dual;
+             if is_s<1 then--不存在才新建
+                      
+                insert into emp_end
+                     (userid_end,
+                     username_end)
+                   values
+                     (
+                        （select e2.userid   from(select * from (select rownum ro,emp.* from emp) e1 where e1.ro=v_num+1) e2）,--这里可以直接写num_id
+                      （select e2.username  from(select * from (select rownum ro,emp.* from emp) e1 where e1.ro=v_num+1) e2）
+                      );
+               end if;       
+        v_num:=v_num+1;
+    end loop;
+    end;   
+    --循环结束
+          
+      --  elsif deleting then
+      --      delete from emp@SHC_LINK where userid=:old.userid;
+    --   elsif updating then
+      --     update emp@SHC_LINK set userid=:new.userid,username=:new.username;
+         
+       end if;
+     end;
+	 
+	 
+8.存储过程（在数据库保存的一段复杂sql代码，方便直接调用）：
+    
+	--定义存储过程
+  create or replace procedure test_names (v_id int,v_name varchar2) --若无参数，不许写括号
+  as
+ begin
+     insert into emp_end(userid_end,username_end) values(v_id,v_name);
+  end ;
+  
+  
+  --删除存储过程
+  drop procedure test_names;
+  
+  
+  --执行存储过程
+  begin  test_names(1,'12');
+commit;
+  end; 
+	 
+	 
+	 
+	 实例******
+	 
+		  create or replace procedure test_names (v_id int) --存储过程。如果emp_str表中第一条数据userid_str!=v_id，则更新到emp_end中
+		  
+		  as
+		   vid number(10);--定义一些变量
+		   vname varchar2(20);
+		  
+		 begin
+		   
+		   select userid_str into vid from emp_str where rownum<2;--获取第一条数据保存到变量
+		   select username_str into vname from emp_str where rownum<2;
+		   
+		   if v_id<>vid then
+			 insert into emp_end(userid_end,username_end) values(vid,vname);
+			 end if;
+
+		  end ;
+		  
+9.临时表：create table emp_test2 as (select_sql)
+
+10，合并查询结果集（ union all ）：
+select userid,user_name from emp1  union all select userid,username from emp
+
+11.case 语法：
+select t.*, t.rowid from EMP t
+
+select e.userid ,(case e.userid when 1.1 then 'aaa'  when 1.0 then 'bbb' end) cc from emp e
+12 oracle按照中文首字拼音排序：  order by nLssort(colname,'NLS_SORT=SCHINESE_PINYIN_M')
+
+
+ SELECT T.C_NAME, REPLACE(T.C_NAME,',','，') FROM  TT_OLD_TABLES  T WHERE T.C_NAME LIKE '%,%';
+
+SELECT T.COL_C_NAME ,REPLACE(T.COL_C_NAME,',','，') FROM  TT_OLD_INC_COL  T WHERE T.COL_C_NAME LIKE '%,%';
+
+
+13.通用查询（字段所有数据更改）
+/*update  TT_OLD_TABLES  T set t.c_name=REPLACE(T.C_NAME,',','，')  WHERE T.C_NAME LIKE '%,%'; 
+commit;*/
+/*
+update  TT_OLD_INC_COL  T set t.COL_C_NAME=REPLACE(T.COL_C_NAME,',','，')  WHERE T.COL_C_NAME LIKE '%,%'; 
+commit;*/
+
+14.定时器执行存储过程（定时任务job)
+    a.job创建（job_shc：随机数，job的id。）每小时执行一次：
+		declare job_shc integer;
+	  begin dbms_job.submit(job_shc,'DEL_TEM_TABLE;',sysdate,'sysdate+1/(24)');
+	  END;
+  
+  
+	  b.查询所有job
+	select *  from user_jobs
+
+
+
+	c.删除指定job
+	begin
+	dbms_job.remove(10);
+	end;
+15.oracle判断语法：
+  * select decode(col, 'Y', 'yes','N', 'not') testname from dual;//当col为y时输出“yes”
+  *判断是否为null： select nvl(col,col2) from dual   --判断col值为null，则返回col2的值
+  多层：
+  decode(T1.MX_MC,'','待创建模型',decode(t.YZ_ZT,'01', '验证通过','02', '验证不通过', '待验证')) YZ_ZT_MC,
+
+16.--MERGE INTO用法
+  --例：对emp表的数据更新成与T2表一致
+  --（1，当emp中emp_id在T2中的a字段存在，则将emp中的emp_name改成T2对应的b值，注：T2中a字段是不重复的；
+    --2.T2中剩下的（emp中不存在emp_id与T2中a相同）数据将在emp表中新增。）
+  
+
+
+MERGE INTO emp T1
+USING (
+SELECT '2' AS a,6666 AS b FROM dual
+union all
+SELECT '1' AS a,7777 AS b FROM dual
+union all
+SELECT '-1' AS a,8888 AS b FROM dual
+
+) T2
+ON ( T1.emp_id=T2.a)
+WHEN MATCHED THEN
+    UPDATE SET T1.emp_name = T2.b
+WHEN NOT MATCHED THEN 
+    INSERT (emp_id,emp_name) VALUES(T2.a,T2.b);
+
+17mysql设置表字段的编码：
+alter table `tt_liuyan` convert to character set utf8;  
+
+18,existi（子查询数据量大时用）  与  in（子查询数据量小于外查询时用）
+  select count(0) from SB_SYSDS_HYSF_PLD tt 
+where 1=1
+  and exists(
+                  select 1 from wd_hy wd_hy
+                  where tt.hy_id=wd_hy.hy_id
+                  and wd_hy.MLHY_ID= '0A000000000000'
+             )
+             
+ select count(0) from SB_SYSDS_HYSF_PLD tt 
+where 1=1
+  and hy_id in (
+                  select hy_id from wd_hy wd_hy
+                  where 1=1
+                  and wd_hy.MLHY_ID= '0A000000000000'
+             )
+
+
+19.--列转行（UNPIVOT：将字段名转值，值得列是重新定义的字段名（xm））
+select * from TEST1 t
+UNPIVOT(VALUE_S FOR XM IN(               
+name as '名称',
+value_s as '值'                         
+ )）
+   --行转列（decode：将列名（name）的值（行）转换成列名）
+select 
+decode(name,'aaa',value_s) aaa,
+decode(name,'bbb',value_s) bbb,
+decode(name,'ccc',value_s) ccc
+from TEST1
+
+20.获取最近几年
+ (SELECT 2017+1 - LEVEL as ssnd FROM dual CONNECT BY LEVEL <=3)
+
+21.递归查询
+select * from TEST1
+start with id = '1'--开始递归的位置
+connect by prior id = pid--id和父id
+
+22.正则表达式替换（全部替换）：
+select regexp_replace('fkf123kff','[0-9]+','0')  from dual;返回值--fkf0kff
+select regexp_replace('fkf123kff','[0-9]','0')  from dual;返回值--fkf000kff
+select regexp_replace('a,b,c,d','[^,]','0')  from dual;返回值--0,0,0,0
+select regexp_replace('a,b,c,d','[,]','0')  from dual;--返回值 a0b0c0d
+
+
+23.数值处理
+   --四舍五入保留两位：select round(0.1255,2)  from dual
+   --将数值转字符串 
+       SELECT TO_CHAR(0.125, 'fm9999999999990.9999') FROM DUAL;--能将点最后无用的0去除，但数据0会显示0.
+       SELECT TO_CHAR(0.125, 'fm9999999999990.0000') FROM DUAL;--能将0显示成0.000，但是无法去除最后的0
+       SELECT TO_CHAR(1.123000, 'fm999999999999990.09999') FROM DUAL;--能处理0和最后面的0
+	   select TO_CHAR(4641161.123000, 'fm999,999,999,999,990.09999') from dual --金额格式化
+
+24，sql
+   a.求总数和某些条件的总数： select sum(ljrksds),sum(case bsxlid when 'XXQY' THEN ljrksds ELSE '0' END) XXQY_SUM
+       					from    QYSDS_QCGL_FLGL_FLGLBSKMX
+--------------------------------------------------------------------------------
+函数:
+1.返回不为null的值（遇到非空值立刻停止并返回）：
+  COALESCE(T1.XJSWJGID, T2.XJSWJGID, T3.XJSWJGID) 
+--------------------------------------------------------------------------------  
+25，数据库锁机制，
+    1.乐观锁：数据库表添加字段：version(数据版本号）；通过java程序实现，防止并发问题
+       注：version初始值为0，场景：多线程同时获取并修改一条值（程序获取某条数据的版本值后，修改前对version+1,
+         update时，需要添加条件  where version<相加后的值。）
+		 满足（此期间没有其他线程修改此数据：则新增成功）；
+		 不满足（数据库返回修改数量为0，循环查询并修改）	   
+	2.悲观锁（ select * from emp where ... for udate;锁住满足条件的数据) 
+	   a,查询时在后面加 for update,对查询的这条数据加锁（其他窗口或连接或线程无法对该数据修改和删除：执行的sql处于等待状态）
+	      例如：select * from emp where empid='01' for update;
+		  当加锁的链接  提交或回滚后其他处于等待的链接自动执行
+	   b.多条数据同时加锁：select * from emp for update;
+	   c.关联条件加锁：满足关联条件和其他条件的两个表的数据被锁。
+		   select * from emp t1,dep t2 
+			where t1.depid=t2.depid
+			and t2.depid='03' for update;
+26，新增测试数据；
+begin
+  declare
+    nums   number(10):= 1;
+    num1   number(10):= 1000000;
+    begin
+    while  nums<num1 loop nums := nums + 1;
+    insert into emp values('test_' || nums,
+                           'name_' || nums,
+                           sysdate,
+                           20,
+                           '01');
+  end loop;
+  commit;
+  end;
+end;
+			
