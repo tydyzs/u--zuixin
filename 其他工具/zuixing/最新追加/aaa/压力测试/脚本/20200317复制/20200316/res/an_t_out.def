@@ -1,0 +1,28 @@
+;[Graph definition]
+[Graph definition]
+;GraphTitle=Timeout Count
+GraphTitle=超时计数
+;XAxisTitle=Elapsed Scenario Time (seconds)
+XAxisTitle=已用场景时间 (秒)
+;YAxisTitle=Count
+YAxisTitle=计数
+;XAxisIsElapsedTime=TRUE
+XAxisIsElapsedTime=TRUE
+;LineType=NOTRIANGLE
+LineType=NOTRIANGLE
+;BuildUnderLoadGraph=FALSE
+BuildUnderLoadGraph=FALSE
+;AggregateFunction=SUM
+AggregateFunction=SUM
+;MissingData=ZERO
+MissingData=ZERO
+;GranularityMode=SUM
+GranularityMode=SUM
+;GraphGroupMenuTitle=Network Delay
+GraphGroupMenuTitle=网络延迟
+;CommonDirectory=anpt_timeout
+CommonDirectory=anpt_timeout
+;NoDataBehavior=RemoveGraph
+NoDataBehavior=RemoveGraph
+;NumberInMenu=1
+NumberInMenu=1

@@ -1,0 +1,4 @@
+2fa
+{"code":200,"success":true,"data":{"quotaNumA":"CI20191226536694","quotaNameA":"单一客户授信集中度限额","quotaUsedRatioA":1.800000,"quotaFreeRatioA":78.200000,"quotaIndexNumA":"CB20191226604691","quotaUsedAmtA":90000.00,"quotaFreeAmtA":3910000.00,"quotaTotalSumA":5000000.00,"quotaNumB":"CI20191226629722","quotaNameB":"最大十家单一客户授信集中度","quotaUsedRatioB":0,"quotaFreeRatioB":0,"quotaIndexNumB":"CB20191226053358","quotaUsedAmtB":0,"quotaFreeAmtB":0,"quotaTotalSumB":0,"quotaNumC":"CI20191226854456","quotaNameC":"最大十家集团客户授信集中度","quotaUsedRatioC":0,"quotaFreeRatioC":0,"quotaIndexNumC":"CB20191226559982","quotaUsedAmtC":0,"quotaFreeAmtC":0,"quotaTotalSumC":0,"useOrgNum":"16200"},"msg":"操作成功"}
+0
+

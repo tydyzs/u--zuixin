@@ -1,0 +1,10 @@
+1.ddl修改后锁表问题：
+	CALL SYSPROC.ADMIN_CMD('reorg table TB_FUND_EARMARK_MAIN');
+2.递归查询：
+	WITH RPL (ID,Parent_ID,dept_name) AS 
+	(
+	  SELECT ID,Parent_ID,dept_name FROM chain_dept WHERE ID='10101'
+	  UNION ALL 
+	  SELECT child.id,child.Parent_ID,child.dept_name FROM RPL parent,chain_dept child WHERE parent.id=child.Parent_ID
+	)
+	SELECT ID FROM RPL

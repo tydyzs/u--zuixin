@@ -1,0 +1,15 @@
+[t42]
+FileName1=t42.html
+URL1=http://127.0.0.1:9528/dev-api/git-system/dept/getList?current=1&size=10&deptName=&fullName=&orgType=
+Total=2
+RequestHeaderFile=t42_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t42_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_40.xml
+FileName2=t42_dictTranslate.html
+URL2=http://127.0.0.1:9528/dev-api/git-system/dict/dictTranslate?code=org&r=1584362440333
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

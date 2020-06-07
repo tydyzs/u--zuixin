@@ -1,0 +1,6 @@
+
+1.接口对应配置：
+	1.报文配置接口id："    <service_id>CLM109</service_id>\n" +
+	2.JxrcbConstant.java类配置接口id与请求和返回实体的对应：
+		CLM109(LoanBillSignRequestDTO.class, LoanBillSignResponseDTO.class),
+	3.数据库配置接口id与api类的对应：select * from TB_FRONT_SERVICE_CONFIG

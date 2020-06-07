@@ -1,0 +1,4 @@
+390
+{"code":200,"success":true,"data":{"records":[{"statisId":"","customerNum":"C0016","crdProductType":"","currencyCd":"156","limitCredit":70000.00,"limitUsed":40000.00,"limitAvi":30000.00,"expCredit":"","expUsed":"","expAvi":"","limitPre":"","expPre":"","limitFrozen":"","expFrozen":"","limitEarmark":"","limitEarmarkUsed":"","orgNum":"10200","createTime":"","updateTime":"","orgNumName":"新建农商银行","currencyCdName":"人民币元","customerName":"陆小凤","certType":"1","certTypeName":"居民身份证","certNum":"420984199910103300","userNum":"","crdDetailPrd":"","crdMainPrd":"","crdDetailPrdName":"","crdMainPrdName":"","custName":"","creditOrganCode":"","orgNumAnother":"","orgType":"","crdProductName":"","crdProductNum":"","deptLevel":"","customerType":"1","crdGrantOrgNum":"","limitEarmarkAvi":""}],"total":1,"size":10,"current":1,"orders":[],"searchCount":true,"pages":1},"msg":"操作成功"}
+0
+

@@ -1,0 +1,13 @@
+[t60]
+FileName1=t60.html
+URL1=http://127.0.0.1:9528/dev-api/git-auth/oauth/logout
+Total=1
+RequestHeaderFile=t60_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t60_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_58.xml
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

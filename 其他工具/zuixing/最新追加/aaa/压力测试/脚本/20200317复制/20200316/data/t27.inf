@@ -1,0 +1,15 @@
+[t27]
+FileName1=t27.html
+URL1=http://127.0.0.1:9528/dev-api/git-system/dept/getList?current=1&size=10&deptName=&fullName=&orgType=
+Total=2
+RequestHeaderFile=t27_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t27_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_25.xml
+FileName2=t27_getCrdListSumPage.html
+URL2=http://127.0.0.1:9528/dev-api/git-chart/customer-chart/getCrdListSumPage?current=1&size=10&userNum=&customerName=&orgNum=01000&certNum=&certType=&customerType=1&r=1584362214931
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

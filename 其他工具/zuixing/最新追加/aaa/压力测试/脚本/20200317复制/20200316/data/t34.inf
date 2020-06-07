@@ -1,0 +1,17 @@
+[t34]
+FileName1=t34.html
+URL1=http://127.0.0.1:9528/dev-api/git-user/info
+Total=3
+RequestHeaderFile=t34_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t34_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_32.xml
+FileName2=t34_getCrdListSumPage.html
+URL2=http://127.0.0.1:9528/dev-api/git-chart/customer-chart/getCrdListSumPage?current=1&size=10&userNum=&customerName=&orgNum=01000&certNum=&certType=&customerType=3&r=1584362331725
+FileName3=t34_getCrdListSumPage.html
+URL3=http://127.0.0.1:9528/dev-api/git-chart/customer-chart/getCrdListSumPage?current=1&size=10&userNum=&customerName=&orgNum=01000&certNum=420984199910103210&certType=&customerType=3&r=1584362347692
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

@@ -1,0 +1,415 @@
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\vugen.exe
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\SysWOW64\ntdll.dll
+		6.1.7601.18015 (win7sp1_gdr.121129-1432)C:\Windows\syswow64\kernel32.dll
+		6.1.7601.18015 (win7sp1_gdr.121129-1432)C:\Windows\syswow64\KERNELBASE.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ProtocolInfoLib.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\inifile.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\mosifs32.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\thrdutil.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\mmalloc_logic.dll
+		6.1.7601.24384 (win7sp1_ldr_escrow.190220-1800)C:\Windows\syswow64\ADVAPI32.dll
+		7.0.7601.17744 (win7sp1_gdr.111215-1535)C:\Windows\syswow64\msvcrt.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\SysWOW64\sechost.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\RPCRT4.dll
+		6.1.7601.24384 (win7sp1_ldr_escrow.190220-1800)C:\Windows\syswow64\SspiCli.dll
+		6.1.7601.24384 (win7sp1_ldr_escrow.190220-1800)C:\Windows\syswow64\CRYPTBASE.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\syswow64\USER32.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\syswow64\GDI32.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\LPK.dll
+		1.0626.7601.18009 (win7sp1_gdr.121121-1431)C:\Windows\syswow64\USP10.dll
+		8.00.50727.4940               C:\Windows\WinSxS\x86_microsoft.vc80.crt_1fc8b3b9a1e18e3b_8.0.50727.4940_none_d08cc06a442b34fc\MSVCR80.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\CrtInitiator.dll
+		9.20.0.0                      E:\anzhuang\LoadRunner\bin\CrtLoader_VS6.dll
+		9.20.0.0                      E:\anzhuang\LoadRunner\bin\CrtLoader_VS8_0_50727_1433.dll
+		9.20.0.0                      E:\anzhuang\LoadRunner\bin\CrtLoader_VS9_0_21022_8.dll
+		9.00.30729.4940               C:\Windows\WinSxS\x86_microsoft.vc90.crt_1fc8b3b9a1e18e3b_9.0.30729.4940_none_50916076bcb9a742\MSVCR90.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\syswow64\SHELL32.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\SHLWAPI.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\config.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\MLIB_DS.dll
+		8.00.50727.4053               C:\Windows\WinSxS\x86_microsoft.vc80.mfc_1fc8b3b9a1e18e3b_8.0.50727.4053_none_cbf21254470d8752\MFC80.DLL
+		6.1.7601.17676                C:\Windows\syswow64\OLEAUT32.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\ole32.dll
+		6.1.7601.18288 (win7sp1_gdr.131018-1533)C:\Windows\syswow64\imagehlp.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\crlquery.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\vug_grid.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\XmlParserInterface.dll
+		2, 7, 0                       E:\anzhuang\LoadRunner\bin\xerces-c_2_7.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\WS2_32.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\NSI.dll
+		1, 10, 0, 0                   E:\anzhuang\LoadRunner\bin\Xalan-C_1_10Mic.dll
+		                              E:\anzhuang\LoadRunner\bin\XalanMessages_1_10.dll
+		3, 6, 0, 0                    E:\anzhuang\LoadRunner\bin\icuin36.dll
+		3, 6, 0, 0                    E:\anzhuang\LoadRunner\bin\icuuc36.dll
+		3, 6, 0, 0                    E:\anzhuang\LoadRunner\bin\icudt36.dll
+		8.00.50727.4940               C:\Windows\WinSxS\x86_microsoft.vc80.crt_1fc8b3b9a1e18e3b_8.0.50727.4940_none_d08cc06a442b34fc\MSVCP80.dll
+		                              E:\anzhuang\LoadRunner\bin\std-vc-mt.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\mic_regex.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\DBIR32.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\RecordEJB.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\FuncView.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\lr_vug32.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\runlogic.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\msg_handler.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\comm_util.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\xdr.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\libxdrutil.dll
+		                              E:\anzhuang\LoadRunner\bin\run_time_context.dll
+		                              E:\anzhuang\LoadRunner\bin\rtc_protocol.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\vusercfg.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\DynamicTree.dll
+		5.82 (win7_rtm.090713-1255)   C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_5.82.7601.18837_none_ec86b8d6858ec0bc\COMCTL32.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\MultiVuser.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\parameng.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\dtable32.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\PickProtocol.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\script_creator_helper.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\vugencfg.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\PathResolver.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\slick_edit.dll
+		                              E:\anzhuang\LoadRunner\bin\vsapi.dll
+		2, 7, 0                       E:\anzhuang\LoadRunner\bin\vsxmlutl.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\WINSPOOL.DRV
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\syswow64\IMM32.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\MSCTF.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\WSOCK32.dll
+		11.00.9600.16428 (winblue_gdr.131013-1700)C:\Windows\syswow64\WININET.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\syswow64\api-ms-win-downlevel-user32-l1-1-0.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\syswow64\api-ms-win-downlevel-shlwapi-l1-1-0.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\syswow64\api-ms-win-downlevel-version-l1-1-0.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\version.DLL
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\syswow64\api-ms-win-downlevel-normaliz-l1-1-0.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\normaliz.DLL
+		11.00.9600.17840 (winblue_r11.150522-0826)C:\Windows\syswow64\iertutil.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\syswow64\api-ms-win-downlevel-advapi32-l1-1-0.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\USERENV.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\profapi.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\MicEouComponents.dll
+		9, 30, 0, 0                   E:\anzhuang\LoadRunner\bin\BCGCBPRO93080.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\comdlg32.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\ODBC32.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\WINMM.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\MicXmlViewHelper.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ReplayBinaryUtils32.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\optn_dlg.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\pefile.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\sqlgrid.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\MPR.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\apphelp.dll
+		6.1.7601.17974 (win7sp1_gdr.121015-1833)C:\Windows\AppPatch\AcLayers.DLL
+		8.00.50727.4053               C:\Windows\WinSxS\x86_microsoft.vc80.mfcloc_1fc8b3b9a1e18e3b_8.0.50727.4053_none_03ca5532205cb096\MFC80CHS.DLL
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\odbcint.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\UxTheme.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\msimg32.dll
+		2001.12.8530.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\CLBCatQ.DLL
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\TDExtendedIntegration.dll
+		8.00.50727.4053               C:\Windows\WinSxS\x86_microsoft.vc80.atl_1fc8b3b9a1e18e3b_8.0.50727.4053_none_d1c738ec43578ea1\ATL80.DLL
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\SOALicenseManager.dll
+		8, 0, 2, 0                    E:\anzhuang\LoadRunner\bin\LSAPIW32.DLL
+		6.1.7601.17887 (win7sp1_gdr.120704-0720)C:\Windows\system32\NETAPI32.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\netutils.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\srvcli.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\wkscli.dll
+		5.0.7601.17807                C:\Windows\system32\msi.dll
+		8.00.50727.4053               C:\Windows\WinSxS\x86_microsoft.vc80.mfc_1fc8b3b9a1e18e3b_8.0.50727.4053_none_cbf21254470d8752\MFC80U.DLL
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\LRCrashHandler.dll
+		4.50.000                      E:\anzhuang\LoadRunner\bin\BugslayerUtil.dll
+		6.1.0017.2 (DbgBuild.030121-2003)E:\anzhuang\LoadRunner\bin\dbghelp.dll
+		11,0,0,4502                   E:\anzhuang\LoadRunner\bin\TDExtendedAPI.dll
+		6.06.8063.0                   C:\Windows\system32\MFC42.DLL
+		6.1.7601.17514                C:\Windows\system32\OLEPRO32.DLL
+		11.00.9600.16428 (winblue_gdr.131013-1700)C:\Windows\syswow64\urlmon.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\syswow64\api-ms-win-downlevel-ole32-l1-1-0.dll
+		3.05.2284                     C:\Windows\system32\ATL.DLL
+		7.0.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\MSVCP60.dll
+		4.0.40305.0 (Main.040305-0000)C:\Windows\system32\mscoree.dll
+		4.0.30319.17929 built by: FX45RTMRELC:\Windows\Microsoft.NET\Framework\v4.0.30319\mscoreei.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\sxs.dll
+		2.0.50727.8762 (QFE.050727-8700)C:\Windows\Microsoft.NET\Framework\v2.0.50727\mscorwks.dll
+		2.0.50727.8762 (QFE.050727-8700)C:\Windows\assembly\NativeImages_v2.0.50727_32\mscorlib\9f895c66454577eff9c77442d0c84f71\mscorlib.ni.dll
+		6.1.7601.24382 (win7sp1_ldr.190210-0600)C:\Windows\system32\CRYPTSP.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\rsaenh.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\RpcRtRemote.dll
+		2.0.50727.5483 (Win7SP1GDR.050727-5400)C:\Windows\Microsoft.NET\Framework\v2.0.50727\mscorsec.dll
+		6.1.7601.24382 (win7sp1_ldr.190210-0600)C:\Windows\syswow64\WINTRUST.dll
+		6.1.7601.24382 (win7sp1_ldr.190210-0600)C:\Windows\syswow64\CRYPT32.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\syswow64\MSASN1.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\ncrypt.dll
+		6.1.7601.24384 (win7sp1_ldr_escrow.190220-1800)C:\Windows\system32\bcrypt.dll
+		6.1.7601.23451 (win7sp1_ldr.160511-0600)C:\Windows\SysWOW64\bcryptprimitives.dll
+		6.1.7601.23452 (win7sp1_ldr.160512-0600)C:\Windows\system32\GPAPI.dll
+		6.1.7601.24382 (win7sp1_ldr.190210-0600)C:\Windows\system32\cryptnet.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\WLDAP32.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\SensApi.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\BPTManagerImpl.dll
+		1.0.0.0                       E:\anzhuang\LoadRunner\bin\BPTManager.dll
+		2.0.50727.5467 (Win7SP1GDR.050727-5400)C:\Windows\Microsoft.NET\Framework\v2.0.50727\mscorjit.dll
+		9.52.0.0                      E:\anzhuang\LoadRunner\bin\Interop.TDExtendedAPI.dll
+		9.52.0.0                      E:\anzhuang\LoadRunner\bin\Interop.SOAMaf.dll
+		8.5.0.1183                    C:\Windows\system32\SOGOUPY.IME
+		7.0.0.0 (win7sp1_gdr.110826-1504)C:\Windows\system32\OLEACC.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\ntmarta.dll
+		1.1.0.1737                    d:\SogouInput\Components\PicFace\1.1.0.1737\PicFace.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\dwmapi.dll
+		8.5.0.1183                    d:\SogouInput\8.5.0.1183\Resource.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\PSAPI.DLL
+		6.10 (win7_rtm.090713-1255)   C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.18837_none_41e855142bd5705d\Comctl32.dll
+		                              E:\anzhuang\LoadRunner\bin\vslick\win\vsRTE.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\vugen_replay_api.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\coparamui.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\paramui.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\is32.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramlr.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramtbl.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\mmdtable.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\libmemmap.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\mmdbigtable.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramcst.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramunq.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramfnc.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramss.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramdte.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramvar.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\paramrnd.dll
+		11.0.0.1093                   E:\anzhuang\LoadRunner\bin\RecentScripts.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\SOAProtocol.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ServiceManagementLight.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ServiceManagement.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WSDLSDK.dll
+		                              E:\anzhuang\LoadRunner\bin\SoapRecordFilter.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebServicesSDK.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\LrJni.dll
+		                              E:\anzhuang\LoadRunner\bin\ConfigurationUtil.dll
+		8.00.50727.4940               C:\Windows\WinSxS\x86_microsoft.vc80.crt_1fc8b3b9a1e18e3b_8.0.50727.4940_none_d08cc06a442b34fc\msvcm80.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WSDLParser.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\MicXMLDiffTool.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WSDLToolkits.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WsCommonLogger.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ServiceManagementUILib.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\MicDynScriptHandler.dll
+		2, 0, 0, 0                    E:\anzhuang\LoadRunner\bin\icuuc20.dll
+		2, 0, 0, 0                    E:\anzhuang\LoadRunner\bin\icudt20.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\base_scripthandler.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\RICHED32.DLL
+		5.31.23.1230                  C:\Windows\system32\RICHED20.dll
+		10.0.2093.0                   E:\anzhuang\LoadRunner\bin\TulipAppInfo.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ThreadSafeFileOperator.dll
+		1.9.2                         E:\anzhuang\LOADRU~1\bin\gecko\xpcom.dll
+		1.9.2                         E:\anzhuang\LOADRU~1\bin\gecko\xul.dll
+		3, 6, 22, 0                   C:\Windows\system32\sqlite3.dll
+		                              E:\anzhuang\LOADRU~1\bin\gecko\js3250.dll
+		4.8.3                         E:\anzhuang\LOADRU~1\bin\gecko\nspr4.dll
+		8.00.0000                     E:\anzhuang\LOADRU~1\bin\gecko\MOZCRT19.dll
+		3.12.4.5 Basic ECC            E:\anzhuang\LOADRU~1\bin\gecko\smime3.dll
+		3.12.4.5 Basic ECC            E:\anzhuang\LOADRU~1\bin\gecko\nss3.dll
+		3.12.4.5                      E:\anzhuang\LOADRU~1\bin\gecko\nssutil3.dll
+		4.8.3                         E:\anzhuang\LOADRU~1\bin\gecko\plc4.dll
+		4.8.3                         E:\anzhuang\LOADRU~1\bin\gecko\plds4.dll
+		3.12.4.5 Basic ECC            E:\anzhuang\LOADRU~1\bin\gecko\ssl3.dll
+		2.0.0.10                      C:\Windows\SysWOW64\ierd_tgp_lsp.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-core-synch-l1-2-0.DLL
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\mswsock.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\System32\wshtcpip.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\iphlpapi.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\WINNSI.DLL
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\VugenIntegration.dll
+		2.0.50727.5491 (Win7SP1GDR.050727-5400)C:\Windows\assembly\GAC_MSIL\System.Windows.Forms\2.0.0.0__b77a5c561934e089\System.Windows.Forms.dll
+		2.0.50727.8770 (QFE.050727-8700)C:\Windows\assembly\NativeImages_v2.0.50727_32\System\ad92dab7f418877d6a1e0358ce35658a\System.ni.dll
+		2.0.50727.5495 (Win7SP1GDR.050727-5400)C:\Windows\assembly\GAC_MSIL\System.Drawing\2.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll
+		2.0.50727.5483 (Win7SP1GDR.050727-5400)C:\Windows\assembly\GAC_MSIL\Accessibility\2.0.0.0__b03f5f7f11d50a3a\Accessibility.dll
+		6.1.7601.18120 (win7sp1_gdr.130402-1532)C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.7601.18120_none_72d2e82386681b36\gdiplus.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\zh-CN\VugenIntegration.resources.dll
+		2.0.50727.5420 (Win7SP1.050727-5400)C:\Windows\assembly\GAC_MSIL\mscorlib.resources\2.0.0.0_zh-CHS_b77a5c561934e089\mscorlib.resources.dll
+		11.9.9.9999                   E:\anzhuang\LoadRunner\bin\interop.OTAClient.dll
+		11.00.9600.16428 (winblue_gdr.131013-1700)C:\Windows\SysWOW64\ieframe.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\SysWOW64\api-ms-win-downlevel-shell32-l1-1-0.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\system32\api-ms-win-downlevel-shlwapi-l2-1-0.dll
+		7.00.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\PROPSYS.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\syswow64\SETUPAPI.dll
+		6.1.7601.17621 (win7sp1_gdr.110523-2108)C:\Windows\syswow64\CFGMGR32.dll
+		6.1.7601.17621 (win7sp1_gdr.110523-2108)C:\Windows\syswow64\DEVOBJ.dll
+		6.1.7601.24384 (win7sp1_ldr_escrow.190220-1800)C:\Windows\system32\Secur32.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\system32\api-ms-win-downlevel-advapi32-l2-1-0.dll
+		11.00.9600.16428 (winblue_gdr.131013-1700)C:\Windows\SysWOW64\mshtml.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\mlang.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\System32\wship6.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\system32\windowscodecs.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\VuGenFileDialog.dll
+		11.0.700.0                    E:\anzhuang\LoadRunner\bin\QTFileDialogLib.dll
+		11.0.721.0                    E:\anzhuang\LoadRunner\bin\OTAWrapperLib.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\FileDialogServices.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\QTFileDialogs.dll
+		11.0.700.0                    E:\anzhuang\LoadRunner\bin\QTFileDialogIfsLib.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\QTOTAWrapper.dll
+		2.0.50727.5494 (Win7SP1GDR.050727-5400)C:\Windows\assembly\GAC_MSIL\System.Xml\2.0.0.0__b77a5c561934e089\System.Xml.dll
+		11.0.700.0                    E:\anzhuang\LoadRunner\bin\Log4netWrap.dll
+		11.0.2168.0                   E:\anzhuang\LoadRunner\bin\MicLogFile.dll
+		2.0.50727.5483 (Win7SP1GDR.050727-5400)C:\Windows\assembly\GAC_MSIL\System.Configuration\2.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll
+		11.0.1465.0                   E:\anzhuang\LoadRunner\bin\QTOTAWrapper.XmlSerializers.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\zh-CN\FileDialogServices.resources.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\shfolder.dll
+		7.3.20073.1053                E:\anzhuang\LoadRunner\bin\Infragistics2.Win.Misc.v7.3.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\msimtf.dll
+		11.00.9600.16428 (winblue_gdr.131013-1700)C:\Windows\SysWOW64\jscript9.dll
+		7.3.20073.1053                E:\anzhuang\LoadRunner\bin\Infragistics2.Win.v7.3.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\system32\d2d1.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\system32\DWrite.dll
+		6.2.9200.16492 (win8_gdr_oobssr.130113-0015)C:\Windows\system32\dxgi.dll
+		6.2.9200.16570 (win8_gdr.130327-1526)C:\Windows\system32\d3d11.dll
+		6.2.9200.16783 (win8_gdr.131220-1803)C:\Windows\system32\D3D10Warp.dll
+		7.3.20073.1053                E:\anzhuang\LoadRunner\bin\Infragistics2.Shared.v7.3.dll
+		7.0.0.0 (win7_rtm.090713-1255)C:\Windows\SysWOW64\uiautomationcore.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\zh-CN\QTFileDialogs.resources.dll
+		3.10.349.0                    C:\Windows\system32\msls31.dll
+		7.3.20073.1053                E:\anzhuang\LoadRunner\bin\Infragistics2.Win.UltraWinEditors.v7.3.dll
+		7.3.20073.1053                E:\anzhuang\LoadRunner\bin\Infragistics2.Win.UltraWinExplorerBar.v7.3.dll
+		10.0.0.0                      E:\anzhuang\LoadRunner\bin\LogicNP.FileView.dll
+		10.0.0.0                      E:\anzhuang\LoadRunner\bin\LogicNP.ShComboBox.dll
+		1, 1, 4, 26626                C:\Program Files (x86)\Common Files\TortoiseOverlays\TortoiseOverlays.dll
+		2.4.0.0                       C:\Program Files\TortoiseGit\bin\TortoiseGitStub32.dll
+		2.4.0.0                       C:\Program Files\TortoiseGit\bin\TortoiseGit32.dll
+		0.25.0                        C:\Program Files\TortoiseGit\bin\libgit232_tgit.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\WINHTTP.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\webio.dll
+		1.2.10                        C:\Program Files\TortoiseGit\bin\zlib132_tgit.dll
+		12.00.21005.1 built by: REL   C:\Windows\system32\MSVCR120.dll
+		2.4.0.0                       C:\Program Files\TortoiseGit\bin\gitdll32.dll
+		12.00.21005.1 built by: REL   C:\Windows\system32\MSVCP120.dll
+		1.9.2.26806                   D:\Program Files\TortoiseSVN\bin\TortoiseStub32.dll
+		1.9.2.26806                   D:\Program Files\TortoiseSVN\bin\TortoiseSVN32.dll
+		1.9.2                         D:\Program Files\TortoiseSVN\bin\libsvn_tsvn32.dll
+		1.5.2                         D:\Program Files\TortoiseSVN\bin\libapr_tsvn32.dll
+		14.00.23026.0 built by: WCSETUPC:\Windows\system32\VCRUNTIME140.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-runtime-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\ucrtbase.DLL
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-core-timezone-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-core-file-l2-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-core-localization-l1-2-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-core-processthreads-l1-1-1.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-core-file-l1-2-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-string-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-heap-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-stdio-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-convert-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-conio-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-utility-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-math-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-environment-l1-1-0.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-time-l1-1-0.dll
+		1.5.4                         D:\Program Files\TortoiseSVN\bin\libaprutil_tsvn32.dll
+		0.14.6                        D:\Program Files\TortoiseSVN\bin\intl3_tsvn32.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-filesystem-l1-1-0.dll
+		2.1.24                        D:\Program Files\TortoiseSVN\bin\libsasl32.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-locale-l1-1-0.dll
+		14.00.23026.0 built by: WCSETUPC:\Windows\system32\MSVCP140.dll
+		10.0.10240.16390 (th1_st1.150714-1601)C:\Windows\system32\api-ms-win-crt-multibyte-l1-1-0.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\EhStorShell.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\ntshrui.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\cscapi.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\slc.dll
+		                              E:\anzhuang\LoadRunner\bin\vslick\win\dragdrop.dll
+		                              E:\anzhuang\LoadRunner\bin\vslick\win\cparse.dll
+		                              E:\anzhuang\LoadRunner\bin\vslick\win\tagsdb.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\DocumentObject.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ScriptView.ocx
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ScriptAnalyzer.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\runlogicview.ocx
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebStudioDocuments.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\LrwiWebInfra.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\VnpUtils.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\http_auth.dll
+		                              E:\anzhuang\LoadRunner\bin\LIBEAY32_MIC.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\LRUN50.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\trans.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\lr_exp.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\trans_server.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\timediff_ext.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\wrapzlib.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\libdatatypes.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\data_types_ifs.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\jrequestor_srv.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\dc_requests.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\merc_uuid.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\faserver.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\wrapicu.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\HttpUtils.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\LrXml.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\VnpReport.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\CoScriptParser.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebScriptHandler.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebStepClsShared.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\mshtmtr.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\DynWininet.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebStepClsDesign.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ArchiveManager.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WSViewManager.dll
+		8.110.7601.17988              C:\Windows\System32\msxml3.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\websteps_scripthandler.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\LrXmlScriptHandler.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\lrscripthandler.DLL
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\unparsedhandler.dll
+		6.1.7601.17761 (win7sp1_gdr.120112-1636)C:\Windows\system32\NLAapi.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\napinsp.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\pnrpnsp.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\DNSAPI.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\System32\winrnr.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\ScriptContext.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\CorrelationSDK.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\Interop.VugenBackEnd.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\Interop.VugenDocIfs.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\StepsUtilsCOMWrapper.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\CorrelationFramework.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\FileLogger.dll
+		8.0.50727.5483 (Win7SP1GDR.050727-5400)C:\Windows\Microsoft.NET\Framework\v2.0.50727\diasymreader.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\PostFilterInScriptFinder.dll
+		                              E:\anzhuang\LoadRunner\bin\vslick\win\vshlp.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebUIRes.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\system32\samcli.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\SAMLIB.dll
+		6.1.7601.18222 (win7sp1_gdr.130725-1535)C:\Windows\System32\shdocvw.dll
+		11,1,0,9512                   d:\Users\Administrator\AppData\Local\Kingsoft\WPS Office\11.1.0.9440\office6\qingnse.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\IconCodecService.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\System32\drprov.dll
+		6.1.7601.18540 (win7sp1_gdr.140716-1508)C:\Windows\System32\WINSTA.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\System32\ntlanman.dll
+		6.1.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\System32\davclnt.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\System32\DAVHLPR.dll
+		                              E:\anzhuang\LoadRunner\bin\vslick\win\vsvcs.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\DUser.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\DUI70.dll
+		7.00.7601.17514 (win7sp1_rtm.101119-1850)C:\Windows\System32\StructuredQuery.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\SysWOW64\thumbcache.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\LINKINFO.dll
+		6.1.7600.16385 (win7_rtm.090713-1255)C:\Windows\system32\NetworkExplorer.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\SnapshotControl.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\Interop.SnapshotViewSDK.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\insp_gen.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\inspdll.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\HTTPSnapshotsWrapper.dll
+		6.0.8964                      E:\anzhuang\LoadRunner\bin\VBA6.DLL
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\CodeGenerationAPI.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\InternalSDKUtils.dll
+		2.0.50727.5420 (Win7SP1.050727-5400)C:\Windows\assembly\GAC_MSIL\System.Windows.Forms.resources\2.0.0.0_zh-CHS_b77a5c561934e089\System.Windows.Forms.resources.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\HTTPSnapshot.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\TextContainer.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\vugen_record_api.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\api_inspector.dll
+		                              E:\anzhuang\LoadRunner\bin\trpfnc32.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\script_language_helper.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\api_scrinfo.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\Api_Filter_Helper.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\type_info_pool.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\lrc_basic_filters.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\api_event_parser.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\api_sock_filter.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebDataFormatsCodeGen.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\DataFormatsEngine.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebSnapshotsCommon.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebHTMLCodeGen.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebRecorder.dll
+		                              E:\anzhuang\LoadRunner\bin\SSLEAY32_MIC.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebCorrelation.dll
+		11.0.0.1002                   E:\anzhuang\LoadRunner\bin\jconv_str.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\WebConvertFromFormattedFilter.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\lrc_com_filters.dll
+		11.0.0.8859                   E:\anzhuang\LoadRunner\bin\lrc_code_gen_filter.dll

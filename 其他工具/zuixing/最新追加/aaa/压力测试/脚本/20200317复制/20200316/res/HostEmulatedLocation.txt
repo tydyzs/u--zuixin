@@ -1,0 +1,3 @@
+[нч WAN ╥буФ]
+HostsCount=1
+Host0=localhost

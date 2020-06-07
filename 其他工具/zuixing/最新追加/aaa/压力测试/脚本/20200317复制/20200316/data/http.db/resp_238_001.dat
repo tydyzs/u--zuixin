@@ -1,0 +1,4 @@
+3fc
+{"code":200,"success":true,"data":{"customerNum":"C002","customerType":"","custStatus":"","bankCustFlag":"","custManagerNo":"","custName":"陈大川开个公司","orgShortName":"","custEngName":"","orgRngShortName":"","nationalEconomyType":"","nationalEconomyDepart1":"","nationalEconomyDepart2":"","nationalEconomyDepart3":"","nationalEconomyDepart4":"C39","foundDate":"","regCapital":200000000.00,"regCptlCurr":"2","unitScale":"1","empNumber":"100000","payCreditFlag":"","countryCode":"156","creditOrganCode":"","businScope":"","bankCustType1":"","bankCustType2":"","bankPaySysNum":"","groupCreditIndicator":"","bankIndicator":"","relPartyInd":"","swiftCode":"","beneCustType":"","remarks":"","createdTs":"","lastUpdatedOrg":"","lastUpdatedTe":"","createTime":"","updateTime":"","beneCustTypeName":"","countryCodeName":"中国","regCptlCurrName":"综合人民币（各币种折人民币）","nationalEconomyDepart4Name":"计算机、通信和其他电子设备制造业","unitScaleName":"大型"},"msg":"操作成功"}
+0
+

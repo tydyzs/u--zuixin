@@ -1,0 +1,29 @@
+
+统一授信系统压力测试
+1.功能测试清单要列一下，主要针对多人登录，多人同时访问台账查询(各个台账查询都要做压力测试)，机构视图，首页。
+  系统管理和参数管理那些用户使用频率低的可以不做压力测试
+2.步骤
+	1.挑选几支典型交易
+	2.录制脚本
+	3.准备测试数据
+	4.执行压力测试
+	5.收集测试结果，写报告
+	
+	
+	
+	登入/首页：vuser_init
+	公司客户：ledger_companyCustomer
+	个人客户ledger_individualCustomer
+	同业客户：ledger_interbankCustomer
+	集团客户：ledger_groupCustomer
+	担保台账：ledger_guaranteeLedger
+	第三方台账：ledger_thirdPartyAccount
+	同业授信：ledger_interbankCredit
+	机构视图：mechanismView
+	退出登入:vuser_end
+	
+	
+	
+	ledger_interbankCredit失败四个
+	mechanismView失败5个
+	vuser_end失败1个

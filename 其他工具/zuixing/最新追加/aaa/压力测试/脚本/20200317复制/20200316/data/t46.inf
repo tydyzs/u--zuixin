@@ -1,0 +1,17 @@
+[t46]
+FileName1=t46.html
+URL1=http://127.0.0.1:9528/dev-api/git-system/dept/getList?current=1&size=10&deptName=%E8%B5%A3%E6%98%8C%E5%86%9C%E5%95%86%E9%93%B6%E8%A1%8C&fullName=&orgType=
+Total=3
+RequestHeaderFile=t46_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t46_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_44.xml
+FileName2=t46_getTbCrdGuaranteeSumPage.html
+URL2=http://127.0.0.1:9528/dev-api/git-demo/tbcrdsum/getTbCrdGuaranteeSumPage?current=1&size=10&userNum=&customerName=%E9%BB%84%E7%9B%96&orgNum=10100&customerNum=C0017&certNum=420984199910102300&certType=&r=1584362596554
+FileName3=t46_getTbCrdGuaranteeSumPage.html
+URL3=http://127.0.0.1:9528/dev-api/git-demo/tbcrdsum/getTbCrdGuaranteeSumPage?current=1&size=10&userNum=&customerName=%E9%BB%84%E7%9B%96&orgNum=10100&customerNum=C00171&certNum=420984199910102300&certType=&r=1584362604467
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

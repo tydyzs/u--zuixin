@@ -1,0 +1,15 @@
+[t2]
+FileName1=t2.txt
+URL1=http://dralot.ie.sogou.com/actor/favor
+Total=2
+RequestHeaderFile=t2_RequestHeader.txt
+RequestBodyFile=t2_RequestBody.txt
+ResponseHeaderFile=t2_ResponseHeader.txt
+ContentType=text/plain
+SnapshotXmlFile=snapshot_2.xml
+FileName2=t2_pushserver.html
+URL2=http://config.push.sogou.com/config/pushserver.do?conn-type=array&udid=7ECF564122FC186A3C4FC2D561C3B41E&appid=4000
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

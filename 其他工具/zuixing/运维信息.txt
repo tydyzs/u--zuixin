@@ -1,0 +1,144 @@
+
+服务器地址：106.12.241.109
+18622
+
+root / Whjx@Git20191001
+ucs/ nanchang2019@git
+
+
+1.
+svn:
+svn://106.12.241.109:3699/git-ucs
+shenhuancheng   shenhuancheng
+
+2.nginx :  http://106.12.241.109:18601
+
+3.nacos:http://106.12.241.109:18602/nacos/
+4.sentinel : http://106.12.241.109:18603/
+
+5.项目git：
+		(shenhuancheng/123456)
+		前端：http://106.12.241.109:18699/product_team/chain-ui2.git
+		poc前端：http://106.12.241.109:18699/product_team/chain-ui2-9j.git
+  项目svn：
+		后端：svn://106.12.241.109:3699/git-ucs/source/chain-boot
+		后端poc：svn://106.12.241.109:3699/git-ucs/source/chain-clm-9j
+
+
+6.
+禅道地址：
+http://106.12.241.109/zentao/product-index-no.html
+
+7.-mysql：18698   ucs/ucs
+redis:18679   密码：redis@2019
+8.avue文档
+http://106.12.241.109:18699/product_team/avue-clidoc.git 文档已经放到git上
+9.
+MyBatis-Plus文档：https://mp.baomidou.com/guide/ 
+Element-UI组件文档：https://element.eleme.cn/#/zh-CN/component/installation
+10db2：
+
+    url: jdbc:db2://106.12.241.109:50000/clmdb
+    username: db2inst1
+    password: dbserver
+
+
+服务器部署项目：
+1.关闭进程：
+	ps -ef |grep bladx*
+	kill -9 ***
+2.打包（maven--Lifecycle--package)并替换jar包：/data/ucs/bladex-boot
+
+3.执行启动：java -Xms512m -Xmx2048m -jar /data/ucs/bladex-boot/bladex-boot.jar --spring.profiles.active=test --server.port=18081
+
+	后台启动：
+（nohup java -Xms512m -Xmx2048m -jar /data/ucs/bladex-boot/bladex-boot.jar --spring.profiles.active=test --server.port=18081 &）
+
+
+
+
+
+
+
+
+
+
+1.
+基础研发项目的数据结构文档请提交到：svn://106.12.241.109:3699/git-ucs/04-项目文档/4.3-设计文档/4.3.4-数据模型/江西农信统一授信系统.pdm
+
+svn://106.12.241.109:3699/git-ucs/04-项目文档/4.2-需求文档/江西农信统一授信系统_业务参数V1.0_20190911.xlsx
+svn://106.12.241.109:3699/git-ucs/04-项目文档/4.3-设计文档/4.3.3-详细设计/系统功能菜单（业务部分）.xmind
+
+
+
+金额类型 decimal(18,2)
+利率类型 decimal(10,6)
+比例 decimal(10,6)
+编号 varchar(30)
+中文名 varchar(200)
+备注 varchar(1000)
+字典 varchar(6)
+
+
+获取当前营业日期时间  org.git.common.utils.CommonUtil#getWorkDateTime
+
+
+
+内网9
+
+江西农信开发环境 
+
+ 10.0.108.19  应用服务器
+
+  系统帐号密码：wasadmin / wasadmin
+
+  Was 控制台： https://10.0.108.19:9043/ibm/console   
+   帐号密码：wasadmin / wasadmin
+日志：/opt/IBM/WebSphere/AppServer/profiles/AppSrv01/logs/server1
+   
+3、nginx 安装位置  /usr/local/nginx
+         配置文件位置 /usr/local/nginx/conf/nginx.conf
+
+ 10.0.113.178 数据库服务器
+
+1、系统帐号密码：db2usr1 / db2usr1
+
+2、DB2数据库连接地址：jdbc:db2://10.0.113.178:50000/clmdb  
+   帐号/密码：db2inst1/db2inst1
+
+3、redis 连接地址：10.0.113.178 端口：6379
+     密码：123456
+
+
+
+
+
+
+
+
+
+   IPv4 地址 . . . . . . . . . . . . : 10.23.30.2
+   子网掩码  . . . . . . . . . . . . : 255.255.255.0
+   默认网关. . . . . . . . . . . . . : 10.23.30.254
+沈 10.23.30.4
+
+RTX下载注册地址：http://10.0.130.43:8012/
+RTX服务器：10.0.130.43 端口 8000
+
+
+内网 redis 连接地址：
+10.0.113.178 端口：6379
+     密码：123456
+db2内网：
+    url: jdbc:db2://10.0.113.178:50000/clmdb
+    username: db2inst1
+    password: db2inst1
+	
+
+
+内网前端访问地址：http://10.0.108.19:1888/#/login
+内网后端访问地址：http://10.0.108.19:9080
+	
+esb队列：
+	IBM.SERVICE.TYSX.REQUEST.IN
+	IBM.SERVICE.TYSX.REQUEST.OUT

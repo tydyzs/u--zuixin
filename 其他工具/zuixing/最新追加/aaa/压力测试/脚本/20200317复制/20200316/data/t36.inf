@@ -1,0 +1,13 @@
+[t36]
+FileName1=t36.html
+URL1=http://127.0.0.1:9528/dev-api/git-system/dept/getList?current=1&size=10&deptName=&fullName=&orgType=
+Total=1
+RequestHeaderFile=t36_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t36_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_34.xml
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

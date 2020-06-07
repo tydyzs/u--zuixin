@@ -1,0 +1,305 @@
+springblade对应的前端框架
+
+1.项目git地址：https://gitee.com/smallc/Saber.git（网址：https://gitee.com/smallc/Saber）
+2.项目在线演示地址：https://saber.bladex.vip
+
+3.启动：
+	1.安装node.js
+	2.项目下载后直接进入目录：
+		1.方案1：执行  npm install
+			报错：
+				1. Unexpected end of JSON input while parsing near '...ser","version":"1.5.0'
+				    执行清理缓存：npm cache clean --force
+				/*全局更新 
+					npm install npm -g 
+				或者用淘宝镜像命令 
+					cnpm install npm -g*/
+				重新安装
+				npm install /cnpm install 
+		
+		2.方案2（推荐）：cnpm install(通过淘宝镜像安装，先安装cnpm，见nodejs说明)
+				报错：Package require os(darwin) not compatible with your platform(win32)
+				解决：cnpm rebuild node-sass
+				重新安装：cnpm install
+		
+		然后 执行 npm run serve
+		（npm start）
+4.访问（需要启动后台服务）：
+  - Local:   http://localhost:1888/
+
+
+
+***************************记录
+  
+  1.表格
+			 1.字段不显示：hide: true,
+			 2.列固定在最右侧： fixed="right"
+			 
+			  {
+										label: "文档分类",
+										type: "select",
+										span: 24,
+										width: 100,
+										hide: true,
+										row: true,
+										dicUrl: "/api/blade-system/dict/dictionary?code=doc",
+										props: {
+											 label: "dictValue",
+											value: "dictKey"
+										},
+										slot: true,
+										prop: "category",
+										search: true,//添加到搜索
+										rules: [{
+											required: true,
+											message: "请选择文档分类",
+											trigger: "blur"
+										}]
+									},
+			2.“操作”列隐藏：menu:false,
+			 option1: {
+								tip: false,
+								dialogWidth: "60%",
+								tree: true,
+								border: true,
+								index: true,
+								selection: true,
+								viewBtn: false,
+								editBtn: false,
+								addBtn: false,
+								delBtn: false,
+								menuWidth: 150,
+								menu:false,
+					
+					
+					
+					
+								
+								********************************  实例  ***************************************
+								
+								
+								<template>
+			  <basic-container>
+				<avue-form :option="option" v-model="form" :upload-before="uploadBefore" :upload-after="uploadAfter">
+				</avue-form>
+				//表格的表达式
+				<avue-crud
+				  :data="data"
+				  :option="option1"//数据
+				  @search-change="searchChange"
+				  @search-reset="searchReset"//清空后的函数
+				  //分页对象
+				  @current-change="currentChange"
+				  @size-change="sizeChange"
+				  :page="page"
+				  //查询方法
+				  @on-load="onLoad">
+				  //menu：“操作”列中的按钮（自定义按钮）
+				  <template slot-scope="{row}" slot="menu">
+					<el-button type="text"
+							   icon="el-icon-view"
+							   size="small"
+							   class="none-border"
+							   @click.stop="dataview(row)">预览
+					</el-button>
+					<el-button type="text"
+							   icon="el-icon-delete"
+							   size="small"
+							   class="none-border"
+							   @click.stop="datadelete(row)">删除
+					</el-button>
+				  </template>
+				</avue-crud>
+			  </basic-container>
+			</template>
+
+			<script>
+				import {
+					getList
+				} from "@/api/doc/doc1";
+				import {mapGetters} from "vuex";
+
+				export default{
+					data() {
+						return {
+							page: {
+								pageSize: 10,
+								currentPage: 1,
+								total: 0
+							},
+							query: {},
+							data: [],
+							form: {
+								upload_param:{doc_type:"test2"}
+							},
+							option: {
+								labelWidth: 120,
+								column: [
+									{
+										label: '附件上传',
+										prop: 'imgUrl',
+										type: 'upload',
+										listType: 'file',
+										loadText: '附件上传中，请稍等',
+										span: 24,
+										propsHttp: {
+											res: 'data.0'
+										},
+										data:'upload_param',
+										tip: '只能上传jpg/png文件，且不超过500kb',
+										action: '/api/blade-doc/Doc/uploadSing?doc_type=test1'//http://localhost:1888/api/blade-doc/Doc/uploadSing
+									}
+								]
+							},
+							option1: {
+								tip: false,
+								dialogWidth: "60%",
+								tree: true,
+								border: true,
+								index: true,
+								selection: true,//表格第一列复选框
+								viewBtn: false,
+								editBtn: false,
+								addBtn: false,
+								delBtn: false,
+								menuWidth: 150,
+								column: [
+									{
+										label: "文档分类",
+										type: "select",
+										span: 24,
+										width: 100,
+										row: true,
+										dicUrl: "/api/blade-system/dict/dictionary?code=doc",//下拉数据接口
+										props: {
+											label: "dictValue",
+											value: "dictKey"
+										},
+										slot: true,
+										prop: "doc_type_code",//查询条件传入后台参数名称
+										search: true,//此列加入到查询中
+										rules: [{
+											required: true,
+											message: "请选择文档分类",
+											trigger: "blur"
+										}]
+									},
+									{
+										label: "文档名称",
+										prop: "doc_name",
+										search: true,
+										rules: [{
+											required: true,
+											message: "请输入用户姓名",
+											trigger: "blur"
+										}, {
+											min: 1,
+											max: 15,
+											message: '姓名长度在1到15个字符'
+										}]
+									},
+									{
+										label: '文档目录',
+										prop: 'sex'
+									}
+								]
+							}
+
+						}
+					},
+					methods: {
+						uploadBefore(file, done, loading) {
+							console.log(file)
+							done()
+							this.$message.success('上传前的方法')
+						},
+						uploadAfter(res, done, loading) {
+							console.log(res)
+							done()
+							this.$message.success('上传后的方法');
+							//window.location.href ="/api/blade-doc/Doc/download";
+							this.download();
+
+
+						},
+						submit() {
+							this.$message.success('当前数据' + JSON.stringify(this.form))
+						},
+						download(){
+							this.$confirm("确定下载？", {
+								confirmButtonText: "确定",
+								cancelButtonText: "取消",
+								type: "warning"
+							})
+								.then(() => {
+									return download1(1);
+								})
+						},
+						// 自定义操作
+						dataview(row) {
+							this.drawerVisible = true;
+							this.scopeMenuId = row.id;
+							this.scopeMenuName = row.name;
+							alert( row.name);
+						},
+						datadelete(row) {
+							this.drawerVisible = true;
+							this.scopeMenuId = row.id;
+							this.scopeMenuName = row.name;
+						},
+						/*分页参数*/
+						currentChange(currentPage) {
+							this.page.currentPage = currentPage;
+						},
+						sizeChange(pageSize) {
+							this.page.pageSize = pageSize;
+						},
+						searchChange(params) {
+							/*根据条件查询*/
+							this.query = params;
+							console.log(this.page);
+							this.onLoad(this.page, params);
+						},
+						searchReset() {
+							/*条件清空*/
+							this.query = {};
+							this.onLoad(this.page);
+						},
+						onLoad1(page, params = {}) {
+							/*查询方法*/
+							alert("onload")
+							this.loading = true;
+							this.$message.success('分页信息:' + JSON.stringify(page))
+							this.page.total = 40
+							//模拟分页
+							if (page.currentPage === 1) {
+								this.data = [
+									{
+										name: '张三',
+										sex: '男'
+									}
+								]
+							} else if (page.currentPage == 2) {
+								this.data = [
+									{
+										name: '李四',
+										sex: '女'
+									}
+								]
+							}
+						},
+						onLoad(page, params = {}) {
+							this.loading = true;
+							getList(page.currentPage, page.pageSize, Object.assign(params, this.query)).then(res => {
+								const data = res.data.data;
+								this.page.total = data.total;
+								this.data = data.records;
+								this.loading = false;
+								this.selectionClear();
+							});
+						}
+					}
+				}
+			</script>
+
+	

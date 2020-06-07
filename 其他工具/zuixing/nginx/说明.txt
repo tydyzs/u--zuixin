@@ -1,0 +1,49 @@
+
+
+1.常用命令：
+nginx -s stop       # 快速关闭Nginx，可能不保存相关信息，并迅速终止web服务。
+nginx -s quit       #平稳关闭Nginx，保存相关信息，有安排的结束web服务。
+nginx -s reload     #因改变了Nginx相关配置，需要重新加载配置而重载。
+nginx -s reopen     #重新打开日志文件。
+nginx -c filename   #为 Nginx 指定一个配置文件，来代替缺省的。
+nginx -t            #不运行，而仅仅测试配置文件。nginx 将检查配置文件的语法的正确性，并尝试打开配置文件中所引用到的文件。
+nginx -v            #显示 nginx 的版本。
+nginx -V            #显示 nginx 的版本，编译器版本和配置参数。
+
+
+2.安装nginx：
+	1.安装相关依赖
+			//1.先安装pcre(为了支持rewrite功能):
+			//    yum install pcre*
+			//2.安装ssl
+			//	yum install openssl*
+				
+	（依赖用以下一句命令执行：	
+		yum install pcre-devel zlib zlib-devel openssl openssl-devel
+	）
+	2.安装nginx：
+		1.将nginx-1.14.2.tar复制到 /usr/local/nginx 目录中并解压
+		2.进入目录/usr/local/nginx/nginx-1.14.2中执行命令：
+			./configure \
+				--prefix=/usr/local/nginx \
+				--pid-path=/var/run/nginx/nginx.pid \
+				--lock-path=/var/lock/nginx.lock \
+				--error-log-path=/var/log/nginx/error.log \
+				--http-log-path=/var/log/nginx/access.log \
+				--with-http_gzip_static_module \
+				--http-client-body-temp-path=/var/temp/nginx/client \
+				--http-proxy-temp-path=/var/temp/nginx/proxy \
+				--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+				--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+				--http-scgi-temp-path=/var/temp/nginx/scgi
+		3.执行命令：make
+		4.执行命令：make install
+		(安装完成)
+3.启动nginx:
+	1.进入目录/usr/local/nginx/sbin。执行./nginx nginx（文件目录不存在报错创建即可: mkdir -p /var/temp/nginx/client）
+	2.访问：http://localhost:80
+	
+	
+	
+	
+	

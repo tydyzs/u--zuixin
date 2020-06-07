@@ -1,0 +1,11 @@
+POST /dev-api/git-system/dept/getList?current=1&size=10&deptName=%E7%8E%89%E5%B1%B1%E5%86%9C%E5%95%86%E9%93%B6%E8%A1%8C&fullName=&orgType= HTTP/1.1
+Referer: http://127.0.0.1:9528/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3314.0 Safari/537.36 SE 2.X MetaSr 1.0
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Accept: */*
+Connection: Keep-Alive
+Host: 127.0.0.1:9528
+Cookie: x-access-token=eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ0ZW5hbnRfaWQiOiIwMDAwMDAiLCJyb2xlX25hbWUiOiJhZG1pbmlzdHJhdG9yIiwidXNlcl9pZCI6IjExMjM1OTg4MjE3Mzg2NzUyMDEiLCJyb2xlX2lkIjoiMTEyMzU5ODgxNjczODY3NTIwMSIsInVzZXJfbmFtZSI6ImFkbWluIiwibmlja19uYW1lIjoi566h55CG5ZGYIiwidG9rZW5fdHlwZSI6ImFjY2Vzc190b2tlbiIsImRlcHRfaWQiOiIwMTAwMCIsImFjY291bnQiOiJhZG1pbiIsImNsaWVudF9pZCI6InNhYmVyIiwiZXhwIjoxNTg0MzY1NTQ4LCJuYmYiOjE1ODQzNjE5NDh9.9DaAaG4qSdU9mU-o8oTaPtzYNUV2sHXJAcEAKr0M9FQ; x-refresh-token=eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ1c2VyX2lkIjoiMTEyMzU5ODgyMTczODY3NTIwMSIsInRva2VuX3R5cGUiOiJyZWZyZXNoX3Rva2VuIiwiY2xpZW50X2lkIjoic2FiZXIiLCJleHAiOjE1ODQ5NjY3NDgsIm5iZiI6MTU4NDM2MTk0OH0.s-MIY-SiCHi69yvm0JH6j2rrzOD6Xyht_-dW7DQR3Sk
+Content-Length: 0
+

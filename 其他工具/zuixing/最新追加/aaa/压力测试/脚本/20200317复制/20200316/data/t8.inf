@@ -1,0 +1,15 @@
+[t8]
+FileName1=t8.html
+URL1=http://127.0.0.1:9528/dev-api/git-auth/oauth/token?account=admin&password=123456&grant_type=password&scope=all&type=account&deptId=01000
+Total=2
+RequestHeaderFile=t8_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t8_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_6.xml
+FileName2=t8_pushserver.html
+URL2=http://config.push.sogou.com/config/pushserver.do?conn-type=array&udid=7ECF564122FC186A3C4FC2D561C3B41E&appid=4000
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

@@ -1,0 +1,4 @@
+285
+{"code":200,"success":true,"data":{"id":"1123598821738675201","createUser":"1123598821738675201","createDept":"1123598813738675201","createTime":"2018-08-08 00:00:00","updateUser":"1123598821738675201","updateTime":"2020-02-29 00:00:00","status":1,"isDeleted":0,"tenantId":"000000","account":"admin","password":"10470c3b4b1fed12c3baac014be15fac67c6e815","name":"管理员","realName":"管理员","avatar":"","email":"admin@bladex.vip","phone":"15878945612","birthday":"2018-08-08","sex":"1","roleId":"1123598816738675201","deptId":"01000","roleName":"超级管理员","deptName":"江西省农联社","sexName":"","dept":{}},"msg":"操作成功"}
+0
+

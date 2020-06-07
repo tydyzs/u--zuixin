@@ -1,0 +1,28 @@
+;[Graph definition]
+[Graph definition]
+;GraphTitle=Path delay
+GraphTitle=¬∑æ∂—”≥Ÿ
+;XAxisTitle=Elapsed Scenario Time (seconds)
+XAxisTitle=“—”√≥°æ∞ ±º‰ (√Î)
+;YAxisTitle=Delay (mili-seconds)
+YAxisTitle=—”≥Ÿ (∫¡√Î)
+;XAxisIsElapsedTime=TRUE
+XAxisIsElapsedTime=TRUE
+;LineType=NOSTEP
+LineType=NOSTEP
+;BuildUnderLoadGraph=TRUE
+BuildUnderLoadGraph=TRUE
+;AggregateFunction=AVG
+AggregateFunction=AVG
+;MissingData=CONNECT
+MissingData=CONNECT
+;GranularityMode=INCLUDEZERO
+GranularityMode=INCLUDEZERO
+;GraphGroupMenuTitle=Network Delay
+GraphGroupMenuTitle=Õ¯¬Á—”≥Ÿ
+;CommonDirectory=anpt_paths
+CommonDirectory=anpt_paths
+;NoDataBehavior=RemoveGraph
+NoDataBehavior=RemoveGraph
+;NumberInMenu=1
+NumberInMenu=1

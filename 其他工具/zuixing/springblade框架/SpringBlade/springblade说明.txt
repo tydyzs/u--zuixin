@@ -1,0 +1,347 @@
+问题记录：
+1.模糊查询无效！
+
+
+
+
+***链接地址
+	1.接口文档地址：http://localhost/doc.html
+	2.nacos地址：http://localhost:8848/nacos
+	3.sentinel地址：http://localhost:8080/#/login
+
+修改配置：
+	1.Nacos和sentinel的ip地址修改：
+		BladeX\blade-common\src\main\java\org\springblade\common\constant\CommonConstant.java
+
+
+1.环境要求：
+		JDK: 1.8
+		Maven: 3.3+
+		MySql: 5.7+
+		Redis: 4.0+
+		Nacos: 1.0.0
+		Sentinel: 1.5.0+
+		NodeJs: 10.15.0+
+		Npm: 5.6.0+
+2.开发工具：
+	IDEA;
+	必要插件：
+			Lombok Plugin （必装）
+			MybatisX Plugin （idea选装）
+3.项目导入：
+	1.进入SpringBlade项目首页：https://gitee.com/smallc/SpringBlade
+	  （点击“克隆/下载” 
+	    方案1：复制git的https地址(https://gitee.com/smallc/SpringBlade.git)，通过idea的git下载：file--new--Project from Version CONTROL--GIT
+		方案2：直接下载放在本地。IDEA导入项目（导入pom文件
+		）
+
+4.依赖启动
+	1.redis启动；
+	2.mysql启动：
+	（新建数据库springbladex,字符集：utf8mb4;排序规则：utf8mb4_general_ci)
+	  (导入表和数据：springblade\doc\sql\blade-saber-mysql.sql)
+	2.nacos启动与配置：
+		1.执行nacos/bin目录的启动文件：.\startup.cmd
+			访问：
+				http://localhost:8848/nacos
+				账号/密码：nacos/nacos	
+			配置：
+				新建两个配置，其名称内容分别为：
+				1.blade.yaml:项目目录中的 /doc/nacos/blade.yaml中的内容
+				2.blade-dev.yaml:项目目录中的 /doc/nacos/blade-dev.yaml中的内容(需要修改redis和mysql配置)
+		2.若Nacos地址不是默认的localhost:8848，
+			则需要单独配置
+			SpringBlade\blade-common\src\main\java\org\springblade\common\launch\LauncherServiceImpl.java
+		   （地址不能带http://）	
+	3.启动Sentinel：java -jar 
+5项目启动：
+	1.
+		先启动redis、mysql、nacos、sentinel等基础服务
+		启动除GateWayApplication之外的项目
+		最后启动GateWayApplication
+
+	2.Show run configurations in Run Dashboard(打开spring boot窗口)
+		1.选中GateWayApplication之外的其他所有服务，右键DeBug启动
+		2.最后启动GateWayApplication服务，
+	3.打开nacos http://localhost:8848/nacos， 查看“服务列表”，有数据则说明服务注册成功
+	4.打开springblade接口文档http://localhost/doc.html：
+		文档管理--全局参数设置--添加参数：
+		Authorization---Basic c3dvcmQ6c3dvcmRfc2VjcmV0---header
+		(（其中"c3dvcmQ6c3dvcmRfc2VjcmV0"为clientId:clientSecret串转换为的base64编码)
+	5.验证整个项目是否启动成功：
+		springblade接口文档中：授权接口--POST获取认证token--debug调试
+		url:/blade-auth/token
+		设置参数(参数名和参数值）：账户密码都输入admin点击发送
+		  /* Authorization---Basic c3dvcmQ6c3dvcmRfc2VjcmV0
+		   username---admin
+		   password---admin
+		   tenantCode---000000*/
+	
+		返回：
+				{
+			  "code": 200,
+			  "success": true,
+			  "data": {
+				"accessToken": "eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ0ZW5hbnRfaWQiOiIwMDAwMDAiLCJyb2xlX25hbWUiOiJhZG1pbmlzdHJhdG9yIiwidXNlcl9pZCI6IjEiLCJyb2xlX2lkIjoiMSIsInVzZXJfbmFtZSI6ImFkbWluIiwidG9rZW5fdHlwZSI6ImFjY2Vzc190b2tlbiIsImFjY291bnQiOiJhZG1pbiIsImNsaWVudF9pZCI6InN3b3JkIiwiZXhwIjoxNTY2ODgxMjk5LCJuYmYiOjE1NjY4Nzc2OTl9.wdh7E8FclHa3fh94iNNK9S9VqUTkS4nzO0QD7CkF1tc",
+				"tokenType": "bearer",
+				"refreshToken": "eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ1c2VyX2lkIjoiMSIsInRva2VuX3R5cGUiOiJyZWZyZXNoX3Rva2VuIiwiY2xpZW50X2lkIjoic3dvcmQiLCJleHAiOjE1Njc0ODI1MDAsIm5iZiI6MTU2Njg3NzcwMH0.oxps0OO7QdmTPxMgyzvlEj9feDkoWOPNim7fSZayItA",
+				"avatar": "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png",
+				"authority": "administrator",
+				"userName": "管理员",
+				"account": "admin",
+				"expiresIn": 3600,
+				"license": "powered by blade"
+			  },
+			  "msg": "操作成功"
+			}
+	
+
+
+	
+
+
+				*******************8   开发   ******************
+				
+1.目录：日常开发中，我们用的最多的模块则是blade-service以及blade-service-api.
+
+		blade-service主要编写业务模块
+		blade-service-api主要为其他业务模块提供本模块的api
+		
+
+2.创建一个模块：
+	1.右击blade-service依次选则 New -> Module -> maven -> next--->  ArtifactId:blade-demo-->下一步，完成
+	2.同上再blade-service-api下新建blade-demo-api
+	3.pom配置：
+		1.blade-demo-api.pom：
+			<artifactId>blade-demo-api</artifactId>
+			<name>${project.artifactId}</name>
+			<version>${blade.project.version}</version>
+			<packaging>jar</packaging>
+		2.blade-demo.pom:
+			<artifactId>blade-demo</artifactId>
+			<name>${project.artifactId}</name>
+			<version>${blade.project.version}</version>
+			<packaging>jar</packaging>
+
+			<dependencies>
+				<!--Blade-Tool封装的模块启动依赖，只需引入一个，便解决了所有常用的配置-->
+				<dependency>
+					<groupId>org.springblade</groupId>
+					<artifactId>blade-core-boot</artifactId>
+					<version>${blade.tool.version}</version>
+				</dependency>
+				<!--配置blade-demo-api.pom-->
+				<dependency>
+					<groupId>org.springblade</groupId>
+					<artifactId>blade-demo-api</artifactId>
+					<version>${blade.project.version}</version>
+				</dependency>
+			</dependencies>
+			
+			*****备注：
+			（版本号报错（blade.tool.version；blade.project.version）
+			 查看项目根目录pom（BladeX\pom.xml。与此版本命名一致）：
+			 <blade.tool.version>2.0.7.RELEASE</blade.tool.version>
+			 <blade.project.version>2.0.7.RELEASE</blade.project.version>
+			 
+
+	4.复制配置文件:
+		1.blade-desk\src\main\resources复制到
+			blade-demo\src\main\resources
+		2.修改端口：修改下application-dev.yml下server.port 9999
+
+	5.在blade-demo的java包下新建package：org.springblade.demo
+	6.blade-desk模块，将DeskApplication拷贝至刚新建的包下并重命名为DemoApplication
+		修改启动类代码：
+		public static void main(String[] args) {
+			//BladeApplication.run(CommonConstant.APPLICATION_DEMO_NAME, DemoApplication.class, args);
+			BladeApplication.run("blade-demo", DemoApplication.class, args);
+		}
+
+	7.启动：DemoApplication.java
+		或通过IDEA添加启动（Edit Configurations---选中左侧springboot点击右边+---springboot---命名启动：DemoApplication并选中DemoApplication.java（设置启动类DemoApplication.java路径）
+	8.新建接口controller：略
+	9.访问：
+		1.postman测试访问
+			http://localhost:9999/api/info?name=Chill 或
+			http://localhost/blade-demo/api/info?name=Chill (推荐）
+		（返回：请求未授权）
+
+		2.授权(Token认证)：
+			1.方案1（网页获取授权）：
+				进入接口文档http://localhost/doc.html#/%E6%8E%88%E6%9D%83%E6%A8%A1%E5%9D%97/%E6%8E%88%E6%9D%83%E6%8E%A5%E5%8F%A3/tokenUsingPOST
+				--调试--发送--拼接返回并拼接参数（中间加空格）：
+				"accessToken": "eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ0ZW5hbnRfaWQiOiIwMDAwMDAiLCJyb2xlX25hbWUiOiJhZG1pbmlzdHJhdG9yIiwidXNlcl9pZCI6IjEiLCJyb2xlX2lkIjoiMSIsInVzZXJfbmFtZSI6ImFkbWluIiwidG9rZW5fdHlwZSI6ImFjY2Vzc190b2tlbiIsImFjY291bnQiOiJhZG1pbiIsImNsaWVudF9pZCI6InN3b3JkIiwiZXhwIjoxNTY3MTU2NTIyLCJuYmYiOjE1NjcxNTI5MjJ9.EKM1N3AlAxux0wi1dLUF6KliVEB_zR2XTR1EUgPMTqQ",
+				"tokenType": "bearer",
+				拼接结果：
+				bearer eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ0ZW5hbnRfaWQiOiIwMDAwMDAiLCJyb2xlX25hbWUiOiJhZG1pbmlzdHJhdG9yIiwidXNlcl9pZCI6IjEiLCJyb2xlX2lkIjoiMSIsInVzZXJfbmFtZSI6ImFkbWluIiwidG9rZW5fdHlwZSI6ImFjY2Vzc190b2tlbiIsImFjY291bnQiOiJhZG1pbiIsImNsaWVudF9pZCI6InN3b3JkIiwiZXhwIjoxNTY3MTU2NTIyLCJuYmYiOjE1NjcxNTI5MjJ9.EKM1N3AlAxux0wi1dLUF6KliVEB_zR2XTR1EUgPMTqQ
+
+				再次测试访问：
+					http://localhost/blade-demo/api/info?name=-name
+					添加请求头（Handers）
+					blade-auth ：值为上面拼接结果
+			2.方案2。java配置请求无需授权：
+				blade-auth\src\main\java\org\springblade\auth\config
+				复制到
+				blade-service\blade-demo\src\main\java\org\springblade\demo\config	
+				修改其中RegistryConfiguration.java类容secureRegistry.excludePathPatterns("/api/info");  （/api/**：api下所有请求）
+				
+				重启并测试访问（无需请求头，直接访问）：http://localhost/blade-demo/api/info?name=-name
+		3.细颗粒度鉴权配置（注解 @PreAuth支持类层级和方法层级，放到类层级则对该类的所有方法进行鉴权。）
+				接口上添加
+				@PreAuth("permitAll()")：(通过Token认证就可以调用)
+				@PreAuth("hasRole('test')"):(通过Token认证并且是test角色才可以调用)
+	10.redis缓存（Spring方案）：
+		1.接口添加缓存功能（@Cacheable）：
+			@GetMapping("redis_in")
+			@Cacheable(cacheNames = "demo-info", key = "#name")
+			public R<String> redis_test(String name) {
+				log.info("本条信息没有从缓存获取");
+				return R.data("Hello, My Name Is: " + name);
+			}
+		2.添加删除缓存的接口（@CacheEvict）：
+			@GetMapping("redis_rm")
+			@CacheEvict(cacheNames = "demo-info", key = "#name")
+			public R<String> redis_rm(String name) {
+				return R.success("删除缓存成功");
+			}
+	11.增删改查：	
+		1.采用mybatis-plus封装的增删改查：
+			1.mapper.xml(只需要写resultMap，无需写sql,对应的dao无需写方法）:	
+				<?xml version="1.0" encoding="UTF-8"?>
+				<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+				<mapper namespace="org.springblade.demo.mapper.EmpMapper">
+
+					<!-- 通用查询映射结果 -->
+					<resultMap id="EmpResultMap" type="org.springblade.demo.entity.Emp">
+						<result column="id" property="id"/>
+						<result column="name" property="name"/>
+						<result column="createDate" property="createDate"/>
+						<result column="is_del" property="is_del"/>
+					</resultMap>
+				</mapper>
+
+			2.实体类
+				1.添加类注解（指定数据库对应的表）：@TableName("tb_emp")//mybatis-plus配置数据库-表名
+				2.主键若非自曾，需要添加注解：@TableId(value = "id", type = IdType.UUID)
+				3.@TableLogic：注解删除标记字段。会自动做成逻辑删除，查询也会自动过滤
+			3.service实现mybatis-plus：
+				extends IService<Emp>
+			4.serviceImp实现mybatis-plus:
+				extends ServiceImpl<EmpMapper, Emp>
+				
+	12.微服务调用（feign方案）：
+		（实例：被调用方（blade-service）。调用者（blade-desk））
+		
+		1.被调用端：
+			1.\blade-service-api\blade-demo-api中新建接口EmpClient.java（springblade\blade-service-api\blade-demo-api\src\main\java\org\springblade\demo\feign\EmpClient.java）
+				代码：
+				String API_PREFIX = "/api/Emp";
+				@GetMapping(API_PREFIX + "/detail")          //****** 可本服务直接调用，
+				R<Emp> detail(@RequestParam("id") String id);//*******可提供远程服务调用
+			
+			2.\blade-service\blade-demo中新建上述接口的实现类EmpClientImpl.java:springblade\blade-service\blade-demo\src\main\java\org\springblade\demo\feign\EmpClientImpl.java	
+				(实现类中可调用service逻辑)：
+					private EmpService service;
+					@Override
+					@GetMapping(API_PREFIX + "/detail")//****** 可本服务直接调用，
+					public R<Emp> detail(String id) {  //*******可提供远程服务调用
+						return R.data(service.getById(id));
+					}
+		
+		2.调用者：
+			1.pom添加被调用房api的包：
+				<dependency>
+					<groupId>org.springblade</groupId>
+					<artifactId>blade-demo-api</artifactId>
+					<version>${blade.project.version}</version>
+				</dependency>
+			2.Controller中添加接口开始调用：
+					private EmpClient client;//添加被调用者的接口
+					@GetMapping("/emp-detail")//添加调用接口
+					public R<Emp>empDetail(String id) {
+						R<Emp> result = client.detail(id);
+						return result;
+					}
+			3.访问路径：http://localhost/blade-desk/dashboard/emp-detail?id=3706430571623986c81325bfca9c0039		
+			
+		3.熔断器(基于上面的服务调用添加熔断器)。（当微服务调用超时，失败。。。为不影响整个服务，可调用备选的方法）
+			1.blade-demo-api包中新建接口EmpClientFallback.java（与上述被调用接口EmpClient.java同级。用于主接口失败或超时后的备选）：
+				@Component//必要
+				public class EmpClientFallback implements EmpClient {
+					@Override
+					public R<Emp> detail(String id) {
+						Emp emp = new Emp();
+						emp.setId("Hystrix");
+						emp.setName("FallBack Success");
+						emp.setCreateDate(LocalDateTime.now());
+						emp.setIs_del("0");
+						return R.data(emp);
+					}
+				}
+			2.	修改原接口EmpClient.java的类注解：
+				@FeignClient(
+				   //定义Feign指向的service-id
+				   value = CommonConstant.APPLICATION_DEMO_NAME,
+				   //定义hystrix配置类
+				   fallback = BlogClientFallback.class
+				)
+			3.实现类EmpClientImpl.java逻辑方法模拟报错	
+			4.再次访问：http://localhost/blade-desk/dashboard/emp-detail?id=3706430571623986c81325bfca9c0039
+				（结果：service方法报错，直接走到熔断器）
+
+
+***********************************				
+postman获取token和请求：
+1.获取token（postman）
+	http://106.12.241.109:18081/git-auth/oauth/token
+	消息头：
+		Authorization      Basic c2FiZXI6c2FiZXJfc2VjcmV0
+		Content-Type     application/x-www-form-urlencoded
+	参数（用户名密码）：
+		username  admin
+		password  admin
+2.测试请求时添加token	
+	Blade-Auth='bearer '+上面获取的token		
+				
+*****************开发进阶
+
+1.聚合文档：
+	1.BladeX\blade-gateway\src\main\resources\bootstrap.yml 配置如下：
+		# 聚合文档配置
+			blade:
+			  document:
+				resources:
+				  - name: 授权模块
+					location: /blade-auth
+				  - name: 工作台模块
+					location: /blade-desk
+				  - name: 系统模块
+					location: /blade-system
+	2.需要的工程引入：
+		<dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-swagger</artifactId>
+            <version>${bladex.tool.version}</version>
+        </dependency>	
+		
+		
+		
+		
+		
+		
+///////////////////////////////笔记////////////////////////////////////////////////////////////
+1.各种返回方式：
+	return R.fail(“返回失败信息");
+	return R.status(productService.save(product));
+	return R.data(pages);
+	return R.success("返回成功信息");		
+		
+****************************** mybatis-plus***************************************
+1.实体类传参方式：
+	baseMapper.selectList(Wrappers.query(crdProduct));		
+		
+		
+		
+		
+		

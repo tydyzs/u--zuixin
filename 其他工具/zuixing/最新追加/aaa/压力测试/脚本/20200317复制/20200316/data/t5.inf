@@ -1,0 +1,13 @@
+[t5]
+FileName1=t5_websocket.html
+URL1=http://localhost:9528/sockjs-node/813/a1rkabrl/websocket
+Total=1
+ContentType=
+SnapshotXmlFile=snapshot_3.xml
+RequestHeaderFile=t5_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t5_ResponseHeader.txt
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

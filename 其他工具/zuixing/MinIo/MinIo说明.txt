@@ -1,0 +1,42 @@
+1.windows版本：
+	1.启动（指定文件服务根目录）：minio.exe server D:\MinIo\Photos
+	2.访问：http://127.0.0.1:9000/minio/login
+		账户密码：从启动日志中取：
+			例如：
+			AccessKey: PADSBTN7YU4SRZHYKH15
+			SecretKey: OpBEvVqCK0tUIoc1WWy4Vqlet7uXnjrEDSSw7Vah
+	2.使用。通过上面+创建目录。通过右下加+上传文件
+2.linux安装启动：
+	mkdir -p /data/minioFile/minio   (其中/data/minioFile 为文件根目录)
+	chmod +x minio
+	./minio server /data（后台启动：nohup ./minio server /data/ucs/minio/Photos &）
+	
+	
+	
+3.java访问注意事项：
+		<dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-minio</artifactId>
+            <version>2.0.7.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>6.0.10</version>
+        </dependency>
+		
+	常用参数说明：
+	String bucketName="home";//跟目录
+	//文件目录以及文件（不包含根目录，上传时若没有abc目录会自动创建）
+	String file_path_name="abc/aa.png";
+
+4.配置下载策越	（直接通过http下载文件；如下实例 server 端的 桶（tysx）设置位永久下载，
+					AccessKey: PADSBTN7YU4SRZHYKH15
+					SecretKey: OpBEvVqCK0tUIoc1WWy4Vqlet7uXnjrEDSSw7Vah）
+	1执行两行命令（linux用./mc)
+		mc.exe config host add minio http://127.0.0.1:9000 QWK5UBVU2JPAAJFFIAM5 otTUFZeIc+5dEwyiE+B8Pj4hUqnOAkAahV1ebx8U S3v4
+		mc.exe policy set download minio/tysx
+	2.下载：
+		http://127.0.0.1:9000/tysx/客户政策/aa.txt
+	

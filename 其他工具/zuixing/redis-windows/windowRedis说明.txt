@@ -1,0 +1,10 @@
+
+1.解压安装
+
+	安装命令：redis-server.exe --service-install redis.windows.conf --loglevel verbose
+
+	启动服务命令：redis-server.exe  --service-start
+
+	关闭服务命令：redis-server.exe  --service-stop
+	
+2.调用命令是：redis-cli.exe -h 127.0.0.1 -p 6379	

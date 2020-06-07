@@ -1,0 +1,13 @@
+[t52]
+FileName1=t52.html
+URL1=http://127.0.0.1:9528/dev-api/git-system/dept/getList?current=1&size=10&deptName=&fullName=&orgType=
+Total=1
+RequestHeaderFile=t52_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t52_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_50.xml
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

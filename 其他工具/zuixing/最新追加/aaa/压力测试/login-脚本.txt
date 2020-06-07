@@ -1,0 +1,287 @@
+Action()
+{
+
+	web_set_user("saber", 
+		lr_decrypt("5e6f1ea985e9854948217e3be0ccba4c"), 
+		"localhost:9528");
+
+	web_url("localhost:9528", 
+		"URL=http://localhost:9528/", 
+		"Resource=0", 
+		"Referer=", 
+		"Mode=HTML", 
+		EXTRARES, 
+		"Url=/app.js", ENDITEM, 
+		"Url=/static/fonts/element-icons.535877f5.woff", ENDITEM, 
+		"Url=/static/img/login_big1.3eb485a7.jpg", ENDITEM, 
+		"Url=/static/img/login_left2.e886d96e.png", ENDITEM, 
+		"Url=/static/img/login_right.a0f85c66.png", ENDITEM, 
+		"Url=/sockjs-node/info?t=1584340589847", ENDITEM, 
+		"Url=http://192.168.3.101:9528/sockjs-node/info?t=1584340589848", ENDITEM, 
+		"Url=/dev-api/git-system/menu/routes?r=1584340609863", ENDITEM, 
+		"Url=/img/bg/logobg.jpg", ENDITEM, 
+		"Url=/dev-api/git-system/menu/buttons?r=1584340610093", ENDITEM, 
+		"Url=/dev-api/git-system/sysdate/workDateTime?r=1584340610940", ENDITEM, 
+		"Url=/dev-api/git-system/menu/top-menu?r=1584340610940", ENDITEM, 
+		"Url=/dev-api/git-chart/org-chart/getStatisOrg?orgNum=01000&r=1584340616230", ENDITEM, 
+		"Url=/dev-api/git-desk/notice/page?createDept=01000&current=1&size=999&r=1584340616230", ENDITEM, 
+		"Url=/dev-api/git-rcm/ledger/home?useOrgNum=16200&r=1584340616230", ENDITEM, 
+		LAST);
+
+	web_add_cookie("IMEVER=8.5.0.1183; DOMAIN=get.sogou.com");
+
+	web_add_cookie("YYID=7ECF564122FC186A3C4FC2D561C3B41E; DOMAIN=get.sogou.com");
+
+	web_add_cookie("SMYUV=1583581077639800; DOMAIN=get.sogou.com");
+
+	web_add_cookie("QIDIANID=p7C0OD8RPST7NB245ehyDXgGZVgMnAbtUZCbHRefZrCQ2uraLlVYvdVls/lyIPaRDTpqAROwylfuYQuS1r2eFg==; DOMAIN=get.sogou.com");
+
+	web_add_cookie("SUV=00EF753BAB51E25C5E5B0FBCBA581727; DOMAIN=get.sogou.com");
+
+	web_add_cookie("usid=WHNFd5Y14tfbGbCs; DOMAIN=get.sogou.com");
+
+	web_add_cookie("SUID=0FE251ABAE32A00A000000005E638B0C; DOMAIN=get.sogou.com");
+
+	web_add_cookie("IPLOC=CN4200; DOMAIN=get.sogou.com");
+
+	web_add_cookie("SNUID=4BF549B3171DB8FAE6BC5D3A187E3754; DOMAIN=get.sogou.com");
+
+	web_add_cookie("ld=ZZllllllll2WzLZClllllVimTu7lllll$C4AcZllll9lllll9llll5@@@@@@@@@@; DOMAIN=get.sogou.com");
+
+	web_add_cookie("CXID=EAF0F91EE2276FC6E4C711C491F4D9B9; DOMAIN=get.sogou.com");
+
+	web_add_cookie("ad=blllllllll2WbeVklllllVis9Qllllll$C4Pjyllll9lllll9Vxlw@@@@@@@@@@@; DOMAIN=get.sogou.com");
+
+	web_add_cookie("IMEVER=8.5.0.1183; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("YYID=7ECF564122FC186A3C4FC2D561C3B41E; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("SMYUV=1583581077639800; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("QIDIANID=p7C0OD8RPST7NB245ehyDXgGZVgMnAbtUZCbHRefZrCQ2uraLlVYvdVls/lyIPaRDTpqAROwylfuYQuS1r2eFg==; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("SUV=00EF753BAB51E25C5E5B0FBCBA581727; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("usid=WHNFd5Y14tfbGbCs; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("SUID=0FE251ABAE32A00A000000005E638B0C; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("IPLOC=CN4200; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("SNUID=4BF549B3171DB8FAE6BC5D3A187E3754; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("ld=ZZllllllll2WzLZClllllVimTu7lllll$C4AcZllll9lllll9llll5@@@@@@@@@@; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("CXID=EAF0F91EE2276FC6E4C711C491F4D9B9; DOMAIN=download.ie.sogou.com");
+
+	web_add_cookie("ad=blllllllll2WbeVklllllVis9Qllllll$C4Pjyllll9lllll9Vxlw@@@@@@@@@@@; DOMAIN=download.ie.sogou.com");
+
+	web_custom_request("q", 
+		"URL=http://get.sogou.com/q", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/octet-stream", 
+		"Referer=", 
+		"Snapshot=t5.inf", 
+		"Mode=HTML", 
+		"Body=k=fu8Ol2iRd0nAdzYVLwgEZpQymNZdPKqvUV2sdqoz1xG9lN8ggNhpmKl+yGS7EuBtZb/EIuxgO6p/w7QkOJ1uuHqRH7iUxOBColu/2o0stX01Suw11PXwlIRY/GoKCbl3ihA/8FY6XExxYsGcw7azlwMN5n8YPAazqos+r+dHa3Q=&v=uUnzqFy8YzRf7Wg3045LPT2i2sXrCHzv3uOhyzBOzgOrLwggQ/Z5ZMwZZxuttyTGA7mkeRF9lDtouezl6cXhN0mRDXJPhM0LXwJepMZrKAz16u0rUUPLykUkCBPsNAANw8A/47ZDoUMO/CjXI2FOZx/dve/h95OAv7FZlgvLspA=&u=dDAffX44NfHw9pveingtu/qlGG6KHoAVgG3FD0UcXp5Dbt5IBFamopOHVISVavLF&g=+/IReMtbA39gJfEjwxEQo2nitHaDujd0DNP9WE+u+"
+		"gAL0wDzJn5IOQnSUx5toezGbAmyIxrxm0R8AllvETBlyQ==", 
+		EXTRARES, 
+		"Url=http://download.ie.sogou.com/js/game/balloon_interface.js", "Referer=", ENDITEM, 
+		LAST);
+
+	lr_think_time(5);
+
+	web_custom_request("q_2", 
+		"URL=http://get.sogou.com/q", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=text/plain", 
+		"Referer=", 
+		"Snapshot=t6.inf", 
+		"Mode=HTML", 
+		"Body=k=QMHVPBwX3HQE1KuZ6nLt4/57eBwVFEwI2b+OmSIC03SVYxdttH7AJnNsTKlR1ElGX0BKlZJn8f0Nf/bdZT2+8fthHeyA77yPsArx9J/C0R7/fJYLv8aKEDDNpUvTjH75UE63etAHg7D/h8pm2aBRD86+bBh4zhJBCZDuwsdiXxM=&v=s2kHBgtXbOz5/e/RoAMTS7slHpAEk9YrWz94DAi4bAsuK6EKgWH6K0oU7mar6imsv93VveATo+PTPGIZbGpiMIsoYzM5KW5ec8t8JR1OBt1kBGixopZE8FtUgPz0v3WikwhUSDvqJUXSwQDy5OAiWPVDvGMTgFKJZyzCZqo1jW0=&u=NPTs1oXOdUb8xPxPnvUCqVceR0bPyx1SNUF5YnPYCW0=&g=j8u5cGVdQXOnGn4sIVIpONRHOA/O1ZtT+Ano3fmRzGiWrEVkvLBdH5bKbGmrPUu8HIbUxtG2EnNaoeTCA78UKw==&p="
+		"w9mNOHT1KZD75Q1knJVTQFxhUOpI2bp/vszrRuukG1F4dfVPTxwFckb2yqb3YiD9Ot0kOYAvmIWIN+f+iYM8C9Q00kQJOr2LbaZvCXhYxJG2/OLGM8byykMHvhdpwvRsZQwy3dTqeJ1w+6/lI+vaJgVZDdoB5snRtIocWkBEqfg=", 
+		LAST);
+
+	web_add_cookie("IMEVER=8.5.0.1183; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("YYID=7ECF564122FC186A3C4FC2D561C3B41E; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("SMYUV=1583581077639800; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("QIDIANID=p7C0OD8RPST7NB245ehyDXgGZVgMnAbtUZCbHRefZrCQ2uraLlVYvdVls/lyIPaRDTpqAROwylfuYQuS1r2eFg==; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("SUV=00EF753BAB51E25C5E5B0FBCBA581727; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("usid=WHNFd5Y14tfbGbCs; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("SUID=0FE251ABAE32A00A000000005E638B0C; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("IPLOC=CN4200; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("SNUID=4BF549B3171DB8FAE6BC5D3A187E3754; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("ld=ZZllllllll2WzLZClllllVimTu7lllll$C4AcZllll9lllll9llll5@@@@@@@@@@; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("CXID=EAF0F91EE2276FC6E4C711C491F4D9B9; DOMAIN=dralot.ie.sogou.com");
+
+	web_add_cookie("ad=blllllllll2WbeVklllllVis9Qllllll$C4Pjyllll9lllll9Vxlw@@@@@@@@@@@; DOMAIN=dralot.ie.sogou.com");
+
+	lr_think_time(27);
+
+	web_submit_data("coll", 
+		"Action=http://dralot.ie.sogou.com/coll", 
+		"Method=POST", 
+		"RecContentType=text/plain", 
+		"Referer=", 
+		"Mode=HTML", 
+		ITEMDATA, 
+		"Name=h", "Value=7ECF564122FC186A3C4FC2D561C3B41E", ENDITEM, 
+		"Name=r", "Value=0000", ENDITEM, 
+		"Name=v", "Value=8.6.1.31812", ENDITEM, 
+		"Name=cid", "Value=b9aebb212fdc48e643bcaea597920d89", ENDITEM, 
+		LAST);
+
+	web_custom_request("feedback", 
+		"URL=http://dralot.ie.sogou.com/feedback", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=text/plain", 
+		"Referer=", 
+		"Snapshot=t7.inf", 
+		"Mode=HTML", 
+		"Body={\"cmd\":\"dralotStatus\",\"data\":\"\",\"hid\":\"7ECF564122FC186A3C4FC2D561C3B41E\",\"version\":1}", 
+		LAST);
+
+	web_add_cookie("IMEVER=8.5.0.1183; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("YYID=7ECF564122FC186A3C4FC2D561C3B41E; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("SMYUV=1583581077639800; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("QIDIANID=p7C0OD8RPST7NB245ehyDXgGZVgMnAbtUZCbHRefZrCQ2uraLlVYvdVls/lyIPaRDTpqAROwylfuYQuS1r2eFg==; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("SUV=00EF753BAB51E25C5E5B0FBCBA581727; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("usid=WHNFd5Y14tfbGbCs; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("SUID=0FE251ABAE32A00A000000005E638B0C; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("IPLOC=CN4200; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("SNUID=4BF549B3171DB8FAE6BC5D3A187E3754; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("ld=ZZllllllll2WzLZClllllVimTu7lllll$C4AcZllll9lllll9llll5@@@@@@@@@@; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("CXID=EAF0F91EE2276FC6E4C711C491F4D9B9; DOMAIN=config.push.sogou.com");
+
+	web_add_cookie("ad=blllllllll2WbeVklllllVis9Qllllll$C4Pjyllll9lllll9Vxlw@@@@@@@@@@@; DOMAIN=config.push.sogou.com");
+
+	web_custom_request("favor", 
+		"URL=http://dralot.ie.sogou.com/actor/favor", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=text/plain", 
+		"Referer=", 
+		"Snapshot=t8.inf", 
+		"Mode=HTML", 
+		"Body={\"cmd\":\"status\",\"hid\":\"7ECF564122FC186A3C4FC2D561C3B41E\"}", 
+		EXTRARES, 
+		"Url=http://config.push.sogou.com/config/pushserver.do?conn-type=array&udid=7ECF564122FC186A3C4FC2D561C3B41E&appid=4000", "Referer=", ENDITEM, 
+		LAST);
+
+	web_url("websocket", 
+		"URL=http://192.168.3.101:9528/sockjs-node/773/dbyas0kt/websocket", 
+		"Resource=0", 
+		"Referer=", 
+		"Snapshot=t9.inf", 
+		"Mode=HTML", 
+		LAST);
+
+	web_url("websocket_2", 
+		"URL=http://localhost:9528/sockjs-node/275/an0oqnma/websocket", 
+		"Resource=0", 
+		"Referer=", 
+		"Snapshot=t10.inf", 
+		"Mode=HTML", 
+		LAST);
+
+	lr_think_time(10);
+
+	web_custom_request("depts", 
+		"URL=http://localhost:9528/dev-api/git-auth/oauth/depts?account=admin", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://localhost:9528/", 
+		"Snapshot=t11.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		LAST);
+
+	lr_think_time(6);
+
+	web_custom_request("token", 
+		"URL=http://localhost:9528/dev-api/git-auth/oauth/token?account=admin&password=123456&grant_type=password&scope=all&type=account&deptId=01000", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://localhost:9528/", 
+		"Snapshot=t12.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		LAST);
+
+	web_add_cookie("x-access-token="
+		"eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ0ZW5hbnRfaWQiOiIwMDAwMDAiLCJyb2xlX25hbWUiOiJhZG1pbmlzdHJhdG9yIiwidXNlcl9pZCI6IjExMjM1OTg4MjE3Mzg2NzUyMDEiLCJyb2xlX2lkIjoiMTEyMzU5ODgxNjczODY3NTIwMSIsInVzZXJfbmFtZSI6ImFkbWluIiwibmlja19uYW1lIjoi566h55CG5ZGYIiwidG9rZW5fdHlwZSI6ImFjY2Vzc190b2tlbiIsImRlcHRfaWQiOiIwMTAwMCIsImFjY291bnQiOiJhZG1pbiIsImNsaWVudF9pZCI6InNhYmVyIiwiZXhwIjoxNTg0MzQ0MjA2LCJuYmYiOjE1ODQzNDA2MDZ9.A8AFilxjFYzmWbBpuEAW-e6Ghoo_Dg233MsIQG9L"
+		"Ny8; DOMAIN=localhost");
+
+	web_add_cookie("x-refresh-token=eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ1c2VyX2lkIjoiMTEyMzU5ODgyMTczODY3NTIwMSIsInRva2VuX3R5cGUiOiJyZWZyZXNoX3Rva2VuIiwiY2xpZW50X2lkIjoic2FiZXIiLCJleHAiOjE1ODQ5NDU0MDYsIm5iZiI6MTU4NDM0MDYwNn0.VERGDg2QlfBfZcw8K36rTmpYZWXCSk5VsnxVsdACJ2g; DOMAIN=localhost");
+
+	web_custom_request("info", 
+		"URL=http://localhost:9528/dev-api/git-user/info", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://localhost:9528/", 
+		"Snapshot=t13.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		LAST);
+
+	web_custom_request("info_2", 
+		"URL=http://localhost:9528/dev-api/git-user/info", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://localhost:9528/", 
+		"Snapshot=t14.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		LAST);
+
+	web_custom_request("info_3", 
+		"URL=http://localhost:9528/dev-api/git-user/info", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://localhost:9528/", 
+		"Snapshot=t15.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		LAST);
+
+	web_custom_request("depts_2", 
+		"URL=http://localhost:9528/dev-api/git-auth/oauth/depts?account=admin", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://localhost:9528/", 
+		"Snapshot=t16.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		LAST);
+
+	return 0;
+}

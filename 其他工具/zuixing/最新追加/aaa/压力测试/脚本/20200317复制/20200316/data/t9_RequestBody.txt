@@ -1,0 +1,2 @@
+"{\"cmd\":\"dralotStatus\",\"data\":\"\",\"hid\":\"7ECF564122FC186A3C4FC2D561C3B41E\",\"version"
+"\":1}"

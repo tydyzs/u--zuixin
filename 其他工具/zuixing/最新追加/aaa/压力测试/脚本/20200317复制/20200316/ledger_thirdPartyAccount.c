@@ -1,0 +1,90 @@
+ledger_thirdPartyAccount()
+{
+
+	lr_think_time(19);
+
+	web_custom_request("info_28", 
+		"URL=http://127.0.0.1:9528/dev-api/git-user/info", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://127.0.0.1:9528/", 
+		"Snapshot=t50.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		EXTRARES, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=&customerName=&userNum=&orgNum=&r=1584362657819", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=99999999&certType=&certNum=&customerName=&userNum=&orgNum=&r=1584362657819", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=&customerName=&userNum=&orgNum=01000&r=1584362658214", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=&customerName=%E9%99%88%E5%A4%A7%E5%B7%9D%E5%BC%80%E4%B8%AA%E5%85%AC%E5%8F%B8&userNum=&orgNum=01000&r=1584362668283", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-chart/customer-chart/getOrgByCust?customerNum=C002&r=1584362673535", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-demo/crdDetail/findThirdPartyCrdDetailPage?current=1&size=5&customerNum=C002&orgNum=01000&r=1584362673535", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-demo/crdapplyserial/getApplySerialPage?current=1&size=5&customerNum=23412&orgNum=10101&r=1584362673535", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-demo/tbcrdapprove/findThirdPartyCrdApprovePage?current=1&size=5&customerNum=C005&orgNum=01000&r=1584362673535", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-chart/customer-chart/listGrtPage?current=1&size=5&customerNum=C002&orgNum=01000&r=1584362673535", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		LAST);
+
+	web_custom_request("info_29", 
+		"URL=http://127.0.0.1:9528/dev-api/git-user/info", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://127.0.0.1:9528/", 
+		"Snapshot=t51.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		EXTRARES, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=&customerName=&userNum=&orgNum=&r=1584362678819", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=99999999&certType=&certNum=&customerName=&userNum=&orgNum=&r=1584362678819", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=&customerName=&userNum=&orgNum=01000&r=1584362679183", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=&customerName=&customerNum=C002&userNum=&orgNum=01000&r=1584362688299", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=420984199910102111&customerName=&customerNum=C002&userNum=&orgNum=01000&r=1584362694636", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-system/dict/dictTranslate?code=org&r=1584362699037", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		LAST);
+
+	web_custom_request("getList_11", 
+		"URL=http://127.0.0.1:9528/dev-api/git-system/dept/getList?current=1&size=10&deptName=&fullName=&orgType=", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://127.0.0.1:9528/", 
+		"Snapshot=t52.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		LAST);
+
+	web_custom_request("getList_12", 
+		"URL=http://127.0.0.1:9528/dev-api/git-system/dept/getList?current=1&size=10&deptName=%E8%BF%9B%E8%B4%A4%E5%86%9C%E5%95%86%E9%93%B6%E8%A1%8C&fullName=&orgType=", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://127.0.0.1:9528/", 
+		"Snapshot=t53.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		EXTRARES, 
+		"Url=/dev-api/git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=420984199910102111&customerName=&customerNum=C002&userNum=&orgNum=10300&r=1584362709401", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=/dev-api/git-csm/csmcorporation/getCsmCorporationPageByCusNum?customerNum=C002&r=1584362718915", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=/dev-api/git-csm/csmaddressinfo/page?current=1&size=5&customerNum=C002&r=1584362718915", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=/dev-api/git-csm/csmrelation/page?current=1&size=5&customerNum=C002&r=1584362718915", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=/dev-api/git-csm/csmmanageteam/getCsmManageTeamPageByCusNum?current=1&size=5&customerNum=C002&r=1584362718915", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		LAST);
+
+	web_custom_request("info_30", 
+		"URL=http://127.0.0.1:9528/dev-api/git-user/info", 
+		"Method=POST", 
+		"Resource=0", 
+		"RecContentType=application/json", 
+		"Referer=http://127.0.0.1:9528/", 
+		"Snapshot=t54.inf", 
+		"Mode=HTML", 
+		"EncType=", 
+		EXTRARES, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=&customerName=&userNum=&orgNum=&r=1584362723245", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=99999999&certType=&certNum=&customerName=&userNum=&orgNum=&r=1584362723245", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-credit/crdsum/findThirdPartyCrdSumPage?current=1&size=10&certType=&certNum=&customerName=&userNum=&orgNum=01000&r=1584362723574", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		"Url=../git-doc/excel-report/query/bankCreditTable?current=1&size=10&customerName=&r=1584362736826", "Referer=http://127.0.0.1:9528/", ENDITEM, 
+		LAST);
+
+	return 0;
+}

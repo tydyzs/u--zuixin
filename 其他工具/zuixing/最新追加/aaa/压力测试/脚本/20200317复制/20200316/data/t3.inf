@@ -1,0 +1,13 @@
+[t3]
+FileName1=t3.txt
+URL1=http://get.sogou.com/q
+Total=1
+RequestHeaderFile=t3_RequestHeader.txt
+RequestBodyFile=t3_RequestBody.txt
+ResponseHeaderFile=t3_ResponseHeader.txt
+ContentType=text/plain
+SnapshotXmlFile=snapshot_1.xml
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

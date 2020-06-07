@@ -1,0 +1,14 @@
+1.下载IDEA插件： JRebel for IntelliJ
+2.激活（图3）：
+	1.执行exe文件（ReverseProxy_windows_amd64）
+	2.点击idea种新的debug按钮，点激活
+	3.输入http://127.0.0.1:8888/92dc4e00-82b8-4c9a-9b8f-ce5ad8539dbb
+	      (guid可随机生成：https://www.guidgen.com/)；邮箱随意；
+	4.settings--JRebel--点击右边“Work offline"；
+	5.激活完成，关闭exe文件
+3.idea设置随时编译，见图1，2
+
+4.重启idea
+
+5.xml文件热部署插件：
+  JRebel mybatisPlus extension

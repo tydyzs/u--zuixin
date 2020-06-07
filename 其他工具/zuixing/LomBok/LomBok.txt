@@ -1,0 +1,45 @@
+Lombok（常用注解工具）
+是一种Java?实用工具，可用来帮助开发人员消除 Java 的冗长，尤其是对于简单的 Java 对象（POJO）。它通过注解实现这一目的。
+
+
+
+1.IDEA安装插件：搜索lombok plugin
+2.引入依赖：
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>${lombok.version}</version>
+		<scope>provided</scope>
+	</dependency>
+3.常用注解:
+	1.@Getter和@Setter ：该注解可以使用在类上也可以使用在属性上。生成的getter遵循布尔属性的约定。在使用该注解时，会默认生成一个无参构造。和对应的getter、setter方法
+	2.@Slf4j ：在类上注解后，可直接调用log(java代码：log.info(xxxx);)
+	3.@Cleanup：自动化关闭流，相当于 try with resource
+				@Cleanup 
+				InputStream in = new FileInputStream(args[0]);
+				@Cleanup 
+				OutputStream out = new FileOutputStream(args[1]);
+	4.@NonNull ：增加不为空判断
+				public NonNullExample(@NonNull Person person) {
+					this.name = person.getName();
+				 }
+				转换为：
+
+				public NonNullExample(@NonNull Person person) {
+					if (person == null) {
+					  throw new NullPointerException("person");
+					}
+					this.name = person.getName();
+				 }			
+	5.@SneakyThrows ：当我们需要抛出异常，在当前方法上调用，不用显示的在方法名后面写 throw
+					@SneakyThrows(Exception.class)			 
+	6.@Synchronized ：方法中所有的代码都加入到一个代码块中，默认静态方法使用的是全局锁，普通方法使用的是对象锁，当然也可以指定锁的对象。
+					private final Object lock = new Object();
+					@Synchronized("lock")
+					public void foo() {
+						// Do something
+					}			 
+				 
+				 
+				 
+				 

@@ -1,0 +1,14 @@
+GET /sockjs-node/165/d5pj3u2l/websocket HTTP/1.1
+Host: 192.168.43.81:9528
+Connection: Upgrade
+Pragma: no-cache
+Cache-Control: no-cache
+Upgrade: websocket
+Origin: http://127.0.0.1:9528
+Sec-WebSocket-Version: 13
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3314.0 Safari/537.36 SE 2.X MetaSr 1.0
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Sec-WebSocket-Key: yaUUMZGsYNoMLVj00+JI0A==
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+

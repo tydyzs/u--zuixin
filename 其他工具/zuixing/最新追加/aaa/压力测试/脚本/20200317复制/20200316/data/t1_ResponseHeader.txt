@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 16 Mar 2020 12:21:09 GMT
+Content-Type: text/plain
+Content-Length: 11
+Connection: keep-alive
+

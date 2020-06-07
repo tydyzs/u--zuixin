@@ -1,0 +1,6 @@
+1.解压activeMq
+2.进入目录到 D:\apache-artemis-2.9.0\bin
+  创建一个空间（例如mybroke）：执行.\artemis create mybroke
+  并设置用户密码
+3.进入目录启动mq： D:\apache-artemis-2.9.0\bin\mybroke\bin
+	启动：.\artemis.cmd run

@@ -1,0 +1,6 @@
+482
+{"code":200,"success":true,"data":[{"id":"6fe7c2ee0b7c3d8ebce0656942fbd75a","userId":"1123598821738675201","roleId":"1123598816738675201","deptId":"01000","isMasterOrg":1,"deptCategoryName":"","fullName":"江西省农联社","deptName":"江西省农联社","deptLevelName":"","roleName":"超级管理员","deptLevel":"1"},{"id":"f08f188c1c83e17d260cf63e23098b5a","userId":"1123598821738675201","roleId":"359cde2c50fe3117c573bfbe9ac30a10,1123598816738675205,1123598816738675204","deptId":"01600","isMasterOrg":0,"deptCategoryName":"","fullName":"吉安市农村信用社","deptName":"吉安市农村信用社","deptLevelName":"","roleName":"业务用户,老板,经理","deptLevel":"2"},{"id":"fff20f34493f0d6082d04b54f9fb0e66","userId":"1123598821738675201","roleId":"1123598816738675202,fce9d04ce9811cb4c1766807532951e5,359cde2c50fe3117c573bfbe9ac30a10","deptId":"01520","isMasterOrg":0,"deptCategoryName":"","fullName":"九江市农村信用社","deptName":"九江市农村信用社","deptLevelName":"","roleName":"用户,普通业务岗,业务用户","deptLevel":"2"},{"id":"745147cd8e099872a11f26d7b7b00ac1","userId":"1123598821738675201","roleId":"a5
+106
+2f266995a80116c038916717455afb","deptId":"16200","isMasterOrg":0,"deptCategoryName":"","fullName":"江西玉山农村商业银行股份有限公司","deptName":"玉山农商银行","deptLevelName":"","roleName":"lqh测试","deptLevel":"3"}],"msg":"操作成功"}
+0
+

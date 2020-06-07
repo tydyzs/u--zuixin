@@ -1,0 +1,2 @@
+[Hosts]
+localhost=D:\用户目录\Desktop\aaa\压力测试\脚本\20200317复制\20200316\res\localhost_1.eve

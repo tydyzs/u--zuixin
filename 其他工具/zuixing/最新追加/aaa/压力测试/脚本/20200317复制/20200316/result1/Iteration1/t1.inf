@@ -1,0 +1,15 @@
+[t1]
+SnapshotXmlFile=snapshot_1.xml
+ContentType=text/html
+StepName=Url: 127.0.0.1:9528
+Total=2
+FileName1=t1.html
+FileName2=t1_0_app.UNK
+RequestHeaderFile=t1_RequestHeader.txt
+SaveSnapshotResources=1
+ResponseHeaderFile=t1_ResponseHeader.txt
+RequestBodyFile=t1_RequestBody.txt
+URL1=http://127.0.0.1:9528/
+URL2=http://127.0.0.1:9528/app.js
+[AdditionalInfo]
+IsIgnorable=0

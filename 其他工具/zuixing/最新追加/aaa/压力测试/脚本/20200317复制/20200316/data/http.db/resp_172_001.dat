@@ -1,0 +1,4 @@
+2e9
+{"code":200,"success":true,"data":{"records":[{"id":"","customerNum":"","memberCustomerNum":"C0034","status":"","updateTime":"","createTime":"","memberRelType":"","crdProductType":"","currencyCd":"","limitCredit":"","limitUsed":"","limitAvi":"","limitPre":"","expCredit":"","expUsed":"","expAvi":"","orgNum":"14103","userNum":"","customerName":"中兴","certType":"","certNum":"","limitCreditTotal":100000.00,"limitUsedTotal":2000.00,"limitAviTotal":98000.00,"expCreditTotal":90000.00,"expUsedTotal":1800.00,"expAviTotal":88200.00,"memberCustomerName":"","companyCustomerName":"","orgNumName":"城区信用社","currencyCdName":"","userNumName":""}],"total":1,"size":10,"current":1,"orders":[],"searchCount":true,"pages":1},"msg":"操作成功"}
+0
+

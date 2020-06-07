@@ -1,0 +1,24 @@
+[StartRecordingGMT]
+StartRecordingGMT_1=2020/03/16 12:18:11
+StartRecordingIsDst_1=0
+StartRecordingGMT_2=2020/03/16 12:20:05
+StartRecordingIsDst_2=0
+StartRecordingGMT_3=2020/03/16 12:22:04
+StartRecordingIsDst_3=0
+StartRecordingGMT_4=2020/03/16 12:23:11
+StartRecordingIsDst_4=0
+StartRecordingGMT_5=2020/03/16 12:26:40
+StartRecordingIsDst_5=0
+StartRecordingGMT_6=2020/03/16 12:29:10
+StartRecordingIsDst_6=0
+StartRecordingGMT_7=2020/03/16 12:30:31
+StartRecordingIsDst_7=0
+StartRecordingGMT_8=2020/03/16 12:31:26
+StartRecordingIsDst_8=0
+[Security]
+UsingPersistForAuthentication=1
+UserName_8_1=saber
+Password_8_1=saber_secret
+Realm_8_1=127.0.0.1:9528
+[User-Agent]
+User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3314.0 Safari/537.36 SE 2.X MetaSr 1.0

@@ -1,0 +1,9 @@
+-+
+-DCCI
+-D_IDA_XL
+-DWINNT
+-ID:\用户目录\Desktop\aaa\压力测试\脚本\20200317复制\20200316
+-IE:\anzhuang\LoadRunner\include
+-ed:\用户目录\desktop\aaa\压力测试\脚本\20200317复制\20200316\\logfile.log
+d:\用户目录\desktop\aaa\压力测试\脚本\20200317复制\20200316\\combined_20200316.c
+d:\用户目录\desktop\aaa\压力测试\脚本\20200317复制\20200316\\pre_cci.c

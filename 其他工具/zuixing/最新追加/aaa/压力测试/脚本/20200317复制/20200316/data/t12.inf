@@ -1,0 +1,17 @@
+[t12]
+FileName1=t12.html
+URL1=http://127.0.0.1:9528/dev-api/git-user/info
+Total=3
+RequestHeaderFile=t12_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t12_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_10.xml
+FileName2=t12_workDateTime.html
+URL2=http://127.0.0.1:9528/dev-api/git-system/sysdate/workDateTime?r=1584361955574
+FileName3=t12_top-menu.html
+URL3=http://127.0.0.1:9528/dev-api/git-system/menu/top-menu?r=1584361955574
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

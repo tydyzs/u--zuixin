@@ -1,0 +1,62 @@
+账户密码：
+tydyzs/shc51888
+1.常用命令：
+
+
+	cd:用来切换工作目录,最常用的一个命令。简单来讲，cd A文件夹就是进入到A文件夹里面的意思。
+	git status .：查看当前路径下的的状态。git下最最常用的一个命令。
+	git add .: 把工作区的所有变化，(就是你的所有改动)，都添加到 版本库/暂存区。
+	git commit -m "提交时说明信息": 更进一步提交，并说明提交log。
+	git push: 把版本库的所有更新内容， 都推送到远程服务器。(就是推代码/推上去)
+	git pull: 把代码从远程服务器拉取到本地。(俗称拉代码)
+
+	git log:查看提交历史，与各次的提交说明。
+	git diff:比较工作区与暂存区的差异，就是比较看看你到底都做了什么修改。
+	git clone url地址: 将远程服务器上项目克隆到新创建的目录中（第一次拉项目时使用， 后面的更新都用 git pull了）。
+
+	操作时 双击tab键的自动提示/补全功能。
+	q或者:q等命令代表退出(quit)。
+	ctrl+f,ctrl+b快捷键在termial可以翻页，就是 上一页，下一页
+	
+	
+安装
+  1.Git-2.23.0-64-bit.exe(下一步：默认配置就行)
+  2.idea配置：setting->version Controller->git     ：   选中D:\Git\bin\git.exe
+  3.环境变量配置（指定git.exe目录）：path中添加一项（D:\Git\bin）
+	验证：git --version
+  4.
+  
+  
+  
+  
+  
+  操作：
+  git工作空间：
+  
+  本地工作空间--- 【Add】>> ---本地仓库（stage)---【Commit】>>---本地仓库（master)---【Push】>>---远程仓库（master）
+ 1.提交步骤： Add -> Commit -> Push
+ 2.更新步骤：Fetch和Pull，Fetch是从远程仓库下载文件到本地的origin/master，pull（下载并合并）
+  
+  
+上传项目
+
+	1.创建仓库并配置
+		0.登入github并创建仓库；其中两个下拉选如下选择
+			Add .gitignore:Python
+			Add a license:MIT License
+		1.将本地git和远程库关联
+			 1.先在本地检出创建的仓库（git clone https://github.com/tydyzs/u-zuixin.git)
+			 2.右键目录执行：git remote add origin https://github.com/tydyzs/u-zuixin.git
+			 （若报错，先执行删除：git remote rm origin）
+		 
+		2.本地仓库也远程仓库关联
+			git branch --set-upstream-to=origin/master master
+			（如果报错，先执行：git pull origin master --allow-unrelated-histories）
+	2.常见问题：
+		1.超过100m无法push
+			1.删除commit的100m文件再push：
+				git rm --cache filename.zip(切换到文件目录并执行)
+				git commit --amend -CHEAD
+				
+				
+				

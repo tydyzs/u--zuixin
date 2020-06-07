@@ -1,0 +1,17 @@
+[t17]
+FileName1=t17.html
+URL1=http://127.0.0.1:9528/dev-api/git-user/info
+Total=3
+RequestHeaderFile=t17_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t17_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_15.xml
+FileName2=t17_getCrdListSumPage.html
+URL2=http://127.0.0.1:9528/dev-api/git-chart/customer-chart/getCrdListSumPage?current=1&size=10&userNum=&customerName=&orgNum=01000&certNum=&certType=&customerType=2&r=1584362071705
+FileName3=t17_dictTranslate.html
+URL3=http://127.0.0.1:9528/dev-api/git-system/dict/dictTranslate?code=org&r=1584362078451
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

@@ -1,0 +1,17 @@
+[t35]
+FileName1=t35.html
+URL1=http://127.0.0.1:9528/dev-api/git-user/info
+Total=3
+RequestHeaderFile=t35_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t35_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_33.xml
+FileName2=t35_getCrdListSumPage.html
+URL2=http://127.0.0.1:9528/dev-api/git-chart/customer-chart/getCrdListSumPage?current=1&size=10&userNum=&customerName=&orgNum=01000&certNum=&certType=&customerType=3&r=1584362352972
+FileName3=t35_dictTranslate.html
+URL3=http://127.0.0.1:9528/dev-api/git-system/dict/dictTranslate?code=org&r=1584362363301
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

@@ -1,0 +1,4 @@
+17b
+{"code":200,"success":true,"data":{"records":[{"uuid":"","customerNum":"","userNum":"manager","orgNum":"10659","userPlacingCd":"01","updateTime":"","createTime":"","realName":"经理","deptName":"鱼目山分理处","aeraCode":"601","aeraCodeName":"","userPlacingCdName":"管户权"}],"total":1,"size":5,"current":1,"orders":[],"searchCount":true,"pages":1},"msg":"操作成功"}
+0
+

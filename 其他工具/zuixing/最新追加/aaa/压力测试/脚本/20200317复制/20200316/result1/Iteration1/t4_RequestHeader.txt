@@ -1,0 +1,10 @@
+POST /dev-api/git-auth/oauth/depts?account=admin HTTP/1.1
+Referer: http://127.0.0.1:9528/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3314.0 Safari/537.36 SE 2.X MetaSr 1.0
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Accept: */*
+Connection: Keep-Alive
+Host: 127.0.0.1:9528
+Content-Length: 0
+

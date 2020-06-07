@@ -1,0 +1,13 @@
+[t57]
+FileName1=t57_bankCreditTable.html
+URL1=http://106.12.241.109:9080/git-doc/excel-report/download/bankCreditTable?customerName
+Total=1
+ContentType=
+SnapshotXmlFile=snapshot_55.xml
+RequestHeaderFile=t57_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t57_ResponseHeader.txt
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

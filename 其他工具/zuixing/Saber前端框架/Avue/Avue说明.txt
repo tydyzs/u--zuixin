@@ -1,0 +1,6 @@
+
+安装：
+npm i @smallwei/avue -S
+官网地址：
+https://avuejs.com/doc/installation
+Avue底层封装了Element-UI组件

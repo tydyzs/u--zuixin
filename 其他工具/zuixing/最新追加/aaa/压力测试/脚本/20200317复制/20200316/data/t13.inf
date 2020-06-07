@@ -1,0 +1,15 @@
+[t13]
+FileName1=t13.html
+URL1=http://127.0.0.1:9528/dev-api/git-user/info
+Total=2
+RequestHeaderFile=t13_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t13_ResponseHeader.txt
+ContentType=application/json
+SnapshotXmlFile=snapshot_11.xml
+FileName2=t13_workDateTime.html
+URL2=http://127.0.0.1:9528/dev-api/git-system/sysdate/workDateTime?r=1584361955574
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

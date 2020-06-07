@@ -1,0 +1,1119 @@
+﻿<?xml version="1.0"?>
+  <!DOCTYPE Report
+[
+<!ELEMENT Report (General ,(Doc|BPT)) >
+<!ATTLIST Report ver CDATA #REQUIRED tmZone CDATA #REQUIRED>
+
+<!ELEMENT General ( DocLocation ) >
+<!ATTLIST General productName CDATA #REQUIRED productVer CDATA #REQUIRED os CDATA #REQUIRED host CDATA #REQUIRED>
+
+<!ELEMENT BPT (DName,Res,DVer?,TSet?,TInst?,NodeArgs,Doc*) >
+<!ATTLIST BPT rID ID #REQUIRED >
+
+<!ELEMENT Doc (DName, Res, DVer?, TSet?, TInst?, RunType?, DT?, Step*, Action+, DIter*, Action*, Summary?, NodeArgs?)> 
+<!ATTLIST Doc rID ID #REQUIRED type (Test|BC) "Test" productName CDATA #REQUIRED BCIter CDATA #IMPLIED >
+
+<!ELEMENT RunType ( #PCDATA )>
+<!ATTLIST RunType fmStep (False|True) "False" batch (False|True) "False" upDesc (False|True) "False" upChk (False|True) "False" upAS (False|True) "False">
+
+<!ELEMENT DName ( #PCDATA ) >
+
+<!ELEMENT Res ( #PCDATA ) >
+
+<!ELEMENT DVer ( #PCDATA ) >
+
+<!ELEMENT TSet ( #PCDATA ) >
+
+<!ELEMENT TInst ( #PCDATA ) >
+
+<!ELEMENT DIter (Step?,Action+,Summary?,NodeArgs)>
+<!ATTLIST DIter rID ID #REQUIRED iterID CDATA #REQUIRED>
+
+<!ELEMENT DocLocation ( #PCDATA )>
+
+<!ELEMENT Action (AName,AIter*,(Step|HtmlStep|Action)*,Summary,NodeArgs) >
+<!ATTLIST Action rID ID #REQUIRED>
+
+<!ELEMENT AIter ((Step|HtmlStep|Action)*,Summary?,NodeArgs) >
+<!ATTLIST AIter rID ID #REQUIRED iterID CDATA #REQUIRED>
+
+<!ELEMENT AName ( #PCDATA ) >
+
+<!ELEMENT Step (Obj,Details,Time,(Step|HtmlStep|Doc)*,NodeArgs) >
+<!ATTLIST Step rID ID #REQUIRED retval CDATA #IMPLIED>
+
+<!ELEMENT HtmlStep (HTML,(Step|HtmlStep|Doc)*,NodeArgs) >
+<!ATTLIST HtmlStep rID ID #REQUIRED >
+
+<!ELEMENT Obj ( #PCDATA ) >
+<!ATTLIST Obj plainTxt (False|True) "True">
+
+<!ELEMENT Details ( #PCDATA ) >
+<!ATTLIST Details plainTxt (False|True) "True">
+
+<!ELEMENT Time ( #PCDATA ) >
+
+<!ELEMENT HTML ( #PCDATA ) >
+
+<!ELEMENT Disp ( #PCDATA ) >
+
+<!ELEMENT NodeArgs (Disp,TopPane?,BtmPane?)>
+<!ATTLIST NodeArgs eType CDATA #REQUIRED icon CDATA #REQUIRED nRep CDATA #REQUIRED filter (False|True) "True">
+<!ATTLIST NodeArgs status (Passed|Failed|Done|Warning|Information) "Done">
+<!ATTLIST NodeArgs iconSel CDATA #IMPLIED nType CDATA #IMPLIED >
+
+<!ELEMENT TopPane (Path)>
+
+<!ELEMENT BtmPane ( (Path|WR)?,ASHilite?)>
+<!ATTLIST BtmPane vType CDATA "HTML">
+
+<!ELEMENT Path ( #PCDATA ) >
+
+<!ELEMENT ASHilite ( #PCDATA ) >
+
+<!ELEMENT WR ( #PCDATA ) >
+
+<!ELEMENT DT (NodeArgs) >
+<!ATTLIST DT rID ID #REQUIRED>
+
+<!ELEMENT Summary (Param*)>
+<!ATTLIST Summary sTime CDATA #IMPLIED eTime CDATA #IMPLIED passed CDATA #IMPLIED failed CDATA #IMPLIED warnings CDATA #IMPLIED retval CDATA #IMPLIED stopped (False|True) "False" >
+
+<!ELEMENT Param (ParamName,ParamVal)+ >
+<!ATTLIST Param paramInOut (In|Out) "In">
+
+<!ELEMENT ParamName ( #PCDATA ) >
+
+<!ELEMENT ParamVal ( #PCDATA ) >
+
+]
+> <Report ver="2.0" tmZone="中国标准时间">
+<General productName="Vugen" productVer="11" os="" host="USER-20130922RZ"><DocLocation><![CDATA[D:\用户目录\Desktop\aaa\压力测试\脚本\20200317复制\20200316]]></DocLocation></General>
+<Doc rID="T1"   productName= "Vugen"  >
+<DName><![CDATA[20200316]]></DName>
+<Res><![CDATA[result1]]></Res>
+<Action rID="T2">
+<AName><![CDATA[vuser_init]]></AName>
+<Step rID="T3">
+<Obj plainTxt="False" ><![CDATA[Service: Set User]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>用户名 =<STRONG><FONT COLOR=#00AF00>saber</FONT></STRONG><BR>密码 = <STRONG><FONT COLOR=#00AF00>******</FONT></STRONG><BR>主机 : 端口 = <STRONG><FONT COLOR=#00AF00>127.0.0.1:9528</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:10:39]]></Time>
+<NodeArgs eType="General" icon="3" nRep="6" >
+<Disp><![CDATA[Service: Set User]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T4">
+<Obj plainTxt="False" ><![CDATA[Url: 127.0.0.1:9528]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:00]]></Time>
+<NodeArgs eType="General" icon="4" nRep="7" status="Passed" >
+<Disp><![CDATA[Url: 127.0.0.1:9528]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t1.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T5">
+<Obj plainTxt="False" ><![CDATA[Url: 127.0.0.1:9528_2]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:01]]></Time>
+<NodeArgs eType="General" icon="4" nRep="8" status="Passed" >
+<Disp><![CDATA[Url: 127.0.0.1:9528_2]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t2.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T6">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>IMEVER=8.5.0.1183; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:01]]></Time>
+<NodeArgs eType="General" icon="5" nRep="9" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T7">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>YYID=7ECF564122FC186A3C4FC2D561C3B41E; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:01]]></Time>
+<NodeArgs eType="General" icon="5" nRep="10" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T8">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SMYUV=1583581077639800; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:01]]></Time>
+<NodeArgs eType="General" icon="5" nRep="11" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T9">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>QIDIANID=p7C0OD8RPST7NB245ehyDXgGZVgMnAbtUZCbHRefZrCQ2uraLlVYvdVls/lyIPaRDTpqAROwylfuYQuS1r2eFg==; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:01]]></Time>
+<NodeArgs eType="General" icon="5" nRep="12" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T10">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SUV=00EF753BAB51E25C5E5B0FBCBA581727; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:01]]></Time>
+<NodeArgs eType="General" icon="5" nRep="13" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T11">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>usid=WHNFd5Y14tfbGbCs; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:01]]></Time>
+<NodeArgs eType="General" icon="5" nRep="14" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T12">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SUID=0FE251ABAE32A00A000000005E638B0C; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="15" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T13">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>IPLOC=CN4200; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="16" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T14">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SNUID=4BF549B3171DB8FAE6BC5D3A187E3754; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="17" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T15">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>CXID=EAF0F91EE2276FC6E4C711C491F4D9B9; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="18" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T16">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>ad=blllllllll2WbeVklllllVis9Qllllll$C4Pjyllll9lllll9Vxlw@@@@@@@@@@@; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="19" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T17">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>ld=6lllllllll2WzLZClllllVisJDYlllll$C4AcZllllwlllll9llll5@@@@@@@@@@; DOMAIN=get.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="20" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T18">
+<Obj plainTxt="False" ><![CDATA[Custom Request: q]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="6" nRep="21" status="Passed" >
+<Disp><![CDATA[Custom Request: q]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t3.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T19">
+<Obj plainTxt="False" ><![CDATA[Custom Request: depts]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="6" nRep="22" status="Passed" >
+<Disp><![CDATA[Custom Request: depts]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t4.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T20">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>IMEVER=8.5.0.1183; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="23" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T21">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>YYID=7ECF564122FC186A3C4FC2D561C3B41E; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="24" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T22">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SMYUV=1583581077639800; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="25" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T23">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>QIDIANID=p7C0OD8RPST7NB245ehyDXgGZVgMnAbtUZCbHRefZrCQ2uraLlVYvdVls/lyIPaRDTpqAROwylfuYQuS1r2eFg==; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="26" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T24">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SUV=00EF753BAB51E25C5E5B0FBCBA581727; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="27" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T25">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>usid=WHNFd5Y14tfbGbCs; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="28" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T26">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SUID=0FE251ABAE32A00A000000005E638B0C; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="29" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T27">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>IPLOC=CN4200; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="30" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T28">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SNUID=4BF549B3171DB8FAE6BC5D3A187E3754; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:02]]></Time>
+<NodeArgs eType="General" icon="5" nRep="31" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T29">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>CXID=EAF0F91EE2276FC6E4C711C491F4D9B9; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="32" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T30">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>ad=blllllllll2WbeVklllllVis9Qllllll$C4Pjyllll9lllll9Vxlw@@@@@@@@@@@; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="33" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T31">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>ld=6lllllllll2WzLZClllllVisJDYlllll$C4AcZllllwlllll9llll5@@@@@@@@@@; DOMAIN=config.push.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="34" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T32">
+<Obj plainTxt="False" ><![CDATA[Custom Request: token]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="6" nRep="35" status="Passed" >
+<Disp><![CDATA[Custom Request: token]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t5.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T33">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>IMEVER=8.5.0.1183; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="36" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T34">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>YYID=7ECF564122FC186A3C4FC2D561C3B41E; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="37" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T35">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SMYUV=1583581077639800; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="38" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T36">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>QIDIANID=p7C0OD8RPST7NB245ehyDXgGZVgMnAbtUZCbHRefZrCQ2uraLlVYvdVls/lyIPaRDTpqAROwylfuYQuS1r2eFg==; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="39" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T37">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SUV=00EF753BAB51E25C5E5B0FBCBA581727; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="40" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T38">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>usid=WHNFd5Y14tfbGbCs; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="41" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T39">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SUID=0FE251ABAE32A00A000000005E638B0C; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="42" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T40">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>IPLOC=CN4200; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="43" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T41">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>SNUID=4BF549B3171DB8FAE6BC5D3A187E3754; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="44" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T42">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>CXID=EAF0F91EE2276FC6E4C711C491F4D9B9; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="45" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T43">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>ad=blllllllll2WbeVklllllVis9Qllllll$C4Pjyllll9lllll9Vxlw@@@@@@@@@@@; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="46" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T44">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>ld=6lllllllll2WzLZClllllVisJDYlllll$C4AcZllllwlllll9llll5@@@@@@@@@@; DOMAIN=dralot.ie.sogou.com</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:03]]></Time>
+<NodeArgs eType="General" icon="5" nRep="47" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T45">
+<Obj plainTxt="False" ><![CDATA[Custom Request: feedback]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:04]]></Time>
+<NodeArgs eType="General" icon="6" nRep="48" status="Passed" >
+<Disp><![CDATA[Custom Request: feedback]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t6.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T46">
+<Obj plainTxt="False" ><![CDATA[Submit Data: coll]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:04]]></Time>
+<NodeArgs eType="General" icon="7" nRep="49" status="Passed" >
+<Disp><![CDATA[Submit Data: coll]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t7.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T47">
+<Obj plainTxt="False" ><![CDATA[Custom Request: favor]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:04]]></Time>
+<NodeArgs eType="General" icon="6" nRep="50" status="Passed" >
+<Disp><![CDATA[Custom Request: favor]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t8.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T48">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>x-access-token=eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ0ZW5hbnRfaWQiOiIwMDAwMDAiLCJyb2xlX25hbWUiOiJhZG1pbmlzdHJhdG9yIiwidXNlcl9pZCI6IjExMjM1OTg4MjE3Mzg2NzUyMDEiLCJyb2xlX2lkIjoiMTEyMzU5ODgxNjczODY3NTIwMSIsInVzZXJfbmFtZSI6ImFkbWluIiwibmlja19uYW1lIjoi566h55CG5ZGYIiwidG9rZW5fdHlwZSI6ImFjY2Vzc190b2tlbiIsImRlcHRfaWQiOiIwMTAwMCIsImFjY291bnQiOiJhZG1pbiIsImNsaWVudF9pZCI6InNhYmVyIiwiZXhwIjoxNTg0MzY1NTQ4LCJuYmYiOjE1ODQzNjE5NDh9.9DaAaG4qSdU9mU-o8oTaPtzYNUV2sHXJAcEAKr0M9FQ; DOMAIN=127.0.0.1</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:04]]></Time>
+<NodeArgs eType="General" icon="5" nRep="51" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T49">
+<Obj plainTxt="False" ><![CDATA[Service: Add Cookie]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER>添加以下 Cookie: <STRONG><FONT COLOR=#00AF00>x-refresh-token=eyJ0eXAiOiJKc29uV2ViVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1c2VyIiwiYXVkIjoiYXVkaWVuY2UiLCJ1c2VyX2lkIjoiMTEyMzU5ODgyMTczODY3NTIwMSIsInRva2VuX3R5cGUiOiJyZWZyZXNoX3Rva2VuIiwiY2xpZW50X2lkIjoic2FiZXIiLCJleHAiOjE1ODQ5NjY3NDgsIm5iZiI6MTU4NDM2MTk0OH0.s-MIY-SiCHi69yvm0JH6j2rrzOD6Xyht_-dW7DQR3Sk; DOMAIN=127.0.0.1</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:04]]></Time>
+<NodeArgs eType="General" icon="5" nRep="52" >
+<Disp><![CDATA[Service: Add Cookie]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T50">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:05]]></Time>
+<NodeArgs eType="General" icon="6" nRep="53" status="Passed" >
+<Disp><![CDATA[Custom Request: info]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t9.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T51">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_2]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:05]]></Time>
+<NodeArgs eType="General" icon="6" nRep="54" status="Passed" >
+<Disp><![CDATA[Custom Request: info_2]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t10.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T52">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_3]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:06]]></Time>
+<NodeArgs eType="General" icon="6" nRep="55" status="Passed" >
+<Disp><![CDATA[Custom Request: info_3]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t11.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T53">
+<Obj plainTxt="False" ><![CDATA[Custom Request: depts_2]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:06]]></Time>
+<NodeArgs eType="General" icon="6" nRep="56" status="Passed" >
+<Disp><![CDATA[Custom Request: depts_2]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t12.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:10:39" eTime="2020/3/17 - 11:11:06" passed="12" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="5" status="Passed" >
+<Disp><![CDATA[vuser_init 概要]]></Disp>
+</NodeArgs>
+</Action>
+<DIter rID="T54" iterID="1" >
+<Action rID="T55">
+<AName><![CDATA[ledger_companyCustomer]]></AName>
+<Step rID="T56">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_4]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:08]]></Time>
+<NodeArgs eType="General" icon="6" nRep="60" status="Passed" >
+<Disp><![CDATA[Custom Request: info_4]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t13.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T57">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_5]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:09]]></Time>
+<NodeArgs eType="General" icon="6" nRep="61" status="Passed" >
+<Disp><![CDATA[Custom Request: info_5]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t14.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T58">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_6]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:10]]></Time>
+<NodeArgs eType="General" icon="6" nRep="62" status="Passed" >
+<Disp><![CDATA[Custom Request: info_6]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t15.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T59">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:10]]></Time>
+<NodeArgs eType="General" icon="6" nRep="63" status="Passed" >
+<Disp><![CDATA[Custom Request: getList]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t16.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T60">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_2]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:12]]></Time>
+<NodeArgs eType="General" icon="6" nRep="64" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_2]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t17.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T61">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_7]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:14]]></Time>
+<NodeArgs eType="General" icon="6" nRep="65" status="Passed" >
+<Disp><![CDATA[Custom Request: info_7]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t18.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T62">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_8]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:15]]></Time>
+<NodeArgs eType="General" icon="6" nRep="66" status="Passed" >
+<Disp><![CDATA[Custom Request: info_8]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t19.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:06" eTime="2020/3/17 - 11:11:15" passed="7" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="59" status="Passed" >
+<Disp><![CDATA[ledger_companyCustomer 概要]]></Disp>
+</NodeArgs>
+</Action>
+<Action rID="T63">
+<AName><![CDATA[ledger_individualCustomer]]></AName>
+<Step rID="T64">
+<Obj plainTxt="False" ><![CDATA[Url: getCrdListSumPage]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>资源已成功加载</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:15]]></Time>
+<NodeArgs eType="General" icon="4" nRep="69" status="Passed" >
+<Disp><![CDATA[Url: getCrdListSumPage]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T65">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_9]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:16]]></Time>
+<NodeArgs eType="General" icon="6" nRep="70" status="Passed" >
+<Disp><![CDATA[Custom Request: info_9]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t20.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T66">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_10]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:17]]></Time>
+<NodeArgs eType="General" icon="6" nRep="71" status="Passed" >
+<Disp><![CDATA[Custom Request: info_10]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t21.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T67">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_11]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:17]]></Time>
+<NodeArgs eType="General" icon="6" nRep="72" status="Passed" >
+<Disp><![CDATA[Custom Request: info_11]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t22.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T68">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_12]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:18]]></Time>
+<NodeArgs eType="General" icon="6" nRep="73" status="Passed" >
+<Disp><![CDATA[Custom Request: info_12]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t23.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T69">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_3]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:19]]></Time>
+<NodeArgs eType="General" icon="6" nRep="74" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_3]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t24.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T70">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_4]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:20]]></Time>
+<NodeArgs eType="General" icon="6" nRep="75" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_4]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t25.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T71">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_13]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:21]]></Time>
+<NodeArgs eType="General" icon="6" nRep="76" status="Passed" >
+<Disp><![CDATA[Custom Request: info_13]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t26.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T72">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_14]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:22]]></Time>
+<NodeArgs eType="General" icon="6" nRep="77" status="Passed" >
+<Disp><![CDATA[Custom Request: info_14]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t27.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T73">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_15]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:23]]></Time>
+<NodeArgs eType="General" icon="6" nRep="78" status="Passed" >
+<Disp><![CDATA[Custom Request: info_15]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t28.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:15" eTime="2020/3/17 - 11:11:23" passed="10" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="68" status="Passed" >
+<Disp><![CDATA[ledger_individualCustomer 概要]]></Disp>
+</NodeArgs>
+</Action>
+<Action rID="T74">
+<AName><![CDATA[ledger_interbankCustomer]]></AName>
+<Step rID="T75">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_16]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:24]]></Time>
+<NodeArgs eType="General" icon="6" nRep="81" status="Passed" >
+<Disp><![CDATA[Custom Request: info_16]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t29.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T76">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_17]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:25]]></Time>
+<NodeArgs eType="General" icon="6" nRep="82" status="Passed" >
+<Disp><![CDATA[Custom Request: info_17]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t30.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T77">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_18]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:26]]></Time>
+<NodeArgs eType="General" icon="6" nRep="83" status="Passed" >
+<Disp><![CDATA[Custom Request: info_18]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t31.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T78">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_19]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:26]]></Time>
+<NodeArgs eType="General" icon="6" nRep="84" status="Passed" >
+<Disp><![CDATA[Custom Request: info_19]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t32.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T79">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_5]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:27]]></Time>
+<NodeArgs eType="General" icon="6" nRep="85" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_5]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t33.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T80">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_6]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:27]]></Time>
+<NodeArgs eType="General" icon="6" nRep="86" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_6]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t34.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T81">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_20]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:29]]></Time>
+<NodeArgs eType="General" icon="6" nRep="87" status="Passed" >
+<Disp><![CDATA[Custom Request: info_20]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t35.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T82">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_21]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:30]]></Time>
+<NodeArgs eType="General" icon="6" nRep="88" status="Passed" >
+<Disp><![CDATA[Custom Request: info_21]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t36.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T83">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_22]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:31]]></Time>
+<NodeArgs eType="General" icon="6" nRep="89" status="Passed" >
+<Disp><![CDATA[Custom Request: info_22]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t37.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:23" eTime="2020/3/17 - 11:11:31" passed="9" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="80" status="Passed" >
+<Disp><![CDATA[ledger_interbankCustomer 概要]]></Disp>
+</NodeArgs>
+</Action>
+<Action rID="T84">
+<AName><![CDATA[ledger_groupCustomer]]></AName>
+<Step rID="T85">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_23]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:32]]></Time>
+<NodeArgs eType="General" icon="6" nRep="92" status="Passed" >
+<Disp><![CDATA[Custom Request: info_23]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t38.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T86">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_7]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:33]]></Time>
+<NodeArgs eType="General" icon="6" nRep="93" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_7]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t39.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T87">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_8]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:35]]></Time>
+<NodeArgs eType="General" icon="6" nRep="94" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_8]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t40.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:31" eTime="2020/3/17 - 11:11:35" passed="3" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="91" status="Passed" >
+<Disp><![CDATA[ledger_groupCustomer 概要]]></Disp>
+</NodeArgs>
+</Action>
+<Action rID="T88">
+<AName><![CDATA[ledger_guaranteeLedger]]></AName>
+<Step rID="T89">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_24]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:37]]></Time>
+<NodeArgs eType="General" icon="6" nRep="97" status="Passed" >
+<Disp><![CDATA[Custom Request: info_24]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t41.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T90">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_9]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:37]]></Time>
+<NodeArgs eType="General" icon="6" nRep="98" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_9]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t42.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T91">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_10]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:38]]></Time>
+<NodeArgs eType="General" icon="6" nRep="99" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_10]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t43.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T92">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_25]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:40]]></Time>
+<NodeArgs eType="General" icon="6" nRep="100" status="Passed" >
+<Disp><![CDATA[Custom Request: info_25]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t44.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T93">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_26]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:41]]></Time>
+<NodeArgs eType="General" icon="6" nRep="101" status="Passed" >
+<Disp><![CDATA[Custom Request: info_26]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t45.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T94">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_27]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:42]]></Time>
+<NodeArgs eType="General" icon="6" nRep="102" status="Passed" >
+<Disp><![CDATA[Custom Request: info_27]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t46.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:35" eTime="2020/3/17 - 11:11:42" passed="6" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="96" status="Passed" >
+<Disp><![CDATA[ledger_guaranteeLedger 概要]]></Disp>
+</NodeArgs>
+</Action>
+<Action rID="T95">
+<AName><![CDATA[ledger_thirdPartyAccount]]></AName>
+<Step rID="T96">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_28]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:44]]></Time>
+<NodeArgs eType="General" icon="6" nRep="105" status="Passed" >
+<Disp><![CDATA[Custom Request: info_28]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t47.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T97">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_29]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:45]]></Time>
+<NodeArgs eType="General" icon="6" nRep="106" status="Passed" >
+<Disp><![CDATA[Custom Request: info_29]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t48.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T98">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_11]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:46]]></Time>
+<NodeArgs eType="General" icon="6" nRep="107" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_11]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t49.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T99">
+<Obj plainTxt="False" ><![CDATA[Custom Request: getList_12]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:47]]></Time>
+<NodeArgs eType="General" icon="6" nRep="108" status="Passed" >
+<Disp><![CDATA[Custom Request: getList_12]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t50.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T100">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_30]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:48]]></Time>
+<NodeArgs eType="General" icon="6" nRep="109" status="Passed" >
+<Disp><![CDATA[Custom Request: info_30]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t51.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:42" eTime="2020/3/17 - 11:11:48" passed="5" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="104" status="Passed" >
+<Disp><![CDATA[ledger_thirdPartyAccount 概要]]></Disp>
+</NodeArgs>
+</Action>
+<Action rID="T101">
+<AName><![CDATA[ledger_interbankCredit]]></AName>
+<Step rID="T102">
+<Obj plainTxt="False" ><![CDATA[Url: workDateTime]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>资源已成功加载</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:49]]></Time>
+<NodeArgs eType="General" icon="4" nRep="112" status="Passed" >
+<Disp><![CDATA[Url: workDateTime]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T103">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_31]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:52]]></Time>
+<NodeArgs eType="General" icon="6" nRep="113" status="Passed" >
+<Disp><![CDATA[Custom Request: info_31]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t52.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T104">
+<Obj plainTxt="False" ><![CDATA[Url: bankCreditTable]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:52]]></Time>
+<NodeArgs eType="General" icon="4" nRep="114" status="Passed" >
+<Disp><![CDATA[Url: bankCreditTable]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t53.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:48" eTime="2020/3/17 - 11:11:52" passed="3" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="111" status="Passed" >
+<Disp><![CDATA[ledger_interbankCredit 概要]]></Disp>
+</NodeArgs>
+</Action>
+<Action rID="T105">
+<AName><![CDATA[mechanismView]]></AName>
+<Step rID="T106">
+<Obj plainTxt="False" ><![CDATA[Custom Request: info_32]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:52]]></Time>
+<NodeArgs eType="General" icon="6" nRep="117" status="Passed" >
+<Disp><![CDATA[Custom Request: info_32]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t54.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T107">
+<Obj plainTxt="False" ><![CDATA[Custom Request: treeManage]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:53]]></Time>
+<NodeArgs eType="General" icon="6" nRep="118" status="Passed" >
+<Disp><![CDATA[Custom Request: treeManage]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t55.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:52" eTime="2020/3/17 - 11:11:53" passed="2" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="116" status="Passed" >
+<Disp><![CDATA[mechanismView 概要]]></Disp>
+</NodeArgs>
+</Action>
+<NodeArgs eType="StartIteration" icon="8" nRep="58" status="Passed" >
+<Disp><![CDATA[20200316 迭代 1 (行 1)]]></Disp>
+</NodeArgs>
+</DIter>
+<Action rID="T108">
+<AName><![CDATA[vuser_end]]></AName>
+<Step rID="T109">
+<Obj plainTxt="False" ><![CDATA[Custom Request: logout]]></Obj>
+<Details plainTxt="False" ><![CDATA[<CENTER><STRONG><FONT COLOR=#009A63>步骤已成功完成</FONT></STRONG></CENTER>]]></Details>
+<Time><![CDATA[2020/3/17 - 11:11:54]]></Time>
+<NodeArgs eType="General" icon="6" nRep="122" status="Passed" >
+<Disp><![CDATA[Custom Request: logout]]></Disp>
+<BtmPane vType="HTMLSNSH">
+<Path><![CDATA[\Iteration1\t56.inf]]></Path>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Summary sTime="2020/3/17 - 11:11:53" eTime="2020/3/17 - 11:11:54" passed="1" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="2" nRep="121" status="Passed" >
+<Disp><![CDATA[vuser_end 概要]]></Disp>
+</NodeArgs>
+</Action>
+<Summary sTime="2020/3/17 - 11:10:39" eTime="2020/3/17 - 11:11:54" passed="58" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartTest" icon="1" nRep="4" status="Passed" >
+<Disp><![CDATA[测试 20200316 概要]]></Disp>
+</NodeArgs>
+</Doc>
+</Report>

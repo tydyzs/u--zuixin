@@ -1,0 +1,13 @@
+[t4]
+FileName1=t4_websocket.html
+URL1=http://192.168.43.81:9528/sockjs-node/165/d5pj3u2l/websocket
+Total=1
+ContentType=
+SnapshotXmlFile=snapshot_2.xml
+RequestHeaderFile=t4_RequestHeader.txt
+RequestBodyFile=NONE
+ResponseHeaderFile=t4_ResponseHeader.txt
+[ProtocolInfo]
+ProtocolId=QTWeb
+[AdditionalInfo]
+IsIgnorable=1

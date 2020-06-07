@@ -1,0 +1,91 @@
+Swagger
+	他可以轻松的整合进框架，并通过一系列注解生成强大的API文档。
+	他既可以减轻编写文档的工作量，也可以保证文档的实时更新，
+	将维护文档与修改代码融为一体，是目前较好的解决方案。
+1.常用注解：
+
+	@Api()用于类；
+	表示标识这个类是swagger的资源
+	@ApiOperation()用于方法；
+	表示一个http请求的操作
+	@ApiParam()用于方法，参数，字段说明；
+	表示对参数的添加元数据（说明或是否必填等）
+	@ApiModel()用于类
+	表示对类进行说明，用于参数用实体类接收
+	@ApiModelProperty()用于方法，字段
+	表示对model属性的说明或者数据操作更改
+	@ApiIgnore()用于类，方法，方法参数
+	表示这个方法或者类被忽略
+	@ApiImplicitParam() 用于方法
+	表示单独的请求参数
+	@ApiImplicitParams() 用于方法，包含多个 @ApiImplicitParam
+	
+2.代码示例
+	@Api
+	@Api(value = "用户博客", tags = "博客接口")
+	public class NoticeController {
+
+	}
+	@ApiOperation
+	@GetMapping("/detail")
+	@ApiOperation(value = "获取用户详细信息", notes = "传入notice" , position = 2)
+	public R<Notice> detail(Integer id) {
+	   Notice detail = noticeService.getOne(id);
+	   return R.data(detail );
+	}
+	@ApiResponses
+	@GetMapping("/detail")
+	@ApiOperation(value = "获取用户详细信息", notes = "传入notice" , position = 2)
+	@ApiResponses(value = {@ApiResponse(code = 500, msg= "INTERNAL_SERVER_ERROR", response = R.class)})
+	public R<Notice> detail(Integer id) {
+	   Notice detail = noticeService.getOne(id);
+	   return R.data(detail );
+	}
+	@ApiImplicitParams
+	@GetMapping("/list")
+	@ApiImplicitParams({
+	   @ApiImplicitParam(name = "category", value = "公告类型", paramType = "query", dataType = "integer"),
+	   @ApiImplicitParam(name = "title", value = "公告标题", paramType = "query", dataType = "string")
+	})
+	@ApiOperation(value = "分页", notes = "传入notice", position = 3)
+	public R<IPage<Notice>> list(@ApiIgnore @RequestParam Map<String, Object> notice, Query query) {
+	   IPage<Notice> pages = noticeService.page(Condition.getPage(query), Condition.getQueryWrapper(notice, Notice.class));
+	   return R.data(pages );
+	}
+	@ApiParam
+	@PostMapping("/remove")
+	@ApiOperation(value = "逻辑删除", notes = "传入notice", position = 7)
+	public R remove(@ApiParam(value = "主键集合") @RequestParam String ids) {
+	   boolean temp = noticeService.deleteLogic(Func.toIntList(ids));
+	   return R.status(temp);
+	}
+	@ApiModel 与 @ApiModelProperty
+	@Data
+	@ApiModel(value = "BladeUser ", description = "用户对象")
+	public class BladeUser implements Serializable {
+
+	   private static final long serialVersionUID = 1L;
+
+	   @ApiModelProperty(value = "主键", hidden = true)
+	   private Integer userId;
+
+	   @ApiModelProperty(value = "昵称")
+	   private String userName;
+
+	   @ApiModelProperty(value = "账号")
+	   private String account;
+
+	   @ApiModelProperty(value = "角色id")
+	   private String roleId;
+	 
+	   @ApiModelProperty(value = "角色名")
+	   private String roleName;
+
+	}
+	@ApiIgnore()
+	@ApiIgnore()
+	@GetMapping("/detail")
+	public R<Notice> detail(Integer id) {
+	   Notice detail = noticeService.getOne(id);
+	   return R.data(detail );
+	}
