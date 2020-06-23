@@ -99,6 +99,16 @@ linux 系统的命令：
 	fg ；bg +进程号分别改为前端和后端)
 	例如后台启动minio：nohup ./minio server /data/ucs/minio/Photos &
 
+24.linux查找：
+	1.查找文件：find -name "*user-config.xml"
+	2.查找文件（包含某个字符串内容）：
+	  find ./ -name "*user-config.xml*" | xargs grep  "Hello"
+
+
+
+
+
+
 参数说明：
 -a:是指archive的意思，也说是指复制所有的目录
 -d:若源文件为连接文件(link file)，则复制连接文件属性而非文件本身
