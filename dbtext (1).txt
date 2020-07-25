@@ -198,7 +198,7 @@ select * from t_emp limit 5,5;    //从第6条开始，查5条数据
 建表：
 
  CREATE TABLE emp_shc(
-        empno NUMBER(4) not null primary key,,
+        empno NUMBER(4) not null primary key,
         ename VARCHAR2(10),
         job VARCHAR2(9),
         mgr NUMBER(4),
@@ -1942,7 +1942,7 @@ select regexp_replace('a,b,c,d','[,]','0')  from dual;--返回值 a0b0c0d
          update时，需要添加条件  where version<相加后的值。）
 		 满足（此期间没有其他线程修改此数据：则新增成功）；
 		 不满足（数据库返回修改数量为0，循环查询并修改）	   
-	2.悲观锁（ select * from emp where ... for udate;锁住满足条件的数据) 
+	2.悲观锁（ select * from emp where ... for update;锁住满足条件的数据) 
 	   a,查询时在后面加 for update,对查询的这条数据加锁（其他窗口或连接或线程无法对该数据修改和删除：执行的sql处于等待状态）
 	      例如：select * from emp where empid='01' for update;
 		  当加锁的链接  提交或回滚后其他处于等待的链接自动执行
@@ -1952,19 +1952,25 @@ select regexp_replace('a,b,c,d','[,]','0')  from dual;--返回值 a0b0c0d
 			where t1.depid=t2.depid
 			and t2.depid='03' for update;
 26，新增测试数据；
-begin
-  declare
-    nums   number(10):= 1;
-    num1   number(10):= 1000000;
-    begin
-    while  nums<num1 loop nums := nums + 1;
-    insert into emp values('test_' || nums,
-                           'name_' || nums,
-                           sysdate,
-                           20,
-                           '01');
-  end loop;
-  commit;
-  end;
-end;
+	begin
+	  declare
+		nums   number(10):= 1;
+		num1   number(10):= 1000000;
+		begin
+		while  nums<num1 loop nums := nums + 1;
+		insert into emp values('test_' || nums,
+							   'name_' || nums,
+							   sysdate,
+							   20,
+							   '01');
+	  end loop;
+	  commit;
+	  end;
+	end;
+27，查看锁表，表解锁
+	--查看锁表及sid    
+	select b.owner,b.object_name,a.session_id as sid,c.serial#,a.locked_mode,logon_time from v$locked_object a,dba_objects b,v$session c where b.object_id = a.object_id and a.session_id = c.sid order by c.logon_time;   
+	--解锁
+	--alter system kill session'sid,serial';
+	alter system kill session'233,13';
 			
