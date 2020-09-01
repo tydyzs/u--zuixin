@@ -13,7 +13,7 @@
 
 （****************准备工作：********************
 1.创建用户：管理员账户：create user testexp identified by shc51888;
-		赋权：grant create session,resource to testexp
+		赋权：grant create session,resource to testexp;
 
 2.为该用户创建并指定新的表空间（查看当前用户的表空间：select default_tablespace from user_users）：
  create tablespace test_data --test_data表空间名称 （tablespace：表空间。temporary：临时表空间）
