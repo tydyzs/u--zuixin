@@ -1529,6 +1529,22 @@ SELECT * FROM ALL_COL_COMMENTS WHERE OWNER='??' AND TABLE_NAME LIKE '%?????%' AN
    3.ALL_TABLES（所有表-用户等）存储的是表跟用户、列等属性的关系表
 SELECT * FROM ALL_TABLES WHERE OWNER='???' AND TABLE_NAME LIKE '%???????%';
 
+   4.mysql：
+   #表
+	select TABLE_NAME, TABLE_COMMENT,table_schema from INFORMATION_SCHEMA.Tables T 
+	where 1=1
+	#and table_comment <>'' 
+	and table_comment<>'VIEW'
+	and table_schema='hse_db_test'
+	#and table_comment like '%计划%'
+	and table_name like '%%'
+
+	#字段
+	select 	t.TABLE_NAME,t.TABLE_COMMENT,c.COLUMN_NAME,c.COLUMN_TYPE,c.COLUMN_COMMENT 
+	from information_schema.`COLUMNS` c ,information_schema.`TABLES` t where 	 c.TABLE_NAME = t.TABLE_NAME
+	#and c.TABLE_NAME like '%org%'
+	#and		 t.TABLE_SCHEMA = 'database'  --更换为自己查询的数据库名称
+	and column_name like'orgid'
 
 
 ****************************************************************

@@ -1,4 +1,5 @@
-﻿1KB (Kilobyte 千字节)=1024B，
+﻿1B，
+1KB (Kilobyte 千字节)=1024B，
 1MB (Megabyte 兆字节 简称“兆”)=1024KB，
 1GB (Gigabyte 吉字节 又称“千兆”)=1024MB，
 1TB (Trillionbyte 万亿字节 太字节)=1024GB，
@@ -26,6 +27,18 @@ javaEE（企业版）---服务器开发
 
 javaME（微型版）---安卓(x)
 
+--
+@SpringBootApplication：
+约定优于配置
+@SpringBootApplication=@ComponentScan+@Configuration+@EnableAutoConfiguration。 放在主程序入口类上, 主程序入口类(启动类) 放在root 包下，这样程序启动时所有的相关配置，类都能扫描，查找到
+@EnableAutoConfiguration：
+启用 Spring 应用程序上下文的自动配置，试图猜测和配置您可能需要的bean。自动配置类通常采用基于你的classpath 和已经定义的 beans 对象进行应用。被 @EnableAutoConfiguration 注解的类所在的包有特定的意义，并且作为默认配置使用。通常推荐将 @EnableAutoConfiguration 配置在 root 包下，这样所有的子包、类都可以被查找到。
+@ComponentScan：
+注解在类上，扫描标注了@Controller等注解的类，注册为bean 。@ComponentScan 为 　
+@Configuration：
+注解的类配置组件扫描指令。@ComponentScan 注解会自动扫描指定包下的全部标有 @Component注解的类，并注册成bean，当然包括 @Component下的子注解@Service、@Repository、@Controller。
+@RestController：
+@RestController 是一个结合了 @ResponseBody 和 @Controller 的注解(像:resetful接口调用时,返回的是json等就使用)
 
 
 //*************
@@ -1643,7 +1656,7 @@ Statnment  stmt =conn.createStatement();                          //创建语句
                  
 
 
-9.元素的显示与隐藏：
+9.元素的显示9与隐藏：
     显示 ：   .show{
              display:block;  
              }
