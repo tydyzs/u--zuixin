@@ -1656,7 +1656,7 @@ Statnment  stmt =conn.createStatement();                          //创建语句
                  
 
 
-9.元素的显示9与隐藏：
+9.元素的显示9与隐藏9：
     显示 ：   .show{
              display:block;  
              }

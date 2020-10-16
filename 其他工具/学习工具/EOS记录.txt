@@ -1,0 +1,15 @@
+1.创建数据对象
+DataObject objs = DataObjectUtil.createDataObject("commonj.sdo.DataObject");
+2.创建实体对象
+DataObject checkExpert = DataObjectUtil.createDataObject("com.hse.person.model.OrgEmployee");
+3.保存实体对象
+DatabaseUtil.saveEntity("default", expert);
+4.根据实体对象查询数据
+	1.查询一条数据
+		DatabaseUtil.expandEntityByTemplate("default", orgData, orgData);
+	2.查询所有满足条件的，返回数组
+		DataObject[] objs=DatabaseUtil.queryEntitiesByTemplate("default", orgData)
+5.逻辑流获取userObject
+   例如赋值：param/userId    m:userObject/userId
+6.对象复制到新的对象
+	riskMonitor=DataObjectUtil.convertDataObject(riskMonitor, "com.hse.workmanager.emergencyManage.emergencyWarning.EmergencyRiskMonitor", true);
