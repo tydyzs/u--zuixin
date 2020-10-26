@@ -100,9 +100,13 @@ mysql –u root –p
 	mysql> FLUSH PRIVILEGES;
 	mysql>exit;
 
-2.mysql设置表编码：
-alter table `tt_liuyan` convert to character set utf8;  
-
+2.编码
+	1.创建数据库设置编码：
+	 字符集：utf8mb4
+	 排序规则：utf8mb4_general_ci
+	2.mysql设置表编码：
+	 alter table `tt_liuyan` convert to character set utf8;  
+ 
 	
  
 加密规则问题：

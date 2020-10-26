@@ -13,3 +13,13 @@ DatabaseUtil.saveEntity("default", expert);
    例如赋值：param/userId    m:userObject/userId
 6.对象复制到新的对象
 	riskMonitor=DataObjectUtil.convertDataObject(riskMonitor, "com.hse.workmanager.emergencyManage.emergencyWarning.EmergencyRiskMonitor", true);
+7.java获取服务器路径
+	（绝对路径）
+	String templateDir = ApplicationContext.getInstance().getWarRealPath();
+	（服务器路径）
+	String templateDir = ApplicationContext.getInstance().getWebContextPath();
+8.事务：
+		ITransactionManager transc=TransactionManagerFactory.getTransactionManager();
+		transc.begin();
+		transc.rollback();
+		transc.commit();
