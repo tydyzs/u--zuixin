@@ -85,7 +85,7 @@ $imp test_zhpt/test_zhpt@86.12.72.146/fxgldb file=D:/ysc_zhpt.dmp indexes=y gran
 3.导入：通过plsql，新建命令窗口执行导出的sql文件。
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////   mysql  ///////////////////////////////////////////
+/////////////////////////////////////////////////   mysql9  ///////////////////////////////////////////
 
 1.linux联网安装mysql：
 
@@ -145,8 +145,11 @@ select * from t_emp limit 5,5;    //从第6条开始，查5条数据
 
 6.mysql日期：
      date_format(create_date, '%Y-%m-%d %H:%i:%S')
-     select now() from dual
-
+	 STR_TO_DATE('2020-01-01', '%Y-%m-%d')
+     #当前时间：select now() 
+	 #当前日期：select curdate()
+7.字符串拼接：concat('','','')
+8.判断位置：LOCATE('abc','abcd');不存在返回0
 //------------------------------------------------------------------------
 7.mysql递归：
 
@@ -1925,7 +1928,7 @@ decode(name,'bbb',value_s) bbb,
 decode(name,'ccc',value_s) ccc
 from TEST1
 
-20.获取最近几年
+20.sql技巧（获取最近几年）
  (SELECT 2017+1 - LEVEL as ssnd FROM dual CONNECT BY LEVEL <=3)
 
 21.递归查询
@@ -1993,4 +1996,14 @@ select regexp_replace('a,b,c,d','[,]','0')  from dual;--返回值 a0b0c0d
 	--解锁
 	--alter system kill session'sid,serial';
 	alter system kill session'233,13';
-			
+28.sql技巧（根据值是否为空来判断是否添加某个条件：值为空不添加条件，不为空则添加）
+	select 1 from EMERGENCY_EMERGENCY_WARNING_FEEDBACK where 1=1
+	and 
+	(	
+	key1 is null
+	or 
+	(
+	key1 is not null
+	and key2=''
+	)
+							

@@ -2,7 +2,7 @@
 DataObject objs = DataObjectUtil.createDataObject("commonj.sdo.DataObject");
 2.创建实体对象
 DataObject checkExpert = DataObjectUtil.createDataObject("com.hse.person.model.OrgEmployee");
-3.保存实体对象
+3.保存实体对象（无id则新增，有id为更新（会将其他传过来的参数值修改）
 DatabaseUtil.saveEntity("default", expert);
 4.根据实体对象查询数据
 	1.查询一条数据
