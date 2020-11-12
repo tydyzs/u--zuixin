@@ -150,6 +150,9 @@ select * from t_emp limit 5,5;    //从第6条开始，查5条数据
 	 #当前日期：select curdate()
 7.字符串拼接：concat('','','')
 8.判断位置：LOCATE('abc','abcd');不存在返回0
+9.获取前  一个月/前30天的数据
+and DATE_SUB(CURDATE(), INTERVAL 1 MONTH)<![CDATA[<=]]>date(RELEASE_TIME)
+and DATE_SUB(CURDATE(), INTERVAL 30 DAY)<![CDATA[<=]]>date(RELEASE_TIME)
 //------------------------------------------------------------------------
 7.mysql递归：
 
@@ -2004,6 +2007,8 @@ select regexp_replace('a,b,c,d','[,]','0')  from dual;--返回值 a0b0c0d
 	or 
 	(
 	key1 is not null
-	and key2=''
+	and key2=key1
 	)
-							
+	缩写：
+select 1 from EMERGENCY_EMERGENCY_WARNING_FEEDBACK where 1=1
+	and (key1 is null or key2=key1)

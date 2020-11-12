@@ -2782,7 +2782,26 @@ public List<Object> implementsql(Map map);
 			ip="127.0.0.1";
 		}
 
-
+61.ajax
+	1.后：
+	@ResponseBody
+	public HashMap getdata(@RequestBody HashMap params) {
+	2.前：
+	var params='{params:{userName:"123"}}';
+	$.ajax({
+		url:service_url+"/testssm",
+		data:params,
+		type:"post",
+		dataType:"json",//返回参数类型
+		contentType:'text/json',//请求参数类型
+		//contentType:'application/json',//请求参数类型
+		success:function(result){
+			alert(result.data[0].userid);
+		},
+		error:function(msg){
+			alert("服务器出错")
+		}
+	})
 *********************************************************************************************************
 1.分割字符串特殊符号：@ % & #
 
@@ -2837,3 +2856,12 @@ $(function(){
 	2.Read committed（读提交（解决脏读）。会出现不可重复读：一个事务范围内两个相同的查询却返回了不同数据（中途其他事务提交了update)）
 	3.Repeatable read(重复读（解决了不可重复读）。一个事务开启，不允许其他事务的UPDATE修改操作。还是会有"幻读"(读两次数据不同（第一次读取，第二次打印，两者不同），中间其他事务提交了insert)的可能）
 	4.Serializable （序列化。在该级别下，事务串行化顺序执行，可以避免脏读、不可重复读与幻读）。。但是这种事务隔离级别效率低下，比较耗数据库性能，一般不使用。）
+10。bigdecimal
+			BigDecimal teamNum = new BigDecimal(recording.getString("TEAM_NUM_SUM"));  
+			BigDecimal joinNum = new BigDecimal(recording.getString("JOIN_NUM_SUM"));
+		1.相除
+			BigDecimal joinRate =joinNum.divide(teamNum,4,BigDecimal.ROUND_HALF_UP);
+		2.转换成百分比字符串（30%）		
+			NumberFormat percent = NumberFormat.getPercentInstance();
+			percent.setMaximumFractionDigits(2);
+			String joinRateStr=percent.format(joinRate.doubleValue());
