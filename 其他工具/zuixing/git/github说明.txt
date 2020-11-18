@@ -65,7 +65,7 @@ tydyzs/shc51888
 		 右键桌面--tortoiseGit--Settings--Git--Credential--
 		 设置为 wincred - this repository only 或者 wincred - current Windows user
 	 2.Git Bash--执行：git config --global credential.helper store
-	 
+
   	  
 				
 				
