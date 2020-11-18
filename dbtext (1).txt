@@ -1934,6 +1934,19 @@ from TEST1
 20.sql技巧（获取最近几年）
  (SELECT 2017+1 - LEVEL as ssnd FROM dual CONNECT BY LEVEL <=3)
 
+	mysql方式：
+	select n as MONTHS from (
+								with recursive c(n) AS 
+								(
+								select 1 
+								union ALL
+								select (n + 1) 
+								from c 
+								where n < 12
+								)
+								select *  from c 
+								) tt1
+								
 21.递归查询
 select * from TEST1
 start with id = '1'--开始递归的位置

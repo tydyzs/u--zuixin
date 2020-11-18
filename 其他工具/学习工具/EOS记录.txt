@@ -23,3 +23,22 @@ DatabaseUtil.saveEntity("default", expert);
 		transc.begin();
 		transc.rollback();
 		transc.commit();
+9.jsp获取缓存：
+	<%@page import="com.eos.data.datacontext.IUserObject"%>
+	<%@page import="java.util.Map"%>
+	<%@page import="com.eos.data.datacontext.DataContextManager"%>
+	<%@page import="com.eos.data.datacontext.IMUODataContext"%>
+	<%
+			IMUODataContext muo = DataContextManager.current().getMUODataContext();
+			IUserObject userobject = muo.getUserObject();
+			Map attributes=userobject.getAttributes();
+			String roleList=(String)attributes.get("roleList");
+			String username=userobject.getUserRealName();
+			String userid=userobject.getUserId();
+			String userorgid=userobject.getUserOrgId();
+			String userorgname=userobject.getUserOrgName();
+	%>
+
+10.jsp权限：
+<hkr:hasPermission funcCode="team_activity_plan_button">
+</hkr:hasPermission>

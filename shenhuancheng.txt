@@ -2782,7 +2782,7 @@ public List<Object> implementsql(Map map);
 			ip="127.0.0.1";
 		}
 
-61.ajax
+61.ajax9
 	1.后：
 	@ResponseBody
 	public HashMap getdata(@RequestBody HashMap params) {
