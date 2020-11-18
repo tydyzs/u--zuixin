@@ -61,10 +61,11 @@ tydyzs/shc51888
 	删除本地 非 git安装目录下的gitconfig文件	
 	
 5.保存账号密码（防止每次提交都需要输入账号密码）
-	 1.tortoiseGit每次push输入账号密码：
+	 1.tortoiseGit每次push输入账号密码解决：
 		 右键桌面--tortoiseGit--Settings--Git--Credential--
 		 设置为 wincred - this repository only 或者 wincred - current Windows user
-	 2.Git Bash--执行：git config --global credential.helper store
+	 2.github每次push输入账号密码解决：
+	 Git Bash--执行：git config --global credential.helper store
   	  
 				
 				
