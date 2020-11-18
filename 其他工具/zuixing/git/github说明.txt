@@ -59,6 +59,8 @@ tydyzs/shc51888
 				git commit --amend -CHEAD
 4.内存溢出：
 	删除本地 非 git安装目录下的gitconfig文件	
-				
+	
+5.保存账号密码（防止每次提交都需要输入账号密码）
+	  				
 				
 				
