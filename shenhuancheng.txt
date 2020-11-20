@@ -2865,3 +2865,5 @@ $(function(){
 			NumberFormat percent = NumberFormat.getPercentInstance();
 			percent.setMaximumFractionDigits(2);
 			String joinRateStr=percent.format(joinRate.doubleValue());
+11.日期格式：
+yyyyMMddHHmmssSSS
