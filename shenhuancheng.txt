@@ -2867,3 +2867,5 @@ $(function(){
 			String joinRateStr=percent.format(joinRate.doubleValue());
 11.日期格式：
 yyyyMMddHHmmssSSS
+12.jquery复制对象：
+var newObject = $.extend(true,{},objList);

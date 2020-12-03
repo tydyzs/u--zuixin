@@ -153,6 +153,32 @@ select * from t_emp limit 5,5;    //从第6条开始，查5条数据
 9.获取前  一个月/前30天的数据
 and DATE_SUB(CURDATE(), INTERVAL 1 MONTH)<![CDATA[<=]]>date(RELEASE_TIME)
 and DATE_SUB(CURDATE(), INTERVAL 30 DAY)<![CDATA[<=]]>date(RELEASE_TIME)
+
+
+10.mysql技巧（序列递增，需要初始化或重新赋值的地方：(SELECT @rownum := 0 )；取递增值：( @rownum := @rownum + 1 )）
+select 
+		(
+		SELECT
+				  case ((SELECT @rownum := 0 )) when -1 then null else
+					( group_concat( concat( ( @rownum := @rownum + 1 ), '.', r.PRIMARY_COVERAGE,';\r\n\r\n' ) SEPARATOR '' ) ) 
+					end
+	
+		FROM
+			EMERGENCY_ON_DUTY_RECORD r ,(SELECT @rownum := 0 ) ro
+		WHERE
+			r.ON_DUTY_ID = t1.ON_DUTY_ID 
+		) PRIMARY_COVERAGE,
+		t1.*
+		from EMERGENCY_ON_DUTY T1 LEFT JOIN ORG_EMPLOYEE T2 ON T1.ON_DUTY_LEADER_ID=T2.EMPID
+		WHERE t1.IS_DELETE='1'
+
+11，mysql拼接字符串：
+	1.单个字符串拼接：concat('a','b','c')
+	2.凭借查询结果集(默认用“,”分割，其他符号分割用后面函数）：group_concat();group_concat(key SEPARATOR ';')
+
+
+
+
 //------------------------------------------------------------------------
 7.mysql递归：
 
