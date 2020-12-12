@@ -9,6 +9,9 @@ DatabaseUtil.saveEntity("default", expert);
 		DatabaseUtil.expandEntityByTemplate("default", orgData, orgData);
 	2.查询所有满足条件的，返回数组
 		DataObject[] objs=DatabaseUtil.queryEntitiesByTemplate("default", orgData)
+	3.根据sql查询：
+		Object[] result= DatabaseExt.queryByNamedSql("default","com.hse.workmanager.emergencyManage.monitorEarlyWarning.emergencyRescueEmpStatistics", sqlParam);
+
 5.逻辑流获取userObject
    例如赋值：param/userId    m:userObject/userId
 6.对象复制到新的对象
@@ -42,3 +45,16 @@ DatabaseUtil.saveEntity("default", expert);
 10.jsp权限：
 <hkr:hasPermission funcCode="team_activity_plan_button">
 </hkr:hasPermission>
+11。java调逻辑流：
+	PageCond page = PageCond.FACTORY.create();
+	page.setSize(pageSize);
+	page.setLength(pageSize);
+	page.setIsCount(true);
+	page.setBegin(pageSize * pageIndex);
+	page.setCurrentPage(pageIndex);
+	//创建逻辑流对象
+	ILogicComponent comp = LogicComponentFactory.create("com.hse.workmanager.hrworktablebiz");
+	//创建参数（参数数量和类型跟逻辑流参数对应）
+	Object[] param = {page, pageSize, pageIndex, workTable};
+	//执行逻辑流
+	Object[] outParameters = comp.invoke("workTableListApi", param);
