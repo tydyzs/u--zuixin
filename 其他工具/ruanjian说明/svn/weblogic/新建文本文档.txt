@@ -1,0 +1,66 @@
+1.安装weblogic，win（configuration wizard）进入weblogic   domain配置
+
+0.weblogic访问地址：
+     http://localhost:7001/console
+
+
+1.weblogic用户名密码：weblogic/shc51888
+
+2.java ee 项目部署jar冲突：在WebRoot/WEB-ING下添加weblogic.xml
+
+3.eclipse配置weblogic：
+window--preferences--server--Runtime Environm--add--oracle--weblogic
+--weblogic_home:C:\Oracle\Middleware\wlserver_10.3
+
+
+/**********端口设置****************************/
+
+文件：/domain_test/config/config.xml（不同域设置不同端口）
+添加配置：   <server>中添加<listen-port>9901</listen-port>
+如下：
+  <server>
+    <name>AdminServer</name>
+    <listen-port>9901</listen-port>
+    <listen-address></listen-address>
+  </server>
+/*************************************/
+
+
+
+
+linux安装：
+
+0.JDK安装（weblogic10采用jdk1.6）；
+
+1.将文件传到/usr/local/weblogic/wls1035_generic.jar
+
+2.java -jar wls1035_generic.jar -mode=console
+
+3.回车
+
+4.输入命令 /usr/local/weblogic  回车（设置安装目录）
+
+5.输入命令 3  回车 输入No 回车输入Yes（将3设置为no，不接收推送消息）
+ 
+6回车知道安装完成。。。
+
+--- linux下weblogic新建domain
+
+/usr/local/weblogic/wlserver_10.3/common/bin
+
+1:   ./config.sh -mode=console
+2:“创建新的Weblogic域”，输入“1”，按回车；
+3.一直回车，直到输入：用户名/密码；
+4。回车直到选中  1，管理服务器。
+5.默认回车直到安装成功
+
+
+注意：
+1.jdk需要修改为sun（将如下文件中BEA_JAVA_HOME设置为空；SUN_JAVA_HOME设为java路径）
+   /usr/local/weblogic/user_projects/domains/test_domain/bin/setDomainEnv.sh
+	BEA_JAVA_HOME=""
+export BEA_JAVA_HOME
+
+
+	SUN_JAVA_HOME="/usr/local/jdk1.6/jdk1.6.0_43"
+export SUN_JAVA_HOME

@@ -1,0 +1,16 @@
+svn报错需要清理缓存
+1.双击安装包--next--modify--command line client tools--完成
+2.cmd进入svn文档路径执行svn cleanup
+
+
+方法二、
+1.将sqlite3.exe复制到项目更目录（.svn同级目录）；
+2.cmd进入项目更目录并执行以下操作：
+	1，
+		启动cmd执行sqlite3 .svn/wc.db "select * from work_queue"
+		启动cmd执行sqlite3 .svn/wc.db "delete from work_queue"
+
+????如果还不成功提示fail to process file的情况，提示xxx file has been locked，需要执行一个清除数据库中的wc_lock的表的操作。,
+	2，
+		启动cmd执行sqlite3 .svn/wc.db "select * from wc_lock"
+		启动cmd执行sqlite3 .svn/wc.db "delete from wc_lock"

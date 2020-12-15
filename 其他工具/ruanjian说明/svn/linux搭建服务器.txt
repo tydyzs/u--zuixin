@@ -1,0 +1,92 @@
+
+
+
+服务器地址：106.12.241.109
+
+root /  @1qaz2wsx
+
+
+
+
+1.通过yum命令安装svnserve，命令如下：
+
+	yum -y install subversion
+	
+2.查看安装位置：
+	rpm -ql subversion
+3.创建版本库目录
+	mkdir -p /data/svn/svnrepos
+4.创建svn版本库
+	svnadmin create /data/svn/svnrepos/git-ucs
+5.修改配置：
+	cd /data/svn/svnrepos/git-ucs/conf
+	authz：负责账号权限的管理，控制账号是否读写权限
+
+	passwd：负责账号和密码的用户名单管理
+
+	svnserve.conf：svn服务器配置文件
+	1.编辑 authz 文件（rw:读写，r:只读）：
+		[/]：表示根目录，即 /var/svn/svnrepos
+		luo = rw：表示用户luo对根目录具有读写权限。
+		* = r  表示任何客户
+	2.编辑 passwd 文件：
+		luo=luo123456：luo，认证密码为：luo123456
+	3.编辑 svnserve.conf 文件（注意：配置的前面不能有空格，一定要顶格写）
+		anon-access = none：表示禁止匿名用户访问。
+
+		auth-access = write：表示授权用户拥有读写权限。
+
+		password-db = passswd：指定用户名口令文件，即 passwd 文件。
+
+		authz-db = authz：指定权限配置文件，即 authz 文件。
+
+		realm = /var/svnrepos：指定认证域，即 /var/svnrepos 目录。
+6.防火墙配置：
+	vi /etc/sysconfig/iptables
+	添加配置信息
+
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 3690 -j ACCEPT
+	保存退出
+
+	systemctl restart iptables.service #重启防火墙使配置生效
+
+7.启动svn服务器
+	svnserve -d -r /data/svn/svnrepos   //根据仓库路径启动
+	开机启动：$ sudo systemctl enable svnserve.service
+	
+		vim /etc/rc.local
+		2、加入如下启动命令 
+		svnserve -d -r /data/svn/svnrepos
+8.验证启动是否成功：
+	ps -ef | grep 'svnserve'
+9.访问：
+	svn://106.12.241.109:3690/git-ucs
+		
+
+
+   ***************添加http访问：
+
+
+1. 安装和配置apache：  yum install -y httpd mod_dav_svn
+   (卸载命令：yum remove httpd 
+    yum remove apr)
+2./etc/httpd/conf.d/subversion.conf(没有则新建),
+?<Location /svn/>
+	DAV svn
+	SVNParentPath /data/svn/svnrepos/git-ucs
+	<LimitExcept GET PROPFIND OPTIONS REPORT>
+		AuthType Basic
+		AuthName "Authorization SVN"
+		AuthzSVNAccessFile /data/svn/authz
+		AuthUserFile /data/svn/passwd.txt
+		Require valid-user
+	</LimitExcept>
+</Location>
+
+3.启动: service httpd start
+
+	重启:service httpd restart
+	停止服务：service httpd stop
+4.添加http用户：
+ htpasswd -bc /data/svn/svnrepos/git-ucs/conf/passwd_http shc shc
+ htpasswd -b /data/svn/svnrepos/git-ucs/conf/passwd_http shc1 shc1

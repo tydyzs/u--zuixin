@@ -1,0 +1,9 @@
+
+
+解压svn插件到myeclipse2014安装目录中的dropins文件夹中，重启myeclipse即可
+
+或
+
+1.myeclipse2014目录中新建myPlugins文件夹（专门用于存放插件），
+2.在改文件夹中新建svn文件夹并将解压的svn插件放入svn文件夹中，
+3.drioubs文件夹中新建svn.link文件，并写入：path=D:\\myeclipse2014\\myPlugins\\svn

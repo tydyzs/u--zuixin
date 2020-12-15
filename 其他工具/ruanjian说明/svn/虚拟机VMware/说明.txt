@@ -1,0 +1,94 @@
+
+
+1.安装  ghost win7
+  a。先新建虚拟机：
+      右键新建虚拟机--典型--稍后安装操作系统--Microsoft Windows--选择安装目录--30g（将虚拟磁盘存为单个文件）--
+      自定义硬件--新cd/dev（使用iso映像:选择需要安装的win7文件；高级：IDE0：0）--完成。
+  b。安装win7：
+     开机f2-biso中boot设置cd-rom按+上调f10保存确定。进入选择PQ 8.05-图形分区工具--
+
+     进入后右键“未分配”：主要分割磁盘；NTFS;29g--确定。
+   
+ // 按照上面再分配一个2g的磁盘（将主要分割磁盘换为逻辑分割磁盘）.也可只设置一个磁盘
+
+      最后右键第一个分区--“进阶”--“设定为作用”---确定---“执行”--“结束”--从第一磁盘安装系统。
+
+   
+
+
+2.解决虚拟机外网连接问题：
+  （需要将虚拟机网络的网关与外网网关设置相同）
+  1.查看外网ip与网关：例如ip：192.168.1.106  网关：192.168.1.1
+  2.vm（编辑）---虚拟网络编辑器----还原默认设置
+     将vmnet8子网ip设置192.168.1.1；
+  3.还原后讲主机网络共享中心中的 vmnet1和vmnet8的ip和网关分别设置为
+   192.168.1.11     192.168.1.1
+   192.168.1.88     192.168.1.1    这样设置与外网对应才能让虚拟机联网
+  4.虚拟机ip网关也设置相同然后选择桥接，便能连上外网。
+
+
+注：nat模式：与主机关联内网。（内网：ping 主机的外网ip地址（192.168.1.88））
+	桥接：与主机共享外网。（外网：ping www.baidu.com;）
+   
+   桥接连接外网后想同时连接内网（见3：安装vmware tools；外网：ping www.baidu.com;内网：ping 主机的外网ip地址（192.168.1.65））
+
+
+
+3.安装vmware tools  
+  
+  a.windows：
+	  在主机vm安装目录找到windows.iso(tools安装包）。
+	  由于无法tools还没安装无法使用复制功能，这里采用其他功能将文件传入win7虚拟机中，
+	  直接双击安装。
+  b.linux（链接外网安装）:
+		vm上的“虚拟机”--“设置”--“CD/DVD"--"使用ISO映像文件”--选择vm安装目录中的linux.iso
+		“虚拟机”--安装vmware tools
+		去linux中VMware Tools复制文件到tmp中：cp /media/VMware\ Tools/VMwareTools-10.0.6-3595377.tar.gz /tmp/
+		解压会出现vmware-tools-distrib文件夹
+		进入执行  ./vmware-install.pl  一直回车
+
+4.linux虚拟机安装：
+		0.安装linux虚拟机：
+			1.新建虚拟机--典型安装--稍后安装操作系统--选择LINUX(CentOS64位）--选择安装路径
+			--将虚拟磁盘存储为单个文件--“自定义硬件”（配置虚拟机硬件配置以及选择linux镜像文件）
+			2.启动虚拟机（开始安装）
+				1.Install or upgrade an existing system
+				2.skip
+		1.配置linux环境
+		用户名：shc
+		密码：shc1888
+
+
+		设置ip:192.168.99.99（设置方法：右击虚拟机右上角的网络图标--Edit Connections...--Edit--IPV4--Method:Manual(静态）--
+						  Address:192.168.99.99   Netmask:255.255.255.0   Gateway:192.168.99.1
+							DNS servers:  192.168.99.1 ---  apply)
+
+		2.无法远程连接查看：
+		   a.主机ping虚拟机（远程访问虚拟机）：虚拟机--设置--网络适配器--桥接模式改为NAT模式。
+		   b.关闭防火墙：重启后生效 
+			  开启： chkconfig iptables on 
+			  关闭： chkconfig iptables off
+		   c.VMware--编辑--虚拟网络编辑器--选择相应的网络--NAT.
+		   D。启动本机上所有的VM服务。
+		   e.网络和共享中心--更改适配器--选择相应的网络--ipv4--查看是否与虚拟机网关相同。
+
+
+		3.
+		修改主机名(root用户修改，改为shclinux）：vi /etc/sysconfig/networt    改为hostname=shclinux
+
+
+		修改主机名和ip地址映射文件：  vi /etc/hosts   中添加一行：  192.168.99.99   shclinux
+
+
+		4。jdk安装
+
+		复制linux版本jdk到指定linux目录并解压文件
+
+		输入命令（配置环境变量）：
+		export JAVA_HOME=/software/jdk1.8.0_111
+		export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+		export PATH=$JAVA_HOME/bin:$PATH
+
+
+
+
