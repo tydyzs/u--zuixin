@@ -18,6 +18,18 @@ tydyzs/shc51888
 		git fetch --all  
 		git reset --hard origin/master
 	
+	11.查看近3此提交记录（获取commit_id)：
+		git log -n 3 --stat
+	12.删除commit记录：
+		1.不删除工作空间的改动代码 ，撤销commit，不撤销git add file
+			git reset --soft ec3503bf48c1c1265e803496fae04c1bef029dab
+		2.删除工作空间的改动代码，撤销commit且撤销add
+			git reset --hard ec3503bf48c1c1265e803496fae04c1bef029dab
+	
+	
+	
+	
+	
 	操作时 双击tab键的自动提示/补全功能。
 	q或者:q等命令代表退出(quit)。
 	ctrl+f,ctrl+b快捷键在termial可以翻页，就是 上一页，下一页
