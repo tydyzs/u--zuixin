@@ -1,0 +1,19 @@
+c)配置JDK到系统环境
+					在哪里配置?
+					右键我的电脑-->属性---->高级---->环境变量
+					---->系统变量
+					
+					1)  新增环境变量JAVA_HOME :配置JDK的安装路径
+							变量名:JAVA_HOME
+							变量值：JDK的安装路径(E:\SD1510-2\jdk)
+							
+					2)  新增环境变量  CLASSPATH ：配置搜索路径
+							变量名: CLASSPATH
+							变量值:　.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar;     //前后符号都不能省略
+							
+					3)  将bin目录配置到Path变量里面去
+							在Path变量最末尾添加:  ;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
+					
+				d)检验JDK是否配置成功
+					在命令窗口输入:  分别java和javac
+					查看系统的JDK版本：java  -version

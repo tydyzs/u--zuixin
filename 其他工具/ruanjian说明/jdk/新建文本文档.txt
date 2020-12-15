@@ -1,0 +1,16 @@
+复制到指定linux目录并解压文件
+
+输入命令（配置环境变量）：
+export JAVA_HOME=/usr/local/java/jdk1.8.0_144
+export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$JAVA_HOME/bin:$PATH
+
+   或
+      1.vim /etc/profile添加上面三行；
+      2.source /etc/profile(使上面设置生效）
+
+
+
+bin文件安装：
+执行 chmod +x jdk-6u29-linux-x64-rpm.bin
+执行安装命令 ./jdk-6u29-linux-x64-rpm.bin
