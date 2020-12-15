@@ -1,0 +1,10 @@
+
+一，将PLSQL Developer和instantclient_11_2  放到一个文件夹
+二，配置2个环境变量：
+NLS_DATE_FORMAT     yyyy-MM-DD HH24:MI:ss
+NLS_LANG     SIMPLIFIED CHINESE_CHINA.ZHS16GBK     （解决plsql中文乱码问题）
+三，配置客户端路径
+登入失败后进入plsql窗口---工具（tools）--首选项（preferences）--连接（connection）：
+1.oracle主目录名（自动检测为空）：D:\plsql\instantclient_11_2
+2.OCI库（自动检测为空）：D:\plsql\instantclient_11_2\oci.dll
+保存；
