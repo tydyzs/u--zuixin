@@ -58,3 +58,5 @@ DatabaseUtil.saveEntity("default", expert);
 	Object[] param = {page, pageSize, pageIndex, workTable};
 	//执行逻辑流
 	Object[] outParameters = comp.invoke("workTableListApi", param);
+12.前端获取字典值：
+	nui.getDictText(dictTypeId,dictId);
