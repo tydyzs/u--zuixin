@@ -2793,8 +2793,8 @@ public List<Object> implementsql(Map map);
 		data:params,
 		type:"post",
 		dataType:"json",//返回参数类型
-		contentType:'text/json',//请求参数类型
-		//contentType:'application/json',//请求参数类型
+		//contentType:'text/json',//请求参数类型
+		contentType:'application/json',//请求参数类型
 		success:function(result){
 			alert(result.data[0].userid);
 		},
