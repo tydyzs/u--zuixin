@@ -174,7 +174,7 @@ select
 
 11，mysql拼接字符串：
 	1.单个字符串拼接：concat('a','b','c')
-	2.凭借查询结果集(默认用“,”分割，其他符号分割用后面函数）：group_concat();group_concat(key SEPARATOR ';')
+	2.拼接查询的结果集(默认用“,”分割，其他符号分割用后面函数）：group_concat();group_concat(key SEPARATOR ';')
 
 
 
