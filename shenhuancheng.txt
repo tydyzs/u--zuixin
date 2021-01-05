@@ -2865,6 +2865,17 @@ $(function(){
 			NumberFormat percent = NumberFormat.getPercentInstance();
 			percent.setMaximumFractionDigits(2);
 			String joinRateStr=percent.format(joinRate.doubleValue());
+		3.相减(subtract())：
+			BigDecimal noQualifiedNum = totalNum.subtract(qualifiedNum);
+		4.想加（add（））：
+			BigDecimal result12 = num12.add(num22);
+		5.相乘（multiply（））
+			BigDecimal result3 = num1.multiply(num2);
+		6.绝对值：
+			BigDecimal result4 = num3.abs();
+		
+		
+
 11.日期格式：
 yyyyMMddHHmmssSSS
 12.jquery复制对象：

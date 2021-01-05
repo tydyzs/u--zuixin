@@ -7,7 +7,7 @@ DatabaseUtil.saveEntity("default", expert);
 4.根据实体对象查询数据
 	1.查询一条数据
 		DatabaseUtil.expandEntityByTemplate("default", orgData, orgData);
-	2.查询所有满足条件的，返回数组
+	2.实体类查询：查询所有满足条件的，返回数组
 		DataObject[] objs=DatabaseUtil.queryEntitiesByTemplate("default", orgData)
 	3.根据sql查询：
 		Object[] result= DatabaseExt.queryByNamedSql("default","com.hse.workmanager.emergencyManage.monitorEarlyWarning.emergencyRescueEmpStatistics", sqlParam);

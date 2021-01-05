@@ -177,7 +177,9 @@ select
 	2.拼接查询的结果集(默认用“,”分割，其他符号分割用后面函数）：group_concat();group_concat(key SEPARATOR ';')
 12，添加字段：
 ALTER TABLE HR_ACTIVITY_RECORDING ADD CREATE_ORG_ID  varchar(64)  NULL DEFAULT NULL COMMENT '创建人机构id' AFTER DEPT_ID;
-
+13，case判断：
+(case (t2.sortno is null) when true then 999 else t2.sortno end)
+(case when BUSINESS_INSURE = 1 then '是' else '否' end)
 
 
 
@@ -1449,7 +1451,9 @@ select *  from employees1_shc
 ②数据操纵语言（DML）：用于改变数据表中的数据，和事务相关，执行完后需要经过事务控制语句提交后才真正的将改变应用到数据库中
 			INSERT,UPDATE,DELETE
 ③事务控制语言（TCL）：用于维护数据一致性的语句
-		COMMIT,ROLLBACK,SAVEPOINT
+		提交：COMMIT,
+		回滚：ROLLBACK,
+		SAVEPOINT
 ④数据查询语言（DQL）：用来查询所需要数据  
 			SELECT
 ⑤数据控制语言（DCL）：用于执行权限的授予和收回操作
