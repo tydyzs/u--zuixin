@@ -1,0 +1,130 @@
+
+/////////////mybatisPlus  增删改查  ///////////////////////////////
+
+一；sql层（分页param.name+查所有name：第一个条件查询需要写参数名，因为存在分页参数）
+        <!--客户列表，因为有分页参数，所以查询参数加“param.”-->
+        <select id="queryCustomer" parameterType="map" resultType="cn.stylefeng.guns.modular.tydyzs.intermediary.marriage.entity.CustomerManage">
+            select t1.*
+            from BLIND_DATE_CUSTOMER t1 where is_delete = '1'
+            <if test="param.name != null and param.name != ''">
+                and t1.name like CONCAT('%',#{param.name},'%')
+            </if>
+        </select>
+        <!--客户列表(所有：此时直接写参数名，无需写“param.”）-->
+        <select id="queryCustomerAll" parameterType="map" resultType="cn.stylefeng.guns.modular.tydyzs.intermediary.marriage.entity.CustomerManage">
+            select t1.*
+            from BLIND_DATE_CUSTOMER t1 where is_delete = '1'
+            <if test="name != null and name != ''">
+                and t1.name like CONCAT('%',#{name},'%')
+            </if>
+        </select>
+
+二，mapper层：
+        Page<CustomerManage> queryCustomer(IPage page, Map param);
+        List<CustomerManage> queryCustomerAll(Map param);
+
+三，service层（sql查分页；sql查所有；实体查分页；实体查所有）：
+        /**
+         * 自定义分页
+         * sql分页查询客户数据
+         * @param param
+         * @return
+         */
+        public LayuiPageInfo queryCustomer(Map param){
+            //获取前端分页参数
+            Page pageContext = LayuiPageFactory.defaultPage();
+            //获取分页查询结果
+           //sql方式
+            IPage page = baseMapper.queryCustomer(pageContext, param);
+            //将结果转换成layui可识别的分页结果
+            LayuiPageInfo result=LayuiPageFactory.createPageInfo(page);
+            return result;
+        }
+        /**
+         * sql查询所有客户数据
+         * @param param
+         * @return
+         */
+        public LayuiPageInfo queryCustomerAll(Map param){
+            //查询条件
+            QueryWrapper<CustomerManage> objectQueryWrapper = new QueryWrapper<>();
+            //获取所有查询结果
+            List data = baseMapper.queryCustomerAll(param);
+            LayuiPageInfo result=new LayuiPageInfo();
+            result.setData(data);
+            return result;
+        }
+
+        /**
+         * 分页查询(实体方式，一般用于单表)
+         * @param param
+         * @return
+         */
+        public LayuiPageInfo queryCustomerEnt(Map param){
+            //获取前端分页参数
+            Page pageContext = LayuiPageFactory.defaultPage();
+            //获取分页查询结果
+            //实体类方式
+           //1.查询条件
+            QueryWrapper<CustomerManage> objectQueryWrapper = new QueryWrapper<>();
+            if(!CommonUtil.checknull(param.get("name"))){
+                objectQueryWrapper.and(i -> i.eq("name", param.get("name")));
+            }
+            //2.开始查询
+            IPage page = this.page(pageContext, objectQueryWrapper);
+            //将结果转换成layui可识别的分页结果
+            LayuiPageInfo result=LayuiPageFactory.createPageInfo(page);
+            return result;
+        }
+        /**
+         * 查所有（实体方式，一般用于单表)
+         * @param param
+         * @return
+         */
+        public LayuiPageInfo queryCustomerEntAll(Map param){
+            //实体类方式
+           //1.查询条件
+            QueryWrapper<CustomerManage> objectQueryWrapper = new QueryWrapper<>();
+            if(!CommonUtil.checknull(param.get("name"))){
+                objectQueryWrapper.and(i -> i.eq("name", param.get("name")));
+            }
+            //2.开始查询
+            List data = this.list(objectQueryWrapper);
+            LayuiPageInfo result=new LayuiPageInfo();
+            result.setData(data);
+            return result;
+        }
+
+四，controller层（sql查分页；sql查所有；实体查分页；实体查所有）：
+        /**
+         * 分页列表
+         */
+        @ResponseBody
+        @RequestMapping("/list")
+        public LayuiPageInfo list(@RequestParam Map<String, String> params) {
+            return iCustomerManageService.queryCustomer(params);
+        }
+        /**
+         * 列表（所有）
+         */
+        @ResponseBody
+        @RequestMapping("/listAll")
+        public LayuiPageInfo listAll(@RequestParam Map<String, String> params) {
+            return iCustomerManageService.queryCustomerAll(params);
+        }
+        /**
+         * 列表（单表实体分页）
+         */
+        @ResponseBody
+        @RequestMapping("/queryCustomerEnt")
+        public LayuiPageInfo queryCustomerEnt(@RequestParam Map<String, String> params) {
+            return iCustomerManageService.queryCustomerEnt(params);
+        }
+        /**
+         * 列表（单表实体所有）
+         */
+        @ResponseBody
+        @RequestMapping("/queryCustomerEntAll")
+        public LayuiPageInfo queryCustomerEntAll(@RequestParam Map<String, String> params) {
+            return iCustomerManageService.queryCustomerEntAll(params);
+        }

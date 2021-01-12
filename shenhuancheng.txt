@@ -2619,7 +2619,7 @@ z-index:9999;
      如需处理get中文乱码：
     var name="<%= new String( request.getParameter("name").getBytes("iso-8859-1"),"utf-8")%>";
 
-44。js中json使用（js中map对象使用）:
+44。js中json9使用（js中map对象使用）:
 
    var aaa={"1":11,"2":22,"3":33,"a":"aa"};
    
@@ -2873,10 +2873,20 @@ $(function(){
 			BigDecimal result3 = num1.multiply(num2);
 		6.绝对值：
 			BigDecimal result4 = num3.abs();
-		
-		
+			
 
 11.日期格式：
-yyyyMMddHHmmssSSS
+	yyyyMMddHHmmssSSS
 12.jquery复制对象：
-var newObject = $.extend(true,{},objList);
+	var newObject = $.extend(true,{},objList);
+
+13.服务器路径：
+	String contextPath = request.getContextPath();    
+	String realPath = request.getSession().
+					getServletContext().getRealPath("/");    
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+
+					request.getServerPort()+contextPath+"/";
+	说明：			
+	contextPath =”/项目名称”; //获取的是项目的相对路径
+	realPath = F:\tomcat_home\webapps\项目名称\ //获取的是项目的绝对路径
+	basePath = http://localhost:8080/项目名称/ //获取的是服务的访问地址

@@ -1,0 +1,4 @@
+
+1.字典获取：
+http://localhost:8081/dict/listDicts?dictTypeId=1106120265689055233
+（Feng.ctxPath + "/dictType/listTypes"）

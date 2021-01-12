@@ -1,0 +1,40 @@
+
+//////////////////////////////////////////////////////mybatisPlus:
+0.实体参数（QueryWrapper）获取：
+		QueryWrapper<CustomerManage> queryWrapper=new QueryWrapper(customer);//customer为实体类
+		可追加参数：
+        if(!CommonUtil.checknull(param.get("name"))){
+            queryWrapper.and(i -> i.eq("name", param.get("name")));
+        }
+1.实体查唯一记录：
+    1.1，controller层：
+	public Result getCustomer(@RequestBody CustomerManage customer) {
+		//实体类方式
+		//1.查询条件
+		QueryWrapper<CustomerManage> queryWrapper=new QueryWrapper(customer);
+		CustomerManage customerManage = iCustomerManageService.getOne(queryWrapper);//（service已继承mybatisPlus:extends IService<CustomerManage> )
+2.实体参数查所有：
+    service层实例：
+    List data = this.list(queryWrapper);
+3.实体参数分页查询：
+    Page pageContext = LayuiPageFactory.defaultPage();
+    //开始查询
+    IPage page = this.page(pageContext, queryWrapper);
+4.sql查所有
+    //获取所有查询结果
+    List data = baseMapper.queryCustomerAll(param);
+    //mapper层
+    List<CustomerManage> queryCustomerAll(Map param);
+    //sql中取参数
+    #{name}
+5.sql分页查询：
+    //获取前端分页参数
+    Page pageContext = LayuiPageFactory.defaultPage();
+   //sql方式
+    IPage page = baseMapper.queryCustomer(pageContext, param);
+    //mapper层：
+    Page<CustomerManage> queryCustomer(IPage page, Map param);
+    //sql取参数：
+    #{param.name}
+6.新增或修改（根据实体类）：
+    this.saveOrUpdate(customerManage);

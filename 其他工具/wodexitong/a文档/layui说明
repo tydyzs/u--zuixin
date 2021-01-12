@@ -1,0 +1,40 @@
+
+
+//////////////////////////////////////////////////////layui:
+0.表单重新渲染：
+    layui.form.render();//渲染所有
+    layui.form.render("select");//渲染select控件
+1.开关动态赋值：
+    $("#room").prop("checked",true);
+    $("#room").prop("disabled",true);
+2.表单赋值：
+    layui.form.val('form1',data);
+    <form id="egFormForm"  lay-filter="form1" class="layui-form" ></form>
+3.弹框关闭事件改造：
+    现有func.js中对layui.open 的end()做了改造，使得func.open中的end方法不起作用
+    目前在func.js中open方法加了函数closeEnd,在使用func.open时调用end如下：
+    func.open({
+        content:  Feng.ctxPath + "/customer/peopleManageForm?type=edit&customerId="+customerId,
+        closeEnd: function(){
+            alert("窗口被关闭！")
+        }
+    });
+4.弹出：
+    4.1：弹出alert确定后执行：
+        layer.alert(res.msg,function(){
+            alert("alert已确定");
+            layer.closeAll();//关闭所有层（包含此alert）
+            //closeWindow();
+        })
+     4.2,提示框：
+        layer.msg("删除成功！")
+     4.3：确认框：
+         layer.confirm('确定删除此数据？', function(index){
+            layer.close(index);
+         })
+
+5.layui执行顺序：
+    layui.use(['form', 'admin', 'ax', 'upload', 'laydate', 'selectPlus'], function () {
+        //此处一般会在其他函数后面执行，因此初始化代码尽量放在此处，已确保以上控件被初始化；
+    })
+6.

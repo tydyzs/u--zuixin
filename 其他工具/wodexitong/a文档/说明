@@ -1,0 +1,118 @@
+
+官方文档：
+https://doc.stylefeng.cn/guns_layui/
+
+
+
+////////////////////////数据库常用表
+#用户表
+select * from sys_user where user_id='';
+#机构部门
+select * from sys_dept where dept_id='';
+#角色表
+select * from sys_role
+
+#菜单角色关联关系表
+select * from sys_relation
+#菜单表
+select * from sys_menu
+
+#文件数据表
+select * from sys_file_info
+
+#字典表
+select * from sys_dict
+select * from sys_dict_type
+
+//////////////////////////////////////新系统部署事项///////////////////////////////
+1.将上传目录清空：
+D:\Work\wodexitong\shcboot\guns-vip-main\target\classes\META-INF\resources\upload
+
+/////////////////////////////////////////系统记录/////////////////////////////////
+0.base:
+0.1:登入页面：pages/login.html
+0.2：登入（退出登入）接口：\guns-sys\src\main\java\cn\stylefeng\guns\sys\modular\system\controller\LoginController.java
+0.3：postmain测试接口。登入。获取权限
+        浏览器登入后任一接口请求通过F12查看cookie：
+    或先通过postmain模拟登入：
+        http://localhost:8081/login?username=tydyzs&password=qwer1234
+    然后测试接口。例如：
+        通过postmain测试接口时输入url和Hander：
+        http://localhost:8081/mgr/list?page=1&limit=10
+        Authorization=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNjA5NDEyNDUyLCJ1c2VySWQiOjEsImlhdCI6MTYwOTMyNjA1MiwiYWNjb3VudCI6ImFkbWluIiwidXNlcktleSI6Inh4eHgifQ.Ohrgr9W62VGlP7BEHFSSYoMC-NR_wvDo7fHPoxL0iwgABnaR_x26-M-b338zy_GMNDP4Wda4Y-ntyJH2Fne01A
+
+
+
+1.访问：
+http://localhost:8081/global/sessionError
+admin/qwer1234
+tydyzs/qwer1234
+2.添加模块
+    在guns-vip-main模块下添加业务模块
+3.当前登入的用户信息获取接口：LoginContext.java
+  LoginUtil.java(获取登录信息工具类）
+4.mybatis-Plus:
+    maper层：
+        baseMapper.insert(customerManage);
+    service层：
+        this.saveOrUpdate(customerManage);
+5.表格查询：
+    前端传递：
+    function search(){
+        var table = layui.table;
+        var queryData = {};
+        queryData['condition'] = $("#condition").val();
+        var json={'params1':queryData};
+        table.reload("egFormTable",
+            {
+                url:Feng.ctxPath + '/customer/list?key=qqqq',
+                where: json
+            });
+    }
+    后端接受参数：
+	@ResponseBody
+	@RequestMapping("/list")
+	public void list(Page page, @RequestParam Map<String, String> params) {
+		System.out.println(params);
+	}
+
+6.静态资源配置：
+    1.静态资源放开过滤：
+        cn.stylefeng.guns.config.security.WebSecurityConfig.java：98行（"/pages/**",）
+    2.静态资源映射：
+        cn.stylefeng.guns.config.web.WebConfig：
+        添加：registry.addResourceHandler("/pages/**").addResourceLocations("classpath:/pages/");
+    3.配置后静态资源无法访问：
+        右侧Maven刷新文件夹
+7.引入js顺序问题：
+    1.将js放在最下面才能获取layui对象；
+    2.layui.use执行顺序：
+        var layuiForm={};
+        layui.use(['form','table', 'admin', 'ax', 'func','selectPlus'], function () {
+             layuiForm=layui.form；
+            //此处函数内代码在其他js代码延后执行，
+            //所以初始化时，若需要用到layui的内置对象如layuiForm，需将初始化代码写在此处,或从新写layui.form
+        })
+8.权限：
+    8.1接口权限@Permission('角色名')：
+        ******只有指定的角色菜能访问路径*******
+        例如：
+            @Permission(Const.ADMIN_NAME)
+            @RequestMapping(value = "/listTree")
+            @ResponseBody
+            public Object listTree() {
+
+    8.2.放开权限校验：
+    NoneAuthedResources.java
+    8.3,功能权限控制：
+        例如“添加”按钮权限控制
+        @if(shiro.hasPermission("/menu/add")){
+        <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        @}
+9.更换主页（首页）：
+    index.html
+    index.loadHome({
+                //menuPath: $("#firstPageAction").attr('lay-href'),
+                menuPath: "/customer",
+                menuName: '<i class="layui-icon layui-icon-home"></i>'
+            });
