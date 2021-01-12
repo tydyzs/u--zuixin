@@ -1,0 +1,151 @@
+@layout("/common/_container.html",{js:[]}){
+<link rel="stylesheet" href="${ctxPath}/assets/common/util/css/file/viewer.min.css" media="all"/>
+
+<script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/util/js/file/viewer.js"></script>
+<script src="${ctxPath}/assets/common/util/js/file/fileInfo.js"></script>
+<div class="layui-body-header">
+    <span class="layui-body-header-title">表单的示例-添加</span>
+</div>
+<div class="layui-fluid " style="">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form id="egFormForm"  lay-filter="egFormForm" disabled class="layui-form" >
+                <div class="layui-form-item">
+                    <table style="width:100%;height:100%;border-collapse:separate; border-spacing:10px;" >
+                        <tr>
+                            <td ><label class="layui-form-label"><span style="color: red;">*</span>姓名:</label></td>
+                            <td colspan="5">
+                                <input type="text" id="name" name="name" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                            </td>
+                            <td ><label class="layui-form-label"><span style="color: red;">*</span>性别:</label></td>
+                            <td colspan="5">
+                                <input type="radio" required  lay-verify="required"  name="gender" value="M" title="男" checked="">
+                                <input type="radio" required  lay-verify="required"  name="gender" value="F" title="女">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1"><label class="layui-form-label"><span style="color: red;">*</span>户口所在地:</label></td>
+                            <td colspan="5">
+                                    <select  id="householdProvince" name="householdProvince" onchange="provinceChange(this,'householdCity')"   lay-verify="required" lay-search=""></select>
+                            </td>
+                            <td colspan="6">
+                                    <select  id="householdCity" name="householdCity"  lay-verify="required" lay-search=""></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1"><label class="layui-form-label"><span style="color: red;">*</span>常驻地址:</label></td>
+                            <td colspan="5">
+                                <select  id="addressProvince" name="addressProvince" onchange="provinceChange(this,'addressCity')"  lay-verify="required" lay-search=""></select>
+                            </td>
+                            <td colspan="6">
+                                <select  id="addressCity" name="addressCity"  lay-verify="required" lay-search=""></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td ><label class="layui-form-label"><span style="color: red;">*</span>出生日期:</label></td>
+                            <td colspan="5">
+                                <input id="birthdate" name="birthdate" readonly  lay-verify="date"  value="" onchange="birthdateChange" placeholder="请输入出生日期" type="text" class="layui-input"/>
+                            </td>
+                            <td ><label class="layui-form-label">年龄:</label></td>
+                            <td>
+                                <input id="customerAge" type="tel" style="width:60px;" name="age" autocomplete="off" class="layui-input layui-disabled" disabled=""/>
+                            </td>
+                            <td><label class="layui-form-label">生肖:</label></td>
+                            <td>
+                                <input id="customerZodiac" type="tel" style="width:60px;" name="zodiac"  autocomplete="off" class="layui-input layui-disabled" disabled=""/>
+                            </td>
+                            <td><label class="layui-form-label">星座:</label></td>
+                            <td>
+                                <input id="customerConstellation" type="tel" style="width:60px;" name="constellation"  autocomplete="off" class="layui-input layui-disabled" disabled=""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td ><label class="layui-form-label"><span style="color: red;">*</span>婚姻状况</label></td>
+                            <td colspan="5" id="maritalStatusTd">
+                            </td>
+                            <td ><label class="layui-form-label">身高（CM):</label></td>
+                            <td>
+                                <input type="number" id="height" name="height" required  lay-verify="required" placeholder="请输入身高（CM)..." autocomplete="off" class="layui-input">
+                            </td>
+                            <td><label class="layui-form-label">体重(KG):</label></td>
+                            <td>
+                                <input type="number" id="weight" name="weight" required  lay-verify="required" placeholder="请输入体重(KG)..." autocomplete="off" class="layui-input">
+                            </td>
+                            <td><label class="layui-form-label">学历（文凭）:</label></td>
+                            <td>
+                                <select  id="education" name="education"  lay-verify="required" lay-search=""></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td ><label class="layui-form-label"><span style="color: red;">*</span>手机号码:</label></td>
+                            <td colspan="5">
+                                <input type="text" id="phoneNumber" name="phoneNumber" required  lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                            </td>
+                            <td ><label class="layui-form-label">其他联系方式:</label></td>
+                            <td colspan="5">
+                                <input type="text" id="contactInformation" name="contactInformation"  placeholder="" autocomplete="off" class="layui-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td ><label class="layui-form-label">车房资产：</label></td>
+                            <td colspan="5">
+                                <input type="checkbox" id="room" name="room" style="margin: auto;" lay-skin="switch" lay-text="有房|无房"/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" id="vehicle" name="vehicle" lay-skin="switch" lay-text="有车|无车"/>
+                            </td>
+                            <td ><label class="layui-form-label">资产说明：</label></td>
+                            <td colspan="5">
+                                <input type="tel" id="assetsexplain" name="assetsexplain"  autocomplete="off" class="layui-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td ><label class="layui-form-label">照片：</label></td>
+                            <td colspan="11">
+                                <input id="pictureInputHidden"  type="hidden" class="layui-input"/>
+                                <div class="over"></div><!--背景层-->
+                                <div  class="layui-upload-list logoImg amplifyImg">
+                                    <button type="button" class="layui-btn layui-btn-sm" id="picBtn"><i class="layui-icon"></i>选择照片</button>
+                                    <ul id="customPhoto">
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td ><label class="layui-form-label">备注：</label></td>
+                            <td colspan="11">
+                                <textarea id="remarks" name="remarks" placeholder="请输入备注说明..." class="layui-textarea"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <div style="float:right">
+                                    <button id="saveButton" class="layui-btn" onclick="saveData()" lay-submit lay-filter="formDemo">保存</button>
+                                    <button id="backuppage" onclick="closeWindow()" type="reset" class="layui-btn layui-btn-primary">关闭</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@}
+<script type="text/javascript">
+    var customerId=getUrlParam("customerId");
+    var formType=getUrlParam("type");
+    var isDle=formType=="view"?false:true;
+    var layuiForm ={};
+    var customPhoto="";//图片分类id
+    $(function(){
+        // 获取前n年
+        var newDate= new Date();
+        var year = newDate.getFullYear()-30;
+        var beginStr= year+'-01-01';
+        var beginDate={year:year,month:"1",date:"1"};
+        $("#birthdate").val(beginStr);
+        dateChange(beginStr,beginDate);
+    })
+</script>
+<script type="text/javascript" src="/pages/tydyzs/intermediary/marriage/js/peopleManageForm.js"></script>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.tydyzs.common.mapper.IFileInfoMapper">
+
+
+    <!--获取文件数据-->
+    <select id="queryFileInfo" parameterType="map" resultType="map">
+        select * from sys_file_info t1 where 1=1
+        <if test="fileId != null and fileId != ''">
+            and t1.file_id =#{fileId}
+        </if>
+        <if test="fileType != null and fileType != ''">
+            and t1.file_type =#{fileType}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic DataGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="/util/jquery-easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/util/jquery-easyui-1.7.0/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/util/jquery-easyui-1.7.0/demo/demo.css">
+    <script type="text/javascript" src="/util/jquery-easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/util/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/assets/tydyzs/intermediary/marriage/js/peopleManage.js"></script>
+</head>
+<body>
+<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">
+    <span>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">新增</a>
+    </span>
+</div>
+<div data-options="region:'center',title:'Center'">
+    <table class="easyui-datagrid" title="客户列表" style="width:100%;"
+           data-options="singleSelect:true,fitColumns:true,url:'datagrid_data1.json',method:'get'">
+        <thead>
+        <tr>
+            <th data-options="field:'itemid',width:20,align:'center'">姓名</th>
+            <th data-options="field:'productid',width:20,align:'center'">性别</th>
+            <th data-options="field:'listprice',width:30,align:'center'">出生年月</th>
+            <th data-options="field:'unitcost',width:15,align:'center'">是否有房</th>
+            <th data-options="field:'attr1',width:15,align:'center'">是否有车</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        //alert(2134)
+    })
+
+</script>
+
+</html>

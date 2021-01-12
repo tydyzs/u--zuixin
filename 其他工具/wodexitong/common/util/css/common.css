@@ -1,0 +1,33 @@
+.filter-section {
+    position: relative;
+    background: #fff;
+    padding: 15px 30px 9px 10px;
+}
+.clear {
+    position: relative;
+    zoom: 1;
+    margin-bottom:6px;
+}
+.addClick {
+    display: flex;
+    justify-content: start;
+}
+.left {
+    float: left;
+    _display: inline;
+}
+.filter-section dd.active {
+    color: #fff;
+    background: #004EA2;
+}
+.filter-section .mr20 {
+    margin-right: 20px;
+}
+.filter-section dd {
+    padding: 0 10px;
+    height: 27px;
+    line-height: 27px;
+    color: #656A74;
+    font-size: 14px;
+    cursor: pointer;
+}
