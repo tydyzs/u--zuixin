@@ -1689,9 +1689,7 @@ Statnment  stmt =conn.createStatement();                          //创建语句
    4.绝对定位（相对父亲定位）：
      -- 相对于父亲产生偏移（**父类设置相对定位，子类设置绝对定位）
       div{ position:relative;  }    /*在div上加position，为了便于给子元素p定位.该div是不许要偏移的，不舍值偏移量即可*/
-      p{ position:absolute;
-          left:0;
-          top:0; }
+      p{position:absolute;left:0;top:0;}
 
    5.固定定位（相对浏览器页面定位，忽悠滚动条）：
      -- 让元素相对与浏览器窗口产生偏移。
