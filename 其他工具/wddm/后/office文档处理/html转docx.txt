@@ -1,0 +1,103 @@
+ 
+
+
+// 格式大全:前缀对应以下方法的fmt值
+// 0:Microsoft Word 97 - 2003 文档 (.doc)
+// 1:Microsoft Word 97 - 2003 模板 (.dot)
+// 2:文本文档 (.txt)
+// 3:文本文档 (.txt)
+// 4:文本文档 (.txt)
+// 5:文本文档 (.txt)
+// 6:RTF 格式 (.rtf)
+// 7:文本文档 (.txt)
+// 8:HTML 文档 (.htm)(带文件夹)
+// 9:MHTML 文档 (.mht)(单文件)
+// 10:MHTML 文档 (.mht)(单文件)
+// 11:XML 文档 (.xml)
+// 12:Microsoft Word 文档 (.docx)
+// 13:Microsoft Word 启用宏的文档 (.docm)
+// 14:Microsoft Word 模板 (.dotx)
+// 15:Microsoft Word 启用宏的模板 (.dotm)
+// 16:Microsoft Word 文档 (.docx)
+// 17:PDF 文件 (.pdf)
+// 18:XPS 文档 (.xps)
+// 19:XML 文档 (.xml)
+// 20:XML 文档 (.xml)
+// 21:XML 文档 (.xml)
+// 22:XML 文档 (.xml)
+// 23:OpenDocument 文本 (.odt)
+// 24:WTF 文件 (.wtf)
+
+
+
+
+ /**
+     * 根据格式类型转换doc文件
+     *
+     * @param srcPaththe doc path 源文件
+     * @param descPath the docx path 目标文件
+     * @param fmtthe fmt 所转格式
+     * @return the file
+     */
+    public File convertDocFmt(String srcPath, String descPath, int fmt) throws Exception {
+        // 实例化ComThread线程与ActiveXComponent
+        ComThread.InitSTA();
+        ActiveXComponent app = new ActiveXComponent("Word.Application");
+        try {
+// 文档隐藏时进行应用操作
+            app.setProperty("Visible", new Variant(false));
+// 实例化模板Document对象
+            Dispatch document = app.getProperty("Documents").toDispatch();
+// 打开Document进行另存为操作
+            Dispatch doc = Dispatch.invoke(document, "Open", Dispatch.Method,
+                    new Object[] { srcPath, new Variant(true), new Variant(true) }, new int[1]).toDispatch();
+            Dispatch.invoke(doc, "SaveAs", Dispatch.Method, new Object[] { descPath, new Variant(fmt) }, new int[1]);
+            Dispatch.call(doc, "Close", new Variant(false));
+            return new File(descPath);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+// 释放线程与ActiveXComponent
+            app.invoke("Quit", new Variant[] {});
+            ComThread.Release();
+        }
+    }
+}
+
+
+ //将html转word并返回word路径
+    public static String htmlToWord(String htmlPath,String filePath){
+		ActiveXComponent app = new ActiveXComponent("Word.Application"); // 启动word        
+		try {            
+			app.setProperty("Visible", new Variant(false));            
+			Dispatch wordDoc = app.getProperty("Documents").toDispatch();      
+			wordDoc = Dispatch.invoke(wordDoc, "Add", Dispatch.Method, new Object[0], new int[1]).toDispatch();  
+			Dispatch.invoke(app.getProperty("Selection").toDispatch(), "InsertFile", Dispatch.Method, new Object[] { htmlPath, "", new Variant(false), new Variant(false), new Variant(false) }, new int[3]);     
+			Dispatch.invoke(wordDoc, "SaveAs", Dispatch.Method, new Object[] {filePath, new Variant(1)}, new int[1]);      
+			Dispatch.call(wordDoc, "Close", new Variant(false));       
+		} catch (Exception e) {     
+			e.printStackTrace();     
+		} finally {          
+			app.invoke("Quit", new Variant[] {});    
+		} 
+		InputStream is;
+		/*WordExtractor ex;
+		 String text2003="";*/
+		String descPath="";
+		try {
+			is = new FileInputStream(filePath);
+			/*ex = new WordExtractor(is);
+			text2003 = ex.getText();*/
+			descPath=filePath+"x";
+			//doc转docx
+			convertDocFmt(filePath, descPath,12);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
+		return descPath;
+    }
+	
+	 public static void main(String[] args) {
+		String docxPath=htmlToWord("d:\aaa\aaa.html","d:\aaa\aaa.doc");
+	 }
+	
