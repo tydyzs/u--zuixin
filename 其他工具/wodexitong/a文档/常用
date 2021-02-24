@@ -1,4 +1,7 @@
 
-1.字典获取：
+1.字典获取接口：
 http://localhost:8081/dict/listDicts?dictTypeId=1106120265689055233
 （Feng.ctxPath + "/dictType/listTypes"）
+2.sql获取字典：
+(select name from sys_dict d where d.dict_type_code='modelType' and d.code=t1.model_Type) modelTypeValue,
+

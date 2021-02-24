@@ -5,7 +5,7 @@
         <!--客户列表，因为有分页参数，所以查询参数加“param.”-->
         <select id="queryCustomer" parameterType="map" resultType="cn.stylefeng.guns.modular.tydyzs.intermediary.marriage.entity.CustomerManage">
             select t1.*
-            from BLIND_DATE_CUSTOMER t1 where is_delete = '1'
+            from TB_MATCHMAKING_CUSTOMER t1 where is_delete = '1'
             <if test="param.name != null and param.name != ''">
                 and t1.name like CONCAT('%',#{param.name},'%')
             </if>
@@ -13,14 +13,14 @@
         <!--客户列表(所有：此时直接写参数名，无需写“param.”）-->
         <select id="queryCustomerAll" parameterType="map" resultType="cn.stylefeng.guns.modular.tydyzs.intermediary.marriage.entity.CustomerManage">
             select t1.*
-            from BLIND_DATE_CUSTOMER t1 where is_delete = '1'
+            from TB_MATCHMAKING_CUSTOMER t1 where is_delete = '1'
             <if test="name != null and name != ''">
                 and t1.name like CONCAT('%',#{name},'%')
             </if>
         </select>
 
 二，mapper层：
-        Page<CustomerManage> queryCustomer(IPage page, Map param);
+        Page<CustomerManage> queryCustomer(@Param("page")IPage page, @Param("param")Map param);//多参数需要加@Param
         List<CustomerManage> queryCustomerAll(Map param);
 
 三，service层（sql查分页；sql查所有；实体查分页；实体查所有）：

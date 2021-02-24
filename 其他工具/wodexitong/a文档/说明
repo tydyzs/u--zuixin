@@ -27,6 +27,23 @@ select * from sys_dict_type
 //////////////////////////////////////新系统部署事项///////////////////////////////
 1.将上传目录清空：
 D:\Work\wodexitong\shcboot\guns-vip-main\target\classes\META-INF\resources\upload
+2.打包部署：
+    1.guns-vip:mvn -install
+    2.guns-vip-main:mvn -package
+        打包方式：
+        1.jar包：
+            通过命令启动服务（校验权限文件路径会有问题）：java -jar guns-vip-main.jar
+        2.war包（推荐）：
+            1.通过tomcat启动（war包中已包含其他jar依赖，部署时无需maven环境）：
+            2.tomcat需要设置默认系统（保证项目启动后可以直接通过ip端口访问到系统，无需再最后再加项目名称）：
+                1.方法一，添加Context标签，去除appBase的默认值“webapps”
+                   <Host name="localhost"  appBase=""
+                               unpackWARs="true" autoDeploy="true">
+                        <Context docBase="D:\a_huanjing\apache-tomcat8\webapps\guns-vip-main" path="" debug="0" reloadable="true" />
+                2.方法二，直接删除webapps中的ROOT目录，将导出的war包命名为ROOT.war
+            3.环境要求：
+                jdk1.8；tomcat8；数据库正常
+    3.部署（guns-vip-main.war;或guns-vip-mainjar）：
 
 /////////////////////////////////////////系统记录/////////////////////////////////
 0.base:
@@ -80,7 +97,7 @@ tydyzs/qwer1234
     1.静态资源放开过滤：
         cn.stylefeng.guns.config.security.WebSecurityConfig.java：98行（"/pages/**",）
     2.静态资源映射：
-        cn.stylefeng.guns.config.web.WebConfig：
+        cn.stylefeng.guns.config.web.WebConfig.java：
         添加：registry.addResourceHandler("/pages/**").addResourceLocations("classpath:/pages/");
     3.配置后静态资源无法访问：
         右侧Maven刷新文件夹
@@ -116,3 +133,11 @@ tydyzs/qwer1234
                 menuPath: "/customer",
                 menuName: '<i class="layui-icon layui-icon-home"></i>'
             });
+10.复制对象：
+ToolUtil.copyProperties(param, entity);
+
+
+
+
+///////////////////////框架修改内容//////////////////
+1.guns-sys修改字典相关文件（字典添加字段：字典类型编码dictTypeCode)
