@@ -185,8 +185,9 @@ select
 (case (t2.sortno is null) when true then 999 else t2.sortno end)
 (case when BUSINESS_INSURE = 1 then '是' else '否' end)
 
-
-
+14.row_number() over()分组添加排序序号字段
+SELECT t.WORK_TABLE_ID, row_number() over(partition by t.WORK_TABLE_ID order by t.CHECK_TABLE_CHECK_CREATE_TIME) orderTimeNum FROM hr_check_supervise t where t.ISFLAG='1'
+****rank() over,dense_rank() over,row_number() over的区别 : 出现相同是排序序号不同*****
 //------------------------------------------------------------------------
 7.mysql递归：
 

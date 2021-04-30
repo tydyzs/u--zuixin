@@ -1664,10 +1664,11 @@ Statnment  stmt =conn.createStatement();                          //创建语句
              display:none
              }
 
-10.字体设置：
+10.字体9设置：font-size:50px;font-weight:700;color:#ff0000;
          font-size:50px ;  /*字体大小*/
          font-weight:700;  /*字体加粗*/
          color:#ff0000;    /*字体颜色*/
+		 
 
 
 11.定位9：
@@ -1684,7 +1685,7 @@ Statnment  stmt =conn.createStatement();                          //创建语句
   例如左浮点：  li{ float:left;}
    3.相对定位：
      -- 相对自己产生偏移。
-       例如：相对自己右，下偏移2px      li{   position:relative;left:2px;top:2px;}
+       例如：相对自己右，下偏移2px      li{position:relative;left:2px;top:2px;}
 
    4.绝对定位（相对父亲定位）：
      -- 相对于父亲产生偏移（**父类设置相对定位，子类设置绝对定位）
