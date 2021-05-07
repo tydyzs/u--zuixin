@@ -1,32 +1,37 @@
 package com.hse.pub.doc.word;
-import java.io.ByteArrayInputStream;  
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;  
-import java.io.InputStream;  
 import java.util.HashMap;
-import java.util.Iterator;  
-import java.util.List;  
-import java.util.Map;  
-import java.util.Map.Entry;  
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import org.apache.poi.POIXMLDocument;  
+import org.apache.poi.POIXMLDocument;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;  
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.TextAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;  
-import org.apache.poi.xwpf.usermodel.XWPFRun;  
-import org.apache.poi.xwpf.usermodel.XWPFTable;  
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;  
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;  
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlToken;
 import org.openxmlformats.schemas.drawingml.x2006.main.CTNonVisualDrawingProps;
 import org.openxmlformats.schemas.drawingml.x2006.main.CTPositiveSize2D;
 import org.openxmlformats.schemas.drawingml.x2006.wordprocessingDrawing.CTInline;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTJc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STJc;
+//import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
   
-/** 
+/** shc20201109
  * 适用于word 2007 
  * poi 版本 3.7 
  */  
@@ -88,7 +93,18 @@ public class WordUtil {
                                 isSetText = true;
                                 Object value = entry.getValue();
                                 if (value instanceof String) {//文本替换
-                                    text = text.replace(key, value.toString());
+                                	String[] str=((String) value).split("\n");
+                                	if(str!=null&&str.length>1){
+                                		isSetText=false;
+                                		run.setText(str[0], 0); // set first line into XWPFRun
+        				                for(int i=1;i<str.length;i++){
+        				                    run.addBreak();//中断
+        				                    run.setText(str[i]);
+        				                }
+                                	}else{
+                                        text = text.replace(key, value.toString());
+                                	}
+
                                 } else if (value instanceof Map) {    //图片替换
                                     text = text.replace(key, "");
                                     Map pic = (Map) value;
@@ -211,6 +227,90 @@ public class WordUtil {
         return picXml;
     }
     
+    /**
+     * set table
+     * @param args
+     * @throws Exception
+     */
+    public static XWPFDocument setTable(XWPFDocument document,List<List<String>> data){
+	    	//获取所有表格
+	    	List<XWPFTable> tables = document.getTables();
+	    	//这里取第一个表格
+	    	XWPFTable table = tables.get(0);
+	    	//表格的插入行
+	    	for (int i = 0; i < data.size(); i++) {//遍历要添加的数据的list
+	             XWPFTableRow newRow = table.insertNewTableRow(i+1);//为表格添加行
+	             List<String> strings =  data.get(i);//获取list中的字符串数组
+	             for (int j = 0; j < strings.size(); j++) {//遍历list中的字符串数组
+	                 String strings1 =  strings.get(j);
+	                 newRow.createCell();//在新增的行上面创建cell
+	                 newRow.getCell(j).setText(strings1);//给每个cell赋值。
+	             }
+	    	}
+	    	return document;
+    }
+    
+    /**
+     * set table
+     * @param args
+     * @throws Exception
+     */
+    public static XWPFDocument setTableByHid(XWPFDocument document,List<List<String>> data){
+	    	//获取所有表格
+	    	List<XWPFTable> tables = document.getTables();
+	    	//这里取第一个表格
+	    	XWPFTable table = tables.get(0);
+	    	//XWPFParagraph p = document.createParagraph();
+	    	//表格的插入行
+	    	for (int i = 0; i < data.size(); i++) {//遍历要添加的数据的list
+	             XWPFTableRow newRow = table.insertNewTableRow(i+5);//为表格添加行
+	             List<String> strings =  data.get(i);//获取list中的字符串数组
+	             for (int j = 0; j < strings.size(); j++) {//遍历list中的字符串数组
+	                 String strings1 =  strings.get(j);
+	                 newRow.createCell();//在新增的行上面创建cell
+	                 XWPFTableCell cell0 = newRow.getCell(j);
+	                 XWPFParagraph p = cell0.getParagraphs().get(0);
+	     	    	 XWPFRun headRun0 = p.createRun();
+	                 headRun0.setText(strings1);
+	                 headRun0.setFontSize(8);
+	                 headRun0.setBold(false);
+//	                 headRun0.setFontFamily("仿宋");
+	                 p.setVerticalAlignment(TextAlignment.CENTER);
+	                 p.setAlignment(ParagraphAlignment.CENTER);
+	             }
+	    	}
+	    	return document;
+    }
+    
+    public static void mergeCells (XWPFTable table, int col, int fromRow, int toRow){
+    	 for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++)
+         {
+             XWPFTableCell cell = table.getRow(rowIndex).getCell(col);
+
+             CTTc cttc = cell.getCTTc();
+             if (cttc.getTcPr() == null)
+             {
+                 cttc.addNewTcPr();
+             }
+
+
+             //第一个合并单元格用重启合并值设置
+             if (rowIndex == fromRow)
+             {
+//            	 cell.getCTTc().addNewTcPr().addNewHMerge().setVal(STMerge.RESTART); 
+//               cell.getCTTc().addNewTcPr().addNewVMerge().val = ST_Merge.restart;
+
+             }
+             else
+             {
+                 //合并第一个单元格的单元被设置为“继续”
+//            	 cell.getCTTc().addNewTcPr().addNewVMerge().setVal(STMerge.CONTINUE); 
+
+             }
+
+         }
+    	
+    }
     
     public static void main(String[] args) throws Exception {
 		Map<String,Object> param = new HashMap<String, Object>();
@@ -224,8 +324,15 @@ public class WordUtil {
 		header.put("type", "png");
 		header.put("content", "e:\\aa.png");//图片路径
 		param.put("IMAGE1",header);
-		XWPFDocument doc = WordUtil.generateWord(param, "D:/ruanjian/EOS/apache-tomcat-9.0.27/webapps/default/excel-config/班组活动记录.docx");
-		FileOutputStream fopts = new FileOutputStream("e:\\test.docx");
+		//1.替换模板中的文字
+		XWPFDocument doc = WordUtil.generateWord(param, "D:\\primeton\\111\\apache-tomcat-9.0.27\\apache-tomcat-9.0.27\\webapps\\default\\excel-config\\退场人员导出台账.docx");
+		
+		//2.获取指定表格并追加行(setTable方法默认获取第一个表格从第一行开始追加数据)
+		List<List<String>> dataList=null;
+        doc = setTable(doc, dataList);
+		
+		
+		FileOutputStream fopts = new FileOutputStream("D:\\test.docx");
 		doc.write(fopts);
 		fopts.close();
 	}
