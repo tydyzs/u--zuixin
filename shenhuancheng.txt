@@ -2820,7 +2820,14 @@ public List<Object> implementsql(Map map);
 				}
 			})
 	
-	
+62.jquery对象转成url参数字符串	（optype=add&checkType=3&checkId=9d989af9c0c8437e8caf692401f2dbbf&checkItemId=68d88a956cc34c038a6201fc8d37c7e0）
+		var paramList=jQuery.param({
+				optype:"add",
+				checkType:3,
+				checkId:nui.get("workTableId").getValue(),
+				checkItemId:nui.get("hrchecksupervise.id").getValue(),
+
+		});	  	
 *********************************************************************************************************
 1.分割字符串特殊符号：@ % & #
 
