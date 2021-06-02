@@ -191,7 +191,37 @@ SELECT t.WORK_TABLE_ID, row_number() over(partition by t.WORK_TABLE_ID order by 
 
 15.计算百分比（保留两位）
 CONCAT(format(sum(t1.JOIN_NUM)/sum(t1.TEAM_NUM)*100,2),'%')
-//------------------------------------------------------------------------
+
+
+16。严格校验sql语句group语法
+my.ini配置文件中添加：sql_mode = only_full_group_by
+（不校验：sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION）
+
+17。mysql动态sql（查询列动态）
+	1.基础用法（先定义一个变量“@sql”，赋值一个sql语句（字符串）。然后执行这个字符串sql）：
+		SET @sql = concat('select WORK_TYPE,',(select 'id' from dual),' from hr_work_table');
+		PREPARE stmt FROM @sql;
+		EXECUTE stmt;
+		DEALLOCATE PREPARE stmt;
+	2.扩展（动态行转列：先查询所有可能出现的行，拼接case when做行转列，然后通过group_concat得到一个行转列的sql字符串。最后将此字符串拼接到主sql中，并执行拼接好的sql字符串）：
+		SET @sql = NULL;
+		select group_concat(t.select_col) INTO @sql  from( select  concat('SUM(CASE `WORK_TYPE` WHEN ',WORK_TYPE,' THEN  1 ELSE 0 END) as WORK_TYPE',WORK_TYPE) select_col from hr_work_table group by WORK_TYPE order by WORK_TYPE) t ;
+		SET @sql = CONCAT('SELECT PROJECT_NAME,ORGID,',@sql,' from hr_work_table a
+				GROUP BY ORGID,PROJECT_NAME;');	
+		PREPARE stmt FROM @sql;
+		EXECUTE stmt;
+		DEALLOCATE PREPARE stmt;
+		
+	3.mybatis中可通过foreach实现动态
+	<foreach collection="list" item="item" separator=",">
+		MAX((CASE t.dpi_distributionPoint WHEN "${item}" THEN t.amount ELSE '' END)) AS "_${item}"
+	</foreach>	
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////   mysql ---END ///////////////////////////////////////////
+
+
+
+
 7.mysql递归：
 
 	#创建向上递归

@@ -41,6 +41,24 @@ DatabaseUtil.saveEntity("default", expert);
 			String userorgid=userobject.getUserOrgId();
 			String userorgname=userobject.getUserOrgName();
 	%>
+	
+	
+	
+	方案二、
+		<%@ taglib uri="http://eos.primeton.com/tags/bean" prefix="b" %>
+
+		var userId = '<b:write property="userObject/userId" scope="s"/>';
+		var userName = '<b:write property="userObject/userRealName" scope="s"/>';
+		var userOrgId = '<b:write property="userObject/userOrgId" scope="s"/>';
+		var userOrgName = '<b:write property="userObject/userOrgName" scope="s"/>';
+		var userOrgSeq = '<b:write property="userObject/attributes/userOrgSeq" scope="s"/>';
+		var theOrgId = '<b:write property="userObject/attributes/theOrgId" scope="s"/>';
+		var theOrgName = '<b:write property="userObject/attributes/theOrgName" scope="s"/>';
+		var theOrgSeq = '<b:write property="userObject/attributes/theOrgSeq" scope="s"/>';
+		var theOrgType = '<b:write property="userObject/attributes/theOrgType" scope="s"/>';
+		var mobile = '<b:write property="userObject/attributes/mobile" scope="s"/>';
+		var roleList ='<b:write property="userObject/attributes/roleList" scope="s" />';
+	
 
 10.jsp权限：
 <hkr:hasPermission funcCode="team_activity_plan_button">
