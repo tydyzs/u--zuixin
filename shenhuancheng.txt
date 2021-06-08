@@ -72,9 +72,9 @@ linux 系统的命令：
 11.tomcat配置jdk：catalina.sh  :  JRE_HOME="/usr/local/jdk1.7.0_55/jre"  
 12.解压：tar zxvf FileName.tar.gz；压缩：tar zcvf filename.tar.gz testfilename
 13，jdk环境变量：
-	export JAVA_HOME=/usr/local/java/jdk1.8.0_144
-	export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-	export PATH=$JAVA_HOME/bin:$PATH
+export JAVA_HOME=/usr/local/java/jdk1.8.0_144
+export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$JAVA_HOME/bin:$PATH
    或
       1.vim /etc/profile添加上面三行；
       2.source /etc/profile(使上面设置生效）
@@ -116,7 +116,10 @@ linux 系统的命令：
 	1.查找文件：find -name "*user-config.xml"
 	2.查找文件（包含某个字符串内容）：
 	  find ./ -name "*user-config.xml*" | xargs grep  "Hello"
-
+25.CentOS-6不能使用yum(改为阿里源)：
+	curl -o /etc/yum.repos.d/CentOS-Base.repo https://www.xmpan.com/Centos-6-Vault-Aliyun.repo
+	yum clean all
+	yum makecache
 
 
 
