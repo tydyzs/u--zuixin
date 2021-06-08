@@ -72,7 +72,7 @@ linux 系统的命令：
 11.tomcat配置jdk：catalina.sh  :  JRE_HOME="/usr/local/jdk1.7.0_55/jre"  
 12.解压：tar zxvf FileName.tar.gz；压缩：tar zcvf filename.tar.gz testfilename
 13，jdk环境变量：
-export JAVA_HOME=/usr/local/java/jdk1.8.0_144
+export JAVA_HOME=/usr/local/eos/jdk1.8
 export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 export PATH=$JAVA_HOME/bin:$PATH
    或
@@ -120,6 +120,14 @@ export PATH=$JAVA_HOME/bin:$PATH
 	curl -o /etc/yum.repos.d/CentOS-Base.repo https://www.xmpan.com/Centos-6-Vault-Aliyun.repo
 	yum clean all
 	yum makecache
+26.firewalld 防火墙开放端口
+查看firewalld状态：systemctl status firewalld
+
+1.开启firewalld：systemctl start firewalld
+//如果启动报错：Failed to start firewalld.service: Unit is masked.
+//#是因为被锁定了，取消firewalld的锁定：systemctl unmask firewalld，再启动即可。
+2.开放某个端口：firewall-cmd --zone=public --add-port=3306/tcp --permanent
+3.需要重新载入：firewall-cmd --reload
 
 
 
@@ -137,6 +145,11 @@ export PATH=$JAVA_HOME/bin:$PATH
 -u:若目标文件比源文件旧，更新目标文件
 （组合：-rf）
 ****************************************************************************************
+
+
+
+
+
 项目处理：
 1.导入非.project项目。右键--Import--Projects from Folder or Archive
 2.将项目改为java项目（自动生成.project文件）。右键项目--properties--Project Facets
