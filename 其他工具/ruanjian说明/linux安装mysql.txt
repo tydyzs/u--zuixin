@@ -1,0 +1,83 @@
+linux安装mysql
+
+1.查看是否已经安装mysql：
+rpm -qa |grep mysql
+
+rpm文件上传到 /opt 文件夹下
+mysql-community-client-8.0.21-1.el7.x86_64.rpm
+mysql-community-common-8.0.21-1.el7.x86_64.rpm
+mysql-community-libs-8.0.21-1.el7.x86_64.rpm
+mysql-community-server-8.0.21-1.el7.x86_64.rpm
+
+cd /opt
+开始安装，顺序依次：
+1、rpm -ivh mysql-community-common-8.0.21-1.el7.x86_64.rpm
+2、rpm -ivh mysql-community-libs-8.0.21-1.el7.x86_64.rpm
+若安装失败提示已安装mariadb，直接查询mariadb并写在
+rpm -qa | grep mariadb
+rpm -e --nodeps mariadb-libs-5.5.41-2.el7_0.x86_64
+
+3、rpm -ivh mysql-community-client-8.0.21-1.el7.x86_64.rpm
+
+4、rpm -ivh mysql-community-server-8.0.21-1.el7.x86_64.rpm
+若缺少依赖 /usr/bin/perl、net-tools
+yum install -y perl-Module-Install.noarch
+yum -y install net-tools
+安装成功
+#查看是否安装成功
+
+mysqladmin --version
+
+ps -ef|grep mysql
+
+#设置数据库不区分大小写（此步骤必须在下面“初始化”之前）
+vi /etc/my.cnf
+末尾添加   lower_case_table_names=1
+然后重启
+
+#查看状态：
+systemctl status mysqld
+#Mysql启动、停止、重启命令
+systemctl start mysqld
+systemctl stop mysqld
+systemctl restart mysqld
+
+#############开始初始化数据库#############
+#查看初始密码：
+cat /var/log/mysqld.log |grep password
+
+
+mysql -uroot -p
+
+#修改初始密码：
+ALTER USER root@localhost IDENTIFIED BY 'Hse@zdjjzjt!2021';
+改为简单密码之前先查看并设置密码规则：
+SHOW VARIABLES LIKE 'validate_password%';
+set global validate_password.policy=0;	
+ALTER USER root@localhost IDENTIFIED BY '12345678';
+
+show variables like 'character%';
+SET character_set_client = utf8;
+	SET character_set_results = utf8;
+	SET character_set_connection = utf8;
+
+#允许远程连接
+select host,user from mysql.user;
+update mysql.user set host="%" where user="root";
+重启：systemctl restart mysqld
+创建数据库
+create database hse_db_project CHARACTER SET utf8 COLLATE utf8_general_ci;
+（*************** 重装myusql--卸载
+1.查看：rpm -qa|grep -i mysql
+2，执行删除：
+rpm -ev mysql-community-client-8.0.11-1.el7.x86_64 --nodeps
+rpm -ev mysql-community-common-8.0.11-1.el7.x86_64 --nodeps
+rpm -ev mysql-community-server-8.0.11-1.el7.x86_64  --nodeps
+rpm -ev mysql-community-libs-8.0.11-1.el7.x86_64 --nodeps
+,3.删除相关记录：find / -name mysql
+rm -rf 。。。
+4.删除my.cnf：
+rm -rf /etc/my.cnf
+5.查看写在情况：rpm -qa|grep -i mysql
+***************
+）
