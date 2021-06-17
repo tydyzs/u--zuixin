@@ -1,0 +1,145 @@
+
+*******************安装依赖*******************************
+
+	1)、安装编译工具及库文件（gcc 依赖包安装）
+			解压到 /usr/local 下
+			执行	cd /usr/local/down
+			执行	unzip gc++.zip -d  /usr/local
+					rpm -ivh kernel-headers-3.10.0-868.1.x86_64.rpm
+			执行	cd /usr/local/gc++
+			可以先编译一下nginx,看看缺少哪些依赖包在安装;也可以全部安装。--force 表示强制安装	--nodeps 表示安装时不检查依赖关系
+			全部安装：
+	rpm -Uvh --force --nodeps *.rpm
+		rpm -ivh --force --nodeps *.rpm
+			//rpm -ivh --replacefiles *.rpm	
+	2)、pcre安装
+			解压到 /usr/local 下
+			执行	cd /usr/local/down
+			执行	tar -zxvf pcre-8.44.tar.gz -C /usr/local
+			执行	cd /usr/local/pcre-8.44
+			编译安装
+			执行	./configure
+		如果报错：
+	configure: error: C preprocessor "/lib/cpp" fails sanity check
+		原因：没有安装kernel-headers
+			执行	cd /usr/local/down
+			执行	rpm -ivh kernel-headers-3.10.0-868.1.x86_64.rpm --force --nodeps  （或rpm -ivh kernel-headers-3.10.0-868.1.x86_64.rpm --force）
+			
+			然后	cd /usr/local/pcre-8.44
+			执行	./configure
+
+			执行	make && make install
+		查看pcre版本
+			执行	pcre-config --version
+			
+			tar -zxvf perl-5.32.1.tar.gz -C /usr/local
+			cd /usr/local/perl-5.32.1
+			./Configure -des -Dprefix=$HOME/localperl
+			make
+			make test
+			make install
+	3)、openssl安装
+			解压到 /usr/local 下
+			执行	cd /usr/local/down
+			执行	tar -zxvf openssl-1.1.0e.tar.gz -C /usr/local
+			执行	cd /usr/local/openssl-1.1.0e
+			编译安装
+			执行	./config
+			执行	make && make install
+			
+	4)、zlib安装
+			解压到 /usr/local 下
+			执行	cd /usr/local/down
+			执行	tar -zxvf zlib-1.2.11.tar.gz -C /usr/local
+			执行	cd /usr/local/zlib-1.2.11
+		编译安装
+			执行	./configure
+			执行	make && make install
+			
+
+
+
+
+
+
+
+
+
+一、linux安装nginx：
+	0.先安装依赖包。
+	1.解压安装包：tar -zxvf nginx-1.18.0.tar.gz -C /usr/local
+	2.进入目录：./configure（若需要使用stream则使用：./configure --with-stream）
+	3.编译安装：make && make install
+	4.查看nginx版本:/usr/local/nginx/sbin/nginx -v
+	  修改配置文件：vi /usr/local/nginx/conf/nginx.conf
+	5.启动nginx：
+		进入目录：cd /usr/local/nginx/sbin
+		执行：./nginx
+	6，其他：
+		查看nginx 的状态 	ps -ef | grep nginx  出现master 则启动成功
+		关闭nginx 命令 		kill -9 8725(进程号 上面的)   则关闭nginx
+		停止 nginx 命令： 	./nginx -s stop 
+		重启nginx命令：		./nginx -s reload
+二、nginx使用及配置
+
+	1.nginx用于跳转（对外暴露一个端口，通过访问nginx主机及暴露的端口跳转到指定的路径）
+		1.http跳转：
+			1.配置对外暴露端口：http {server {listen       80;}}
+			2.配置跳转（如下配置作用为访问 nginx主机ip:80/kkFileView 即可跳转到http://192.168.99.2:8012/）：
+			 server {
+				location /kkFileView {
+					proxy_pass http://192.168.99.2:8012/;
+				}
+			}
+			3.可定义变量例如（myproject）：
+				http{
+					upstream myproject {   
+						server 192.168.99.2:8080;
+						ip_hash;		
+					}
+					server {
+						location /default {
+							client_max_body_size 500m;
+							proxy_set_header Host $host;
+							proxy_set_header X-Real-IP $remote_addr;
+							proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+							proxy_pass http://myproject/default;
+						}
+					}
+				}
+		2.ip端口跳转（在stream中配置，***安装nginx时使用./configure --with-stream才能使用stream）
+			stream {
+				#定义目标redis
+				upstream redis {
+					server 192.168.99.2:6379 max_fails=3 fail_timeout=30s;
+				}
+				#redis代理，对外暴露端口16379
+				server {
+					listen 16379;
+					#allow 10.1.115.243;
+					#deny all;
+					proxy_connect_timeout 1s;
+					proxy_timeout 3s;
+					proxy_pass redis;
+				}
+			}
+	2.nginx负载均衡(集群时使用，可随机也可分配优先级；stream中也可使用负载均衡）：
+		http{
+			upstream myproject {   
+				server 192.168.99.2:8080;
+				server 192.168.99.3:8080;
+				ip_hash;		
+			}
+			location /default {
+					client_max_body_size 500m;
+					proxy_set_header Host $host;
+					proxy_set_header X-Real-IP $remote_addr;
+					proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+					proxy_pass http://myproject/default;
+				}
+		}
+	
+	
+	
+	
+	
