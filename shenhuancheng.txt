@@ -41,7 +41,11 @@ javaME（微型版）---安卓(x)
 @RestController 是一个结合了 @ResponseBody 和 @Controller 的注解(像:resetful接口调用时,返回的是json等就使用)
 
 
-//*************
+
+//**********************************************************************************************
+//******************************** linux  start*************************************************
+//**********************************************************************************************
+
 linux 系统的命令：
 0.查看linux版本：cat /etc/redhat-release
 1."cd home"   跳转到当前目录下的home目录。。。
@@ -72,7 +76,7 @@ linux 系统的命令：
 11.tomcat配置jdk：catalina.sh  :  JRE_HOME="/usr/local/jdk1.7.0_55/jre"  
 12.解压：tar zxvf FileName.tar.gz；压缩：tar zcvf filename.tar.gz testfilename
 13，jdk环境变量：
-export JAVA_HOME=/usr/local/eos/jdk1.8
+export JAVA_HOME=/usr/local/java/jdk1.8.0_111
 export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 export PATH=$JAVA_HOME/bin:$PATH
    或
@@ -120,7 +124,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 	curl -o /etc/yum.repos.d/CentOS-Base.repo https://www.xmpan.com/Centos-6-Vault-Aliyun.repo
 	yum clean all
 	yum makecache
-26.firewalld 防火墙开放端口
+26.firewalld 防火墙开放端口开放
 查看firewalld状态：systemctl status firewalld
 
 1.开启firewalld：systemctl start firewalld
@@ -129,6 +133,13 @@ export PATH=$JAVA_HOME/bin:$PATH
 2.开放某个端口：firewall-cmd --zone=public --add-port=3306/tcp --permanent
 3.需要重新载入：firewall-cmd --reload
 
+27.常用命令安装：
+	1.ifconfig:
+		yum install net-tools.x86_64 -y
+	2.telnet:
+		yum install telnet
+	3.lsof:
+		yum install lsof
 
 
 
@@ -144,7 +155,13 @@ export PATH=$JAVA_HOME/bin:$PATH
 -s:复制成符号连接文件(symbolic link)，即“快捷方式”文件
 -u:若目标文件比源文件旧，更新目标文件
 （组合：-rf）
-****************************************************************************************
+
+//**********************************************************************************************
+//******************************** linux  end*************************************************
+//**********************************************************************************************
+
+
+
 
 
 

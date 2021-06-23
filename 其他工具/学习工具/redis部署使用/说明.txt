@@ -19,6 +19,10 @@ redis只能在linux下运行
         进入源码包目录下的deps目录中执行
 
         make geohash-int hiredis jemalloc linenoise lua
+		
+		cc报错，先安装gcc：
+		yum install gcc
+		
      ）
 3.安装完成后复制文件
    /home/rdtar/redis-4.0.1/redis.conf
