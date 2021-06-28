@@ -133,16 +133,21 @@ export PATH=$JAVA_HOME/bin:$PATH
 2.开放某个端口：firewall-cmd --zone=public --add-port=3306/tcp --permanent
 3.需要重新载入：firewall-cmd --reload
 
-27.常用命令安装：
+
+27.查看文件和文件夹大小：
+	1.文件夹内所有文件展示大小：ls -sh(或ll -sh)
+	2.当前文件夹总大小：  du -sh
+
+
+
+
+安装常用命令：
 	1.ifconfig:
 		yum install net-tools.x86_64 -y
 	2.telnet:
 		yum install telnet
 	3.lsof:
 		yum install lsof
-
-
-
 
 参数说明：
 -a:是指archive的意思，也说是指复制所有的目录

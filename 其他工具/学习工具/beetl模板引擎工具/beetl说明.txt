@@ -1,0 +1,15 @@
+Beetl模板引擎工具
+    1.对象植入模板中，获取时根据方法取值
+        1.创建用于取值的类MyBeetl.java,并添加取值方法：
+              public String getShc(){
+                    return "shcValue";
+              }
+              ####方法可设置参数
+                  public String getValue(String param){
+                      return "传入的值为："+param;
+                  }
+        2.BeetlConfiguration.java中追加代码：
+            groupTemplate.registerFunctionPackage("shc", new MyBeetl());
+        3.前端获取模板的值：
+            alert("${shc.getShc()}");
+            alert("${shc.getValue('123')}");
