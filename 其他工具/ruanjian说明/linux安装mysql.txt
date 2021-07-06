@@ -1,6 +1,5 @@
-linux安装mysql
-
-1.查看是否已经安装mysql：
+2、数据库服务器
+查看是否已经安装mysql：
 rpm -qa |grep mysql
 
 rpm文件上传到 /opt 文件夹下
@@ -20,7 +19,8 @@ rpm -e --nodeps mariadb-libs-5.5.41-2.el7_0.x86_64
 3、rpm -ivh mysql-community-client-8.0.21-1.el7.x86_64.rpm
 
 4、rpm -ivh mysql-community-server-8.0.21-1.el7.x86_64.rpm
-若缺少依赖 /usr/bin/perl、net-tools
+若缺少依赖 /usr/bin/    
+perl、net-tools
 yum install -y perl-Module-Install.noarch
 yum -y install net-tools
 安装成功
@@ -30,9 +30,14 @@ mysqladmin --version
 
 ps -ef|grep mysql
 
-#设置数据库不区分大小写（此步骤必须在下面“初始化”之前）
+####设置数据库不区分大小写（此步骤必须在下面“初始化”之前）
 vi /etc/my.cnf
-末尾添加   lower_case_table_names=1
+末尾添加：
+lower_case_table_names=1
+
+#group by规则放开
+末尾添加：
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
 然后重启
 
 #查看状态：
@@ -51,15 +56,15 @@ mysql -uroot -p
 
 #修改初始密码：
 ALTER USER root@localhost IDENTIFIED BY 'Hse@zdjjzjt!2021';
-改为简单密码之前先查看并设置密码规则：
+***若需要改为简单密码之前先查看并设置密码规则：
 SHOW VARIABLES LIKE 'validate_password%';
 set global validate_password.policy=0;	
 ALTER USER root@localhost IDENTIFIED BY '12345678';
 
 show variables like 'character%';
 SET character_set_client = utf8;
-	SET character_set_results = utf8;
-	SET character_set_connection = utf8;
+SET character_set_results = utf8;
+SET character_set_connection = utf8;
 
 #允许远程连接
 select host,user from mysql.user;
@@ -78,6 +83,6 @@ rpm -ev mysql-community-libs-8.0.11-1.el7.x86_64 --nodeps
 rm -rf 。。。
 4.删除my.cnf：
 rm -rf /etc/my.cnf
-5.查看写在情况：rpm -qa|grep -i mysql
+查看写在情况：rpm -qa|grep -i mysql
 ***************
 ）
