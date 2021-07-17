@@ -142,13 +142,29 @@ export PATH=$JAVA_HOME/bin:$PATH
 
 
 
-安装常用命令：
+28.安装常用命令(yun联网安装）：
 	1.ifconfig:
 		yum install net-tools.x86_64 -y
 	2.telnet:
 		yum install telnet
 	3.lsof:
 		yum install lsof
+
+29.rpm:
+-ivh：安装显示安装进度--install--verbose--hash
+-Uvh：升级软件包--Update；
+-qpl：列出RPM软件包内的文件信息[Query Package list]；
+-qpi：列出RPM软件包的描述信息[Query Package install package(s)]；
+-qf：查找指定文件属于哪个RPM软件包[Query File]；
+-Va：校验所有的RPM软件包，查找丢失的文件[View Lost]；
+-e：删除包
+
+
+
+
+
+
+
 
 参数说明：
 -a:是指archive的意思，也说是指复制所有的目录
@@ -161,6 +177,34 @@ export PATH=$JAVA_HOME/bin:$PATH
 -s:复制成符号连接文件(symbolic link)，即“快捷方式”文件
 -u:若目标文件比源文件旧，更新目标文件
 （组合：-rf）
+
+
+创建用户：
+0.创建用户组：groupadd hse_usre
+1.创建用户：adduser hse_user hse_usre
+2.设置密码：passwd hse_user
+3.授权：
+	1.root下执行（使文件可编辑）：
+		chmod -v u+w /etc/sudoers
+	2.root下执行编辑文件：vim /etc/sudoers
+		在“root    ALL=(ALL)       ALL	”下添加一行：
+		hse_usre    ALL=(ALL)       ALL
+		或（NOPASSWD:ALL，sudo的时候就不用输入密码了。）
+		hse_usre    ALL=(ALL)       NOPASSWD:ALL
+	3.root用户下执行（使文件不可编辑）：
+		chmod -v u-w /etc/sudoers 
+4.切换用户：su hse_user(或 su -hse_user)
+5.hse_user执行命令时在命令前面加sudo。
+例如：sudo chomd 777 startup.sh
+
+
+
+删除用户
+1、先用命令   cat /etc/passwd  查看一下所有的用户  可以看到片你需要删除的用户名
+2、用命令    who    查询当前登录的用户
+3、用命令   ps -u 用户名     查看该用户的pid 
+4、用命令  kill  pid    杀掉他的sshd或者是shell进程
+5、再用命令   userdel -r 用户名   删除用户
 
 //**********************************************************************************************
 //******************************** linux  end*************************************************
